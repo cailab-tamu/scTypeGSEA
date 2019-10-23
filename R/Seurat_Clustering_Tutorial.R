@@ -41,7 +41,7 @@
 # #pbmc <- ScaleData(pbmc)
 #
 # ##Perform linear dimensional reduction
-# pbmc <- RunPCA(pbmc, features = VariableFeatures(object = pbmc))
+# pbmc <- RunPCA(pbmc, features = VariableFeatures(object = pbmc), verbose = FALSE)
 # # Examine and visualize PCA results a few different ways
 # print(pbmc[["pca"]], dims = 1:5, nfeatures = 5)
 # VizDimLoadings(pbmc, dims = 1:2, reduction = "pca")
@@ -95,7 +95,7 @@
 # names(new.cluster.ids) <- levels(pbmc)
 # pbmc <- RenameIdents(pbmc, new.cluster.ids)
 # DimPlot(pbmc, reduction = "tsne", label = TRUE, pt.size = 0.5) + NoLegend()
-#
-#
-#
-#
+
+
+
+
