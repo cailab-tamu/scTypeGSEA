@@ -95,7 +95,3 @@
 # names(new.cluster.ids) <- levels(pbmc)
 # pbmc <- RenameIdents(pbmc, new.cluster.ids)
 # DimPlot(pbmc, reduction = "tsne", label = TRUE, pt.size = 0.5) + NoLegend()
-
-
-
-

@@ -39,4 +39,3 @@
 # dta2_2 <- import("~/Documents/single cell/data set/GSEA/scsig.v1.0.metadata.txt", header = FALSE) ## same data set as dta2_1
 #
 # rm(list = ls())
-
