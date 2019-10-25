@@ -1,39 +1,62 @@
-#' Checks if the input is already clustered, if not, the function should do it.
-#' @param obj A Seurat object
-#' @import Seurat
-#' @return If the input is already clustered, return the original object. If not, the function will return a Seurat object will cluster.
+#' Title Cluster Determination
+#'
+#' If the input is already clustered, just return it.
+#' If not, the function will check whether the data has already been pre-processed, for example, PCA. If not, the function will do data pre-process first.
+#' After the basic data pre-process (Normalization, Scale data, Find HVG and PCA), the function will do cluster.
+#'
+#' @importFrom Seurat NormalizeData
+#' @importFrom Seurat FindVariableFeatures
+#' @importFrom Seurat ScaleData
+#' @importFrom Seurat RunPCA
+#' @importFrom Seurat FindNeighbors
+#' @importFrom Seurat FindClusters
+#'
+#' @param obj An Seurat object.
+#' @param normalization.method Method for normalization. Include "LogNormalize", "CLR" and "RC".
+#' @param scale.factor Sets the scale factor for cell-level normalization.
+#' @param selection.method How to choose top variable features. Include "vst", "mean.var.plot" and "dispersion".
+#' @param nfeatures Number of features to select as top variable features.
+#' @param npcs Total Number of PCs to compute and store (50 by default).
+#' @param dims Dimensions of reduction to use as input. (For cluster.)
+#' @param k.param Defines k for the k-nearest neighbor algorithm. (For cluster.)
+#' @param resolution Value of the resolution parameter, use a value above (below) 1.0 if you want to obtain a larger (smaller) number of communities. (For cluster.)
+#'
+#' @return If the input is already clustered, just return it. If not, the function do cluster and return obj with cluster.
 #' @export
 #'
-#' @examples
-#' library(Seurat)
-#' inputMatrix <- matrix(data = rnbinom(n = 1e6, size = 10, prob = .9), nrow = 5000)
-#' rownames(inputMatrix) <- paste0('Gene_', seq_len(nrow(inputMatrix)))
-#' colnames(inputMatrix) <- paste0('Cell_', seq_len(ncol(inputMatrix)))
-#' dta <- CreateSeuratObject(counts = inputMatrix, min.cells = 3, min.features = 20)
-#' dta <- check_cluster(dta)
+check_cluster <- function(obj, normalization.method = "LogNormalize", scale.factor = 10000, selection.method = "vst", nfeatures = 2000,
+                          npcs = 50, dims = 1:50, k.param = 20, resolution = 0.5) {
 
-check_cluster <- function(obj){
+  # check cluster
   check_clu <- is.null(obj@meta.data$seurat_clusters)
-  if (check_clu == TRUE){
-    # Normalizing the data
-    obj <- NormalizeData(obj, normalization.method = "LogNormalize", scale.factor = 10000)
 
-    # Identification of highly variable features (feature selection)
-    obj <- FindVariableFeatures(obj, selection.method = "vst", nfeatures = 2000)
+  if (check_clu == TRUE) {
 
-    # Scaling the data
-    all.genes <- rownames(obj)
-    obj <- ScaleData(obj, features = all.genes)
+    cat("The data has not been pre-processed, let's do it!")
+    # check PCA dimension reduction
+    check_pca <- is.null(obj@reductions$pca)
+    if (check_pca == TRUE) {
 
-    # Perform linear dimensional reduction
-    obj <- RunPCA(obj, features = VariableFeatures(object = obj), verbose = FALSE)
+      # Normalize object
+      obj <- Seurat::NormalizeData(obj, normalization.method = normalization.method, scale.factor = scale.factor)
 
-    #Cluster the cells
-    obj <- FindNeighbors(obj, dims = 1:50)
-    obj <- FindClusters(obj, resolution = 0.5)
+      # Identification of highly variable features (feature selection)
+      obj <- Seurat::FindVariableFeatures(obj, selection.method = selection.method, nfeatures = nfeatures)
+
+      # Scaling the data
+      all.genes <- rownames(obj)
+      obj <- Seurat::ScaleData(obj, features = all.genes)
+
+      # Perform linear dimensional reduction
+      obj <- Seurat::RunPCA(obj, features = VariableFeatures(object = obj), verbose = FALSE, npcs = npcs)
+    }
+
+    # Cluster the cells
+    obj <- Seurat::FindNeighbors(obj, dims = dims, k.param = 20)
+    obj <- Seurat::FindClusters(obj, resolution = resolution)
 
     return(obj)
-  } else{
+  } else {
     return(obj)
   }
 }
