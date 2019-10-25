@@ -32,7 +32,7 @@ check_cluster <- function(obj, normalization.method = "LogNormalize", scale.fact
 
   if (check_clu == TRUE) {
 
-    cat("The data has not been pre-processed, let's do it!")
+    cat("The data has not been pre-processed, let's do it!\n")
     # check PCA dimension reduction
     check_pca <- is.null(obj@reductions$pca)
     if (check_pca == TRUE) {
