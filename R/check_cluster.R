@@ -4,6 +4,8 @@
 #' If not, the function will check whether the data has already been pre-processed, for example, PCA. If not, the function will do data pre-process first.
 #' After the basic data pre-process (Normalization, Scale data, Find HVG and PCA), the function will do cluster.
 #'
+#' @importFrom Seurat PercentageFeatureSet
+#' @importFrom Seurat subset
 #' @importFrom Seurat NormalizeData
 #' @importFrom Seurat FindVariableFeatures
 #' @importFrom Seurat ScaleData
@@ -12,9 +14,10 @@
 #' @importFrom Seurat FindClusters
 #'
 #' @param obj An Seurat object.
-#' @param normalization.method Method for normalization. Include "LogNormalize", "CLR" and "RC".
+#' @param percent.mt The highest percentage of reads that map to the mitochondrial genome.
+#' @param normalization.method Method for normalization. Include 'LogNormalize', 'CLR' and 'RC'.
 #' @param scale.factor Sets the scale factor for cell-level normalization.
-#' @param selection.method How to choose top variable features. Include "vst", "mean.var.plot" and "dispersion".
+#' @param selection.method How to choose top variable features. Include 'vst', 'mean.var.plot' and 'dispersion'.
 #' @param nfeatures Number of features to select as top variable features.
 #' @param npcs Total Number of PCs to compute and store (50 by default).
 #' @param dims Dimensions of reduction to use as input. (For cluster.)
@@ -24,8 +27,7 @@
 #' @return If the input is already clustered, just return it. If not, the function do cluster and return obj with cluster.
 #' @export
 #'
-check_cluster <- function(obj, normalization.method = "LogNormalize", scale.factor = 10000, selection.method = "vst", nfeatures = 2000,
-                          npcs = 50, dims = 1:50, k.param = 20, resolution = 0.5) {
+check_cluster <- function(obj, percent.mt = 5, normalization.method = "LogNormalize", scale.factor = 10000, selection.method = "vst", nfeatures = 2000, npcs = 50, dims = 1:50, k.param = 20, resolution = 0.5) {
 
   # check cluster
   check_clu <- is.null(obj@meta.data$seurat_clusters)
@@ -36,6 +38,9 @@ check_cluster <- function(obj, normalization.method = "LogNormalize", scale.fact
     # check PCA dimension reduction
     check_pca <- is.null(obj@reductions$pca)
     if (check_pca == TRUE) {
+      # Do quality control
+      obj[["percent.mt"]] <- Seurat::PercentageFeatureSet(obj, pattern = "^MT-")
+      obj <- Seurat::subset(obj, subset = percent.mt < percent.mt)
 
       # Normalize object
       obj <- Seurat::NormalizeData(obj, normalization.method = normalization.method, scale.factor = scale.factor)

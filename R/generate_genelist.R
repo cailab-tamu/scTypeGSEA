@@ -8,7 +8,7 @@
 # mylist <- vector("list", length(mylist.names))
 # names(mylist) <- mylist.names
 #
-# for (i in 1:length(mylist.names)){
+# for (i in 1:length(mylist.names)) {
 #   index <- which(dta1$`cell type` == celltype[i])
 #   mylist[[i]] <- dta1$`official gene symbol`[index]
 # }
@@ -25,7 +25,7 @@
 # mylist <- vector("list", length(mylist.names))
 # names(mylist) <- mylist.names
 #
-# for (i in 1:length(mylist.names)){
+# for (i in 1:length(mylist.names)) {
 #   entry <- dta2_1[i, 12]
 #   entry <- strsplit(entry, ",")
 #   mylist[[i]] <- entry
@@ -36,6 +36,6 @@
 # rm(list = ls())
 #
 # #### the third data set
-# dta2_2 <- import("~/Documents/single cell/data set/GSEA/scsig.v1.0.metadata.txt", header = FALSE) ## same data set as dta2_1
+# dta2_2 <- import("~/Documents/single cell/data set/GSEA/scsig.v1.0.metadata.txt", header = FALSE)  ## same data set as dta2_1
 #
 # rm(list = ls())

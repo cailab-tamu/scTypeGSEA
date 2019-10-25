@@ -5,7 +5,7 @@
 #' @importFrom fgsea fgsea
 #' @param obj A Seurat object with cluster.
 #' @param cluster_list A ranked gene list for each cluster.
-#' @param db The cell type data base to use. It should be "PanglaoDB_list" for "PanglaoDB" data base and "GSEA_list" for "GSEA" data base.
+#' @param db The cell type data base to use. It should be 'PanglaoDB_list' for 'PanglaoDB' data base and 'GSEA_list' for 'GSEA' data base.
 #' @param minSize Minimal size of a gene set to test. All pathways below the threshold are excluded.
 #' @param maxSize Maximal size of a gene set to test. All pathways above the threshold are excluded.
 #' @param nperm Number of permutations to do. Minimial possible nominal p-value is about 1/nperm
@@ -29,9 +29,11 @@ GSEA_analysis <- function(obj, cluster_list, db = "PanglaoDB_list", minSize = 15
 
   # Do fgsea to each cluster
   for (i in 1:ncluster) {
+    cat(paste0("Do GSEA for cluster"), i - 1, "\n")
+
     Ranks <- cluster_list[[i]]
 
-    fgseaRes <- fgsea(pathways = pathways, stats = Ranks, minSize = minSize, maxSize = maxSize, nperm = nperm)
+    fgseaRes <- fgsea::fgsea(pathways = pathways, stats = Ranks, minSize = minSize, maxSize = maxSize, nperm = nperm)
 
     fgseaRes <- fgseaRes[order(fgseaRes[, "NES"], -fgseaRes[, "padj"], decreasing = TRUE), ]
 
