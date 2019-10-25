@@ -2,24 +2,39 @@
 % Please edit documentation in R/check_cluster.R
 \name{check_cluster}
 \alias{check_cluster}
-\title{Checks if the input is already clustered, if not, the function should do it.}
+\title{Title Cluster Determination}
 \usage{
-check_cluster(obj)
+check_cluster(obj, percent.mt = 5,
+  normalization.method = "LogNormalize", scale.factor = 10000,
+  selection.method = "vst", nfeatures = 2000, npcs = 50,
+  dims = 1:50, k.param = 20, resolution = 0.5)
 }
 \arguments{
-\item{obj}{A Seurat object}
+\item{obj}{An Seurat object.}
+
+\item{percent.mt}{The highest percentage of reads that map to the mitochondrial genome.}
+
+\item{normalization.method}{Method for normalization. Include 'LogNormalize', 'CLR' and 'RC'.}
+
+\item{scale.factor}{Sets the scale factor for cell-level normalization.}
+
+\item{selection.method}{How to choose top variable features. Include 'vst', 'mean.var.plot' and 'dispersion'.}
+
+\item{nfeatures}{Number of features to select as top variable features.}
+
+\item{npcs}{Total Number of PCs to compute and store (50 by default).}
+
+\item{dims}{Dimensions of reduction to use as input. (For cluster.)}
+
+\item{k.param}{Defines k for the k-nearest neighbor algorithm. (For cluster.)}
+
+\item{resolution}{Value of the resolution parameter, use a value above (below) 1.0 if you want to obtain a larger (smaller) number of communities. (For cluster.)}
 }
 \value{
-If the input is already clustered, return the original object. If not, the function will return a Seurat object will cluster.
+If the input is already clustered, just return it. If not, the function do cluster and return obj with cluster.
 }
 \description{
-Checks if the input is already clustered, if not, the function should do it.
-}
-\examples{
-library(Seurat)
-inputMatrix <- matrix(data = rnbinom(n = 1e6, size = 10, prob = .9), nrow = 5000)
-rownames(inputMatrix) <- paste0('Gene_', seq_len(nrow(inputMatrix)))
-colnames(inputMatrix) <- paste0('Cell_', seq_len(ncol(inputMatrix)))
-dta <- CreateSeuratObject(counts = inputMatrix, min.cells = 3, min.features = 20)
-dta <- check_cluster(dta)
+If the input is already clustered, just return it.
+If not, the function will check whether the data has already been pre-processed, for example, PCA. If not, the function will do data pre-process first.
+After the basic data pre-process (Normalization, Scale data, Find HVG and PCA), the function will do cluster.
 }

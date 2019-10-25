@@ -3,7 +3,7 @@
 #' @importFrom Seurat Project
 #' @importFrom Seurat RenameIdents
 #' @param obj An Seurat object.
-#' @param ...
+#' @param ... Arguments passed to other methods
 #'
 #' @return An Seurat object with celltype for each cluster.
 #' @export

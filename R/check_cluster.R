@@ -5,11 +5,11 @@
 #' After the basic data pre-process (Normalization, Scale data, Find HVG and PCA), the function will do cluster.
 #'
 #' @importFrom Seurat PercentageFeatureSet
-#' @importFrom Seurat subset
 #' @importFrom Seurat NormalizeData
 #' @importFrom Seurat FindVariableFeatures
 #' @importFrom Seurat ScaleData
 #' @importFrom Seurat RunPCA
+#' @importFrom Seurat VariableFeatures
 #' @importFrom Seurat FindNeighbors
 #' @importFrom Seurat FindClusters
 #'
@@ -40,7 +40,7 @@ check_cluster <- function(obj, percent.mt = 5, normalization.method = "LogNormal
     if (check_pca == TRUE) {
       # Do quality control
       obj[["percent.mt"]] <- Seurat::PercentageFeatureSet(obj, pattern = "^MT-")
-      obj <- Seurat::subset(obj, subset = percent.mt < percent.mt)
+      obj <- subset(obj, subset = percent.mt < percent.mt)
 
       # Normalize object
       obj <- Seurat::NormalizeData(obj, normalization.method = normalization.method, scale.factor = scale.factor)
@@ -53,7 +53,7 @@ check_cluster <- function(obj, percent.mt = 5, normalization.method = "LogNormal
       obj <- Seurat::ScaleData(obj, features = all.genes)
 
       # Perform linear dimensional reduction
-      obj <- Seurat::RunPCA(obj, features = VariableFeatures(object = obj), verbose = FALSE, npcs = npcs)
+      obj <- Seurat::RunPCA(obj, features = Seurat::VariableFeatures(object = obj), verbose = FALSE, npcs = npcs)
     }
 
     # Cluster the cells
