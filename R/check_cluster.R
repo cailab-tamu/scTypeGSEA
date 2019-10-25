@@ -40,7 +40,7 @@ check_cluster <- function(obj, percent.mt = 5, normalization.method = "LogNormal
     if (check_pca == TRUE) {
       # Do quality control
       obj[["percent.mt"]] <- Seurat::PercentageFeatureSet(obj, pattern = "^MT-")
-      obj <- subset(obj, subset = percent.mt < percent.mt)
+      obj <- subset(obj, cells = which(obj[["percent.mt"]] < percent.mt))
 
       # Normalize object
       obj <- Seurat::NormalizeData(obj, normalization.method = normalization.method, scale.factor = scale.factor)
