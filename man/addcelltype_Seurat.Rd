@@ -2,7 +2,7 @@
 % Please edit documentation in R/addcelltype_Seurat.R
 \name{addcelltype_Seurat}
 \alias{addcelltype_Seurat}
-\title{Title Add cell type to Seurat object}
+\title{Add cell type to Seurat object}
 \usage{
 addcelltype_Seurat(obj, cluster_celltype)
 }
@@ -15,10 +15,10 @@ addcelltype_Seurat(obj, cluster_celltype)
 A Seurat object with cell type for each cell.
 }
 \description{
-Title Add cell type to Seurat object
+Add cell type to Seurat object
 }
 \examples{
-pbmc_example <- check_cluster(pbmc_small, nfeatures = 100, npcs = 10,
+pbmc_example <- check_cluster(pbmc_test, nfeatures = 100, npcs = 10,
                               dims = 1:10, k.param = 5, resolution = 0.75)
 cluster_celltype <- list(Cluster0 = "NK cells", Cluster1 = "Dendritic cells")
 pbmc_example <- addcelltype_Seurat(pbmc_example, cluster_celltype)

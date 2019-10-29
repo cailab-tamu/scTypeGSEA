@@ -2,7 +2,7 @@
 % Please edit documentation in R/check_seurat.R
 \name{check_seurat}
 \alias{check_seurat}
-\title{Title Check Seurat.}
+\title{Check Seurat.}
 \usage{
 check_seurat(obj, min.cells = 3, min.features = 200)
 }
@@ -21,4 +21,5 @@ Check whether the input is a seurat object or not.
 }
 \examples{
 pbmc_example <- check_seurat(pbmc_raw, min.cells = 1, min.features = 10)
+pbmc_example
 }

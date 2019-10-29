@@ -2,7 +2,7 @@
 % Please edit documentation in R/Test_DE_cluster.R
 \name{Test_DE_cluster}
 \alias{Test_DE_cluster}
-\title{Title Gene rank of identity cluster}
+\title{Gene rank of identity cluster}
 \usage{
 Test_DE_cluster(obj, min.pct = 0.25, test.use = "wilcox")
 }
@@ -21,7 +21,7 @@ This function is to do DE for each cluster regarding all other clusters.
 And then for each cluster, it will return a ranked gene list.
 }
 \examples{
-pbmc_example <- check_cluster(pbmc_small, nfeatures = 100, npcs = 10,
+pbmc_example <- check_cluster(pbmc_test, nfeatures = 100, npcs = 10,
                               dims = 1:10, k.param = 5, resolution = 0.75)
 cluster_list <- Test_DE_cluster(pbmc_example, min.pct = 0.25, test.use = "MAST")
 
