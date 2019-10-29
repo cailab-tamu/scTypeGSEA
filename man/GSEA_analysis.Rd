@@ -4,12 +4,10 @@
 \alias{GSEA_analysis}
 \title{Title Runs preranked gene set enrichment analysis.}
 \usage{
-GSEA_analysis(obj, cluster_list, db = "PanglaoDB_list", minSize = 15,
+GSEA_analysis(cluster_list, db = "PanglaoDB_list", minSize = 15,
   maxSize = 500, nperm = 10000)
 }
 \arguments{
-\item{obj}{A Seurat object with cluster.}
-
 \item{cluster_list}{A ranked gene list for each cluster.}
 
 \item{db}{The cell type data base to use. It should be 'PanglaoDB_list' for 'PanglaoDB' data base and 'GSEA_list' for 'GSEA' data base.}
@@ -25,4 +23,11 @@ Cell type for each cluster.
 }
 \description{
 The function do gene set enrichment analysis(GSEA) for each cluster with its gene ranks. It will return cell type for each cluster.
+}
+\examples{
+pbmc_example <- check_cluster(pbmc_small, nfeatures = 100, npcs = 10,
+                              dims = 1:10, k.param = 5, resolution = 0.75)
+cluster_list <- Test_DE_cluster(pbmc_example, min.pct = 0.25, test.use = "MAST")
+cluster_celltype <- GSEA_analysis(cluster_list = cluster_list, minSize = 5, nperm = 1000)
+head(cluster_celltype)
 }

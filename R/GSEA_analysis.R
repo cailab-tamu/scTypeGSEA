@@ -3,7 +3,6 @@
 #' The function do gene set enrichment analysis(GSEA) for each cluster with its gene ranks. It will return cell type for each cluster.
 #'
 #' @importFrom fgsea fgsea
-#' @param obj A Seurat object with cluster.
 #' @param cluster_list A ranked gene list for each cluster.
 #' @param db The cell type data base to use. It should be 'PanglaoDB_list' for 'PanglaoDB' data base and 'GSEA_list' for 'GSEA' data base.
 #' @param minSize Minimal size of a gene set to test. All pathways below the threshold are excluded.
@@ -12,8 +11,13 @@
 #'
 #' @return Cell type for each cluster.
 #' @export
-#'
-GSEA_analysis <- function(obj, cluster_list, db = "PanglaoDB_list", minSize = 15, maxSize = 500, nperm = 10000) {
+#' @examples
+#' pbmc_example <- check_cluster(pbmc_small, nfeatures = 100, npcs = 10,
+#'                               dims = 1:10, k.param = 5, resolution = 0.75)
+#' cluster_list <- Test_DE_cluster(pbmc_example, min.pct = 0.25, test.use = "MAST")
+#' cluster_celltype <- GSEA_analysis(cluster_list = cluster_list, minSize = 5, nperm = 1000)
+#' head(cluster_celltype)
+GSEA_analysis <- function(cluster_list, db = "PanglaoDB_list", minSize = 15, maxSize = 500, nperm = 10000) {
 
   # number of cluster
   ncluster <- length(cluster_list)
@@ -22,9 +26,9 @@ GSEA_analysis <- function(obj, cluster_list, db = "PanglaoDB_list", minSize = 15
 
   # decide the database to use
   if (db == db) {
-    pathways <- readRDS("inst/PanglaoDB_list.rds")
+    pathways <- PanglaoDB_list
   } else {
-    pathways <- readRDS("inst/GSEA_list.rds")
+    pathways <- GSEA_list
   }
 
   # Do fgsea to each cluster

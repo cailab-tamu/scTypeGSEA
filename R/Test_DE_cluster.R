@@ -10,11 +10,16 @@
 #'
 #' @return For each cluster, there will be a ranked gene list.
 #' @export
+#' @examples
+#' pbmc_example <- check_cluster(pbmc_small, nfeatures = 100, npcs = 10,
+#'                               dims = 1:10, k.param = 5, resolution = 0.75)
+#' cluster_list <- Test_DE_cluster(pbmc_example, min.pct = 0.25, test.use = "MAST")
 #'
 Test_DE_cluster <- function(obj, min.pct = 0.25, test.use = "wilcox") {
 
   # number of cluster
   ncluster <- length(unique(obj@meta.data$seurat_clusters))
+  if (ncluster == 0) stop(paste0("You should do cluster first, please go through 'check_cluster' fucntion."))
 
   list.names <- paste0("Cluster", 0:(ncluster - 1))
   cluster_list <- vector("list", length(list.names))

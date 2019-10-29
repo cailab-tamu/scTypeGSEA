@@ -7,7 +7,8 @@
 check_cluster(obj, percent.mt = 5,
   normalization.method = "LogNormalize", scale.factor = 10000,
   selection.method = "vst", nfeatures = 2000, npcs = 50,
-  dims = 1:50, k.param = 20, resolution = 0.5)
+  dims = 1:50, k.param = 20, resolution = 0.5, doit = "FALSE",
+  doprocess = "FALSE")
 }
 \arguments{
 \item{obj}{An Seurat object.}
@@ -29,6 +30,10 @@ check_cluster(obj, percent.mt = 5,
 \item{k.param}{Defines k for the k-nearest neighbor algorithm. (For cluster.)}
 
 \item{resolution}{Value of the resolution parameter, use a value above (below) 1.0 if you want to obtain a larger (smaller) number of communities. (For cluster.)}
+
+\item{doit}{If the object contains the cluster, whether do the cluster with parameters. (Default is FALSE)}
+
+\item{doprocess}{Whether do data process (Normalization, Scale data, Find HVG and PCA) with new parameters.}
 }
 \value{
 If the input is already clustered, just return it. If not, the function do cluster and return obj with cluster.
@@ -37,4 +42,13 @@ If the input is already clustered, just return it. If not, the function do clust
 If the input is already clustered, just return it.
 If not, the function will check whether the data has already been pre-processed, for example, PCA. If not, the function will do data pre-process first.
 After the basic data pre-process (Normalization, Scale data, Find HVG and PCA), the function will do cluster.
+}
+\examples{
+is.null(pbmc_small@meta.data$seurat_clusters)
+pbmc_example <- check_cluster(pbmc_small, nfeatures = 100, npcs = 10,
+                              dims = 1:10, k.param = 5, resolution = 0.5)
+head(pbmc_example@meta.data$seurat_clusters)
+pbmc_example <- check_cluster(pbmc_example, nfeatures = 100, npcs = 10,
+                              dims = 1:10, k.param = 5, resolution = 0.75, doit = TRUE)
+head(pbmc_example@meta.data$seurat_clusters)
 }
