@@ -1,4 +1,4 @@
-#' Title Gene rank of identity cluster
+#' Gene rank of identity cluster
 #'
 #' This function is to do DE for each cluster regarding all other clusters.
 #' And then for each cluster, it will return a ranked gene list.
@@ -11,7 +11,7 @@
 #' @return For each cluster, there will be a ranked gene list.
 #' @export
 #' @examples
-#' pbmc_example <- check_cluster(pbmc_small, nfeatures = 100, npcs = 10,
+#' pbmc_example <- check_cluster(pbmc_test, nfeatures = 100, npcs = 10,
 #'                               dims = 1:10, k.param = 5, resolution = 0.75)
 #' cluster_list <- Test_DE_cluster(pbmc_example, min.pct = 0.25, test.use = "MAST")
 #'

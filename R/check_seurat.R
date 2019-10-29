@@ -1,4 +1,4 @@
-#' Title Check Seurat.
+#' Check Seurat.
 #'
 #' Check whether the input is a seurat object or not.
 #'
@@ -12,6 +12,7 @@
 #'
 #' @examples
 #' pbmc_example <- check_seurat(pbmc_raw, min.cells = 1, min.features = 10)
+#' pbmc_example
 check_seurat <- function(obj, min.cells = 3, min.features = 200) {
   # check Seurat object
   info <- try(Seurat::Project(obj), silent = TRUE)

@@ -1,4 +1,4 @@
-#' Title Runs preranked gene set enrichment analysis.
+#' Runs preranked gene set enrichment analysis.
 #'
 #' The function do gene set enrichment analysis(GSEA) for each cluster with its gene ranks. It will return cell type for each cluster.
 #'
@@ -12,7 +12,7 @@
 #' @return Cell type for each cluster.
 #' @export
 #' @examples
-#' pbmc_example <- check_cluster(pbmc_small, nfeatures = 100, npcs = 10,
+#' pbmc_example <- check_cluster(pbmc_test, nfeatures = 100, npcs = 10,
 #'                               dims = 1:10, k.param = 5, resolution = 0.75)
 #' cluster_list <- Test_DE_cluster(pbmc_example, min.pct = 0.25, test.use = "MAST")
 #' cluster_celltype <- GSEA_analysis(cluster_list = cluster_list, minSize = 5, nperm = 1000)

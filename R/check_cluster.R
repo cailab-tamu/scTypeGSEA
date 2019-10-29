@@ -1,4 +1,4 @@
-#' Title Cluster Determination
+#' Cluster Determination
 #'
 #' If the input is already clustered, just return it.
 #' If not, the function will check whether the data has already been pre-processed, for example, PCA. If not, the function will do data pre-process first.
@@ -29,7 +29,7 @@
 #' @return If the input is already clustered, just return it. If not, the function do cluster and return obj with cluster.
 #' @export
 #' @examples
-#' is.null(pbmc_small@meta.data$seurat_clusters)
+#' is.null(pbmc_test@meta.data$seurat_clusters)
 #' pbmc_example <- check_cluster(pbmc_small, nfeatures = 100, npcs = 10,
 #'                               dims = 1:10, k.param = 5, resolution = 0.5)
 #' head(pbmc_example@meta.data$seurat_clusters)

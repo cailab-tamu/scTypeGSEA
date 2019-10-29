@@ -28,7 +28,7 @@
 #'   \item{version}{Seurat version used to create the object}
 #'   \item{commands}{Command history}
 #' }
-"pbmc_small"
+"pbmc_test"
 
 #' Cell type gene expression markers from GSEA data base
 #'
