@@ -5,6 +5,7 @@
 #' @importFrom fgsea fgsea
 #' @param cluster_list A ranked gene list for each cluster.
 #' @param db The cell type data base to use. It should be 'PanglaoDB_list' for 'PanglaoDB' data base and 'GSEA_list' for 'GSEA' data base.
+#' @param otherdb A path to the new data base that hope to be used, which is list of cell types with their marker genes. The file must be 'rds' format.
 #' @param minSize Minimal size of a gene set to test. All pathways below the threshold are excluded.
 #' @param maxSize Maximal size of a gene set to test. All pathways above the threshold are excluded.
 #' @param nperm Number of permutations to do. Minimial possible nominal p-value is about 1/nperm
@@ -14,10 +15,10 @@
 #' @examples
 #' pbmc_example <- check_cluster(pbmc_test, nfeatures = 100, npcs = 10,
 #'                               dims = 1:10, k.param = 5, resolution = 0.75)
-#' cluster_list <- Test_DE_cluster(pbmc_example, min.pct = 0.25, test.use = "MAST")
+#' cluster_list <- Test_DE_cluster(pbmc_example, min.pct = 0.25, test.use = 'MAST')
 #' cluster_celltype <- GSEA_analysis(cluster_list = cluster_list, minSize = 5, nperm = 1000)
 #' head(cluster_celltype)
-GSEA_analysis <- function(cluster_list, db = "PanglaoDB_list", minSize = 15, maxSize = 500, nperm = 10000) {
+GSEA_analysis <- function(cluster_list, db = "PanglaoDB_list", otherdb = NULL, minSize = 15, maxSize = 500, nperm = 10000) {
 
   # number of cluster
   ncluster <- length(cluster_list)
@@ -25,10 +26,14 @@ GSEA_analysis <- function(cluster_list, db = "PanglaoDB_list", minSize = 15, max
   names(cluster_celltype) <- names(cluster_list)
 
   # decide the database to use
-  if (db == db) {
-    pathways <- PanglaoDB_list
-  } else {
-    pathways <- GSEA_list
+  if (is.null(otherdb)) {
+    if (db == db) {
+      pathways <- PanglaoDB_list
+    } else{
+      pathways <- GSEA_list
+    }
+  } else{
+    pathways <- readRDS(otherdb)
   }
 
   # Do fgsea to each cluster
@@ -36,9 +41,7 @@ GSEA_analysis <- function(cluster_list, db = "PanglaoDB_list", minSize = 15, max
     cat(paste0("Do GSEA for cluster"), i - 1, "\n")
 
     Ranks <- cluster_list[[i]]
-
-    fgseaRes <- fgsea::fgsea(pathways = pathways, stats = Ranks, minSize = minSize, maxSize = maxSize, nperm = nperm)
-
+    fgseaRes <- fgsea::fgsea(pathways = PanglaoDB_list, stats = Ranks, minSize = minSize, maxSize = maxSize, nperm = nperm)
     fgseaRes <- fgseaRes[order(fgseaRes[, "NES"], -fgseaRes[, "padj"], decreasing = TRUE), ]
 
     # decide the cell type

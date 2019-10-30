@@ -4,13 +4,15 @@
 \alias{GSEA_analysis}
 \title{Runs preranked gene set enrichment analysis.}
 \usage{
-GSEA_analysis(cluster_list, db = "PanglaoDB_list", minSize = 15,
-  maxSize = 500, nperm = 10000)
+GSEA_analysis(cluster_list, db = "PanglaoDB_list", otherdb = NULL,
+  minSize = 15, maxSize = 500, nperm = 10000)
 }
 \arguments{
 \item{cluster_list}{A ranked gene list for each cluster.}
 
 \item{db}{The cell type data base to use. It should be 'PanglaoDB_list' for 'PanglaoDB' data base and 'GSEA_list' for 'GSEA' data base.}
+
+\item{otherdb}{A path to the new data base that hope to be used, which is list of cell types with their marker genes. The file must be 'rds' format.}
 
 \item{minSize}{Minimal size of a gene set to test. All pathways below the threshold are excluded.}
 
@@ -27,7 +29,7 @@ The function do gene set enrichment analysis(GSEA) for each cluster with its gen
 \examples{
 pbmc_example <- check_cluster(pbmc_test, nfeatures = 100, npcs = 10,
                               dims = 1:10, k.param = 5, resolution = 0.75)
-cluster_list <- Test_DE_cluster(pbmc_example, min.pct = 0.25, test.use = "MAST")
+cluster_list <- Test_DE_cluster(pbmc_example, min.pct = 0.25, test.use = 'MAST')
 cluster_celltype <- GSEA_analysis(cluster_list = cluster_list, minSize = 5, nperm = 1000)
 head(cluster_celltype)
 }
