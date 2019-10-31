@@ -7,7 +7,11 @@ Authors@R:
            role = c("aut", "cre"),
            email = "victorguanxun@gmail.com",
            comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: This package is used to label the cell type.
+Description: This package is used to label cell type for each cell in single-cell data. 
+             After using "Seurat" package to do data pre-process, cluster and find marker genes for each cluster, 
+            "scTypeGSEA" label cell type for each cluster by Gene set enrichment analysis (GSEA). 
+            See Aravind Subramanian et al (2005) <https://www.pnas.org/content/102/43/15545.short> and 
+            Seurat package tutorial <https://satijalab.org/seurat/v3.1/pbmc3k_tutorial.html> for more details.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
