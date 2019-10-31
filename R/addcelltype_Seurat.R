@@ -10,7 +10,8 @@
 #' @examples
 #' pbmc_example <- check_cluster(pbmc_test, nfeatures = 100, npcs = 10,
 #'                               dims = 1:10, k.param = 5, resolution = 0.75)
-#' cluster_celltype <- list(Cluster0 = "NK cells", Cluster1 = "Dendritic cells")
+#' cluster_celltype <- c("NK cells", "Dendritic cells")
+#' names(cluster_celltype) <- c("Cluster0", "Cluster1")
 #' pbmc_example <- addcelltype_Seurat(pbmc_example, cluster_celltype)
 #' head(pbmc_example@active.ident)
 #'
