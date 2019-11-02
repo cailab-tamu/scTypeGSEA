@@ -1,0 +1,61 @@
+---
+title: "Example_scTypeGSEA"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Example_scTypeGSEA}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## Description
+
+This package is used to label cell type for each cell in single-cell data. The first step is to use “Seurat” package to do data pre-process and cells cluster. After clustering the cell, our purpose is to label cell type for each cluster. The second step is to do use differential gene expression analysis to find marker genes for each cluster, that is to find which genes have higher expression in given cluster and lower expression in others. Then for each cluster we get a list of marker genes. It is also known that each cell type has its own marker genes, thus the final step is to use the Gene set enrichment analysis (GSEA) method to compare two list of genes. For each cluster, we compare its marker genes to all cell type marker genes. GSEA will give us which cell type marker genes are the most relevant to such cluster marker genes. That is the cell type for such cluster.This package aims to assemble all these steps to give cell type for each cluster.
+
+## Installation
+
+You can use following codes to install the package.
+
+```{r, eval=FALSE}
+library(devtools)
+install_github("cailab-tamu/scTypeGSEA")
+```
+
+## Example
+### Data process and Cluster
+Next to use small data set "pbmc" go through this pipline. First is to load data set. If it is a gene expression count matrix, you can use "check_seurat" function to create a Seurat object.
+```{r, message=FALSE}
+library(scTypeGSEA)
+library(Seurat)
+pbmc_raw <- Read10X(data.dir = "~/Documents/single cell/package example/R package/Seurat/cluster/data set")
+pbmc <- check_seurat(pbmc_raw, min.cells = 3, min.features = 200)
+pbmc
+```
+Next to do data pre-process and cluster. Here data pre-process include quality control, normalization, feature selection and dimension reduction. Here we do “LogNormalize” nomalization, "vst" feature selections to select 2000 features and do PCA to get first 50 PCs. After data-process, we cluster the data.
+```{r}
+pbmc <- check_cluster(pbmc, percent.mt = 5,
+  normalization.method = "LogNormalize", scale.factor = 10000, selection.method = "vst", nfeatures = 2000, npcs = 50,
+  dims = 1:50, k.param = 20, resolution = 0.75)
+head(pbmc@meta.data$seurat_clusters)
+```
+
+### Gene differential expression analysis.
+To get rank of gene list, we need to do gene differential expression analysis for each cluster with respect to all others. Here we use "wilcox" method.
+```{r}
+cluster_list <- Test_DE_cluster(pbmc, min.pct = 0.25, test.use = "wilcox")
+head(cluster_list[[1]])
+```
+
+### Gene set enrichment analysis (GSEA)
+After getting rank of gene list for each cluster, we can use GSEA method to find the cell type for each cluster. Here we use "PanglaoDB" database.
+```{r}
+cluster_celltype <- GSEA_analysis(cluster_list = cluster_list, db = "PanglaoDB_list", 
+                                  minSize = 15, maxSize = 500, nperm = 1000)
+head(cluster_celltype)
+```
+
+### Add label cell type
+The last step is to add label cell type to our Seurat object.
+```{r}
+pbmc <- addcelltype_Seurat(pbmc, cluster_celltype)
+head(pbmc@active.ident)
+```
