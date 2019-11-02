@@ -22,7 +22,7 @@ install_github("cailab-tamu/scTypeGSEA")
 
 ## Example
 ### Data process and Cluster
-Next to use small data set "pbmc" go through this pipline. First is to load data set. If it is a gene expression count matrix, you can use "check_seurat" function to create a Seurat object.
+Next to use data set "pbmc" go through this pipline. First is to load data set. If it is a gene expression count matrix, you can use "check_seurat" function to create a Seurat object.
 ```{r, message=FALSE}
 library(scTypeGSEA)
 library(Seurat)
@@ -35,6 +35,12 @@ Next to do data pre-process and cluster. Here data pre-process include quality c
 pbmc <- check_cluster(pbmc, percent.mt = 5,
   normalization.method = "LogNormalize", scale.factor = 10000, selection.method = "vst", nfeatures = 2000, npcs = 50,
   dims = 1:50, k.param = 20, resolution = 0.75)
+head(pbmc@meta.data$seurat_clusters)
+```
+
+If your data set have already been clustered, you can set "doit = TRUE" to do cluster using new parameters.
+```{r}
+pbmc <- check_cluster(pbmc, percent.mt = 5, k.param = 30, resolution = 0.5, doit = TRUE)
 head(pbmc@meta.data$seurat_clusters)
 ```
 
@@ -52,10 +58,22 @@ cluster_celltype <- GSEA_analysis(cluster_list = cluster_list, db = "PanglaoDB_l
                                   minSize = 15, maxSize = 500, nperm = 1000)
 head(cluster_celltype)
 ```
+You can also use your own database. Here "otherdb" can be a path to the new data base that hope to be used, which is list of cell types with their marker genes. The file must be 'rds' format.
+```{r, eval=FALSE}
+## Don't run
+cluster_celltype <- GSEA_analysis(cluster_list = cluster_list, otherdb = "path/to/your/rdsfile")
+```
 
 ### Add label cell type
 The last step is to add label cell type to our Seurat object.
 ```{r}
 pbmc <- addcelltype_Seurat(pbmc, cluster_celltype)
 head(pbmc@active.ident)
+```
+
+### Plot the data with cell type
+
+```{r}
+pbmc <- Seurat::RunTSNE(pbmc, dims = 1:30)
+Seurat::DimPlot(pbmc, reduction = "tsne", label = TRUE, pt.size = 0.5) + NoLegend()
 ```
