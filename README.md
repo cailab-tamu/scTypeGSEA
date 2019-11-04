@@ -7,31 +7,38 @@ This package is used to label cell type for each cell in single-cell data. The f
 ```{r}
 library(devtools)
 install_github("cailab-tamu/scTypeGSEA")
+library(scTypeGSEA)
 ```
 
 ## Small Example
 Next to use small data set "pbmc_small" quickly go through this pipline. First is to load data set. If it is a gene expression count matrix, you can use "check_seurat" function to create a Seurat object.
 ```{r}
 pbmc_example <- check_seurat(pbmc_raw, min.cells = 1, min.features = 10)
+pbmc_example
 ```
 Next to do data pre-process and cluster.
 ```{r}
-pbmc_example <- check_cluster(pbmc_test, nfeatures = 100, npcs = 10, dims = 1:10, k.param = 5, resolution = 0.5)
+pbmc_example <- check_cluster(pbmc_test, nfeatures = 100, npcs = 10, dims = 1:10, k.param = 5, resolution = 0.75)
+head(pbmc_example@meta.data$seurat_clusters)
 ```
 
 To get rank of gene list, we need to do gene differential expression analysis.
 ```{r}
 cluster_list <- Test_DE_cluster(pbmc_example, min.pct = 0.25, test.use = "MAST")
+head(cluster_list[[1]])
 ```
 
 After getting rank of gene list for each cluster, we can use GSEA method to find the cell type for each cluster.
 ```{r}
 cluster_celltype <- GSEA_analysis(cluster_list = cluster_list, minSize = 5, nperm = 1000)
+head(cluster_celltype)
 ```
 
 The last step is to add label cell type to our Seurat object.
 ```{r}
+head(pbmc_example@active.ident)
 pbmc_example <- addcelltype_Seurat(pbmc_example, cluster_celltype)
+head(pbmc_example@active.ident)
 ```
 
 
