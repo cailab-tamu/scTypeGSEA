@@ -20,10 +20,8 @@ check_seurat <- function(obj, min.cells = 3, min.features = 200) {
   if (grepl("Error", info) == TRUE) {
     cat("The input is not a Seurat object, next to transform gene express count matrix to Seurat object.\n")
     obj <- Seurat::CreateSeuratObject(counts = obj, min.cells = min.cells, min.features = min.features)
-    rownames(obj) <- toupper(rownames(obj))
     return(obj)
   } else{
-    rownames(obj) <- toupper(rownames(obj))
     return(obj)
   }
 }
