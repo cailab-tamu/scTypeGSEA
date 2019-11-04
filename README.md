@@ -18,6 +18,7 @@ pbmc_example
 ```
 Next to do data pre-process and cluster.
 ```{r}
+set.seed(47)
 pbmc_example <- check_cluster(pbmc_test, nfeatures = 100, npcs = 10, dims = 1:10, k.param = 5, resolution = 0.75)
 head(pbmc_example@meta.data$seurat_clusters)
 ```

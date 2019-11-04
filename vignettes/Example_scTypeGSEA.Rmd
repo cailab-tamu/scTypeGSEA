@@ -32,6 +32,7 @@ pbmc
 ```
 Next to do data pre-process and cluster. Here data pre-process include quality control, normalization, feature selection and dimension reduction. Here we do “LogNormalize” nomalization, "vst" feature selections to select 2000 features and do PCA to get first 50 PCs. After data-process, we cluster the data.
 ```{r}
+set.seed(47)
 pbmc <- check_cluster(pbmc, percent.mt = 5,
   normalization.method = "LogNormalize", scale.factor = 10000, selection.method = "vst", nfeatures = 2000, npcs = 50,
   dims = 1:50, k.param = 20, resolution = 0.75)
