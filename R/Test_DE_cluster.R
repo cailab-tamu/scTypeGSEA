@@ -35,7 +35,8 @@ Test_DE_cluster <- function(obj, min.pct = 0.25, test.use = "wilcox") {
     # Order gene by 'avg_logFC'
     cluster.markers <- cluster.markers[order(cluster.markers[, "avg_logFC"], -cluster.markers[, "p_val_adj"], decreasing = TRUE), ]
     cluster_list[[i]] <- cluster.markers[, "avg_logFC"]
-    names(cluster_list[[i]]) <- toupper(rownames(cluster.markers))
+    names(cluster_list[[i]]) <- rownames(cluster.markers)
+    names(cluster_list[[i]]) <- toupper(names(cluster_list[[i]]))
   }
 
   return(cluster_list)
