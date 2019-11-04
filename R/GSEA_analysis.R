@@ -41,11 +41,11 @@ GSEA_analysis <- function(cluster_list, db = "PanglaoDB_list", otherdb = NULL, m
     cat(paste0("Do GSEA for cluster"), i - 1, "\n")
 
     Ranks <- cluster_list[[i]]
-    fgseaRes <- fgsea::fgsea(pathways = PanglaoDB_list, stats = Ranks, minSize = minSize, maxSize = maxSize, nperm = nperm)
+    fgseaRes <- fgsea::fgsea(pathways = pathways, stats = Ranks, minSize = minSize, maxSize = maxSize, nperm = nperm)
     fgseaRes <- fgseaRes[order(fgseaRes[, "NES"], -fgseaRes[, "padj"], decreasing = TRUE), ]
 
     # decide the cell type
-    if (fgseaRes[, "padj"][1] > 0.05) {
+    if (fgseaRes[, "padj"][1] > 0.05 | fgseaRes[, "NES"][1] < 0) {
       cluster_celltype[i] <- "unidentified"
     } else {
       cluster_celltype[i] <- fgseaRes[, "pathway"][1]
