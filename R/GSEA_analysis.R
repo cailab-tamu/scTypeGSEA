@@ -27,7 +27,7 @@ GSEA_analysis <- function(cluster_list, db = "PanglaoDB_list", otherdb = NULL, m
 
   # decide the database to use
   if (is.null(otherdb)) {
-    if (db == db) {
+    if (db ==  "PanglaoDB_list") {
       pathways <- PanglaoDB_list
     } else{
       pathways <- GSEA_list
