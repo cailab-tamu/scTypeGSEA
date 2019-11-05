@@ -35,7 +35,7 @@ check_seurat <- function(obj, min.cells = 3, min.features = 200, percent.mt = 5,
     library_size <- obj$nCount_RNA
     sd_library_size <- sd(library_size)
     mean_library_size <- mean(library_size)
-    thres_library_size <- mean_library_size + 2 * sd_library_size
+    thres_library_size <- mean_library_size + oversd * sd_library_size
     obj <- subset(obj, cells = which(obj[["nCount_RNA"]] < thres_library_size))
     return(obj)
   }
