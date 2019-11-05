@@ -4,7 +4,6 @@
 #' If not, the function will check whether the data has already been pre-processed, for example, PCA. If not, the function will do data pre-process first.
 #' After the basic data pre-process (Normalization, Scale data, Find HVG and PCA), the function will do cluster.
 #'
-#' @importFrom Seurat PercentageFeatureSet
 #' @importFrom Seurat NormalizeData
 #' @importFrom Seurat FindVariableFeatures
 #' @importFrom Seurat ScaleData
@@ -14,7 +13,6 @@
 #' @importFrom Seurat FindClusters
 #'
 #' @param obj An Seurat object.
-#' @param percent.mt The highest percentage of reads that map to the mitochondrial genome.
 #' @param normalization.method Method for normalization. Include 'LogNormalize', 'CLR' and 'RC'.
 #' @param scale.factor Sets the scale factor for cell-level normalization.
 #' @param selection.method How to choose top variable features. Include 'vst', 'mean.var.plot' and 'dispersion'.
@@ -36,7 +34,7 @@
 #' pbmc_example <- check_cluster(pbmc_example, nfeatures = 100, npcs = 10,
 #'                               dims = 1:10, k.param = 5, resolution = 0.75, doit = TRUE)
 #' head(pbmc_example@meta.data$seurat_clusters)
-check_cluster <- function(obj, percent.mt = 5, normalization.method = "LogNormalize", scale.factor = 10000, selection.method = "vst", nfeatures = 2000, npcs = 50, dims = 1:50, k.param = 20, resolution = 0.5, doit = "FALSE", doprocess = "FALSE") {
+check_cluster <- function(obj, normalization.method = "LogNormalize", scale.factor = 10000, selection.method = "vst", nfeatures = 2000, npcs = 50, dims = 1:50, k.param = 20, resolution = 0.5, doit = "FALSE", doprocess = "FALSE") {
 
   # check cluster
   check_clu <- is.null(obj@meta.data$seurat_clusters)
@@ -49,10 +47,6 @@ check_cluster <- function(obj, percent.mt = 5, normalization.method = "LogNormal
     if (check_pca == TRUE || doprocess == TRUE) {
 
       if (check_pca == TRUE) cat("The data has not been pre-processed, let's do it!\n")
-
-      # Do quality control
-      obj[["percent.mt"]] <- Seurat::PercentageFeatureSet(obj, pattern = "^MT-")
-      obj <- subset(obj, cells = which(obj[["percent.mt"]] < percent.mt))
 
       # Normalize object
       obj <- Seurat::NormalizeData(obj, normalization.method = normalization.method, scale.factor = scale.factor)

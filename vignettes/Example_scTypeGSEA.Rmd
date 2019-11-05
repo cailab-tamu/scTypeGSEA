@@ -27,21 +27,20 @@ Next to use data set "pbmc" go through this pipline. First is to load data set. 
 library(scTypeGSEA)
 library(Seurat)
 pbmc_raw <- Read10X(data.dir = "~/Documents/single cell/package example/R package/Seurat/cluster/data set")
-pbmc <- check_seurat(pbmc_raw, min.cells = 3, min.features = 200)
+pbmc <- check_seurat(pbmc_raw, min.cells = 3, min.features = 200, percent.mt = 5)
 pbmc
 ```
 Next to do data pre-process and cluster. Here data pre-process include quality control, normalization, feature selection and dimension reduction. Here we do “LogNormalize” nomalization, "vst" feature selections to select 2000 features and do PCA to get first 50 PCs. After data-process, we cluster the data.
 ```{r}
 set.seed(47)
-pbmc <- check_cluster(pbmc, percent.mt = 5,
-  normalization.method = "LogNormalize", scale.factor = 10000, selection.method = "vst", nfeatures = 2000, npcs = 50,
+pbmc <- check_cluster(pbmc, normalization.method = "LogNormalize", scale.factor = 10000, selection.method = "vst", nfeatures = 2000, npcs = 50,
   dims = 1:50, k.param = 20, resolution = 0.75)
 head(pbmc@meta.data$seurat_clusters)
 ```
 
 If your data set have already been clustered, you can set "doit = TRUE" to do cluster using new parameters.
 ```{r}
-pbmc <- check_cluster(pbmc, percent.mt = 5, k.param = 30, resolution = 0.5, doit = TRUE)
+pbmc <- check_cluster(pbmc, k.param = 30, resolution = 0.5, doit = TRUE)
 head(pbmc@meta.data$seurat_clusters)
 ```
 

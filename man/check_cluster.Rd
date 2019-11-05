@@ -4,16 +4,13 @@
 \alias{check_cluster}
 \title{Cluster Determination}
 \usage{
-check_cluster(obj, percent.mt = 5,
-  normalization.method = "LogNormalize", scale.factor = 10000,
-  selection.method = "vst", nfeatures = 2000, npcs = 50,
-  dims = 1:50, k.param = 20, resolution = 0.5, doit = "FALSE",
-  doprocess = "FALSE")
+check_cluster(obj, normalization.method = "LogNormalize",
+  scale.factor = 10000, selection.method = "vst", nfeatures = 2000,
+  npcs = 50, dims = 1:50, k.param = 20, resolution = 0.5,
+  doit = "FALSE", doprocess = "FALSE")
 }
 \arguments{
 \item{obj}{An Seurat object.}
-
-\item{percent.mt}{The highest percentage of reads that map to the mitochondrial genome.}
 
 \item{normalization.method}{Method for normalization. Include 'LogNormalize', 'CLR' and 'RC'.}
 

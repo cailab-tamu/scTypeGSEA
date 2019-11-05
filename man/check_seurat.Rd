@@ -4,7 +4,8 @@
 \alias{check_seurat}
 \title{Check Seurat.}
 \usage{
-check_seurat(obj, min.cells = 3, min.features = 200)
+check_seurat(obj, min.cells = 3, min.features = 200, percent.mt = 5,
+  oversd = NULL)
 }
 \arguments{
 \item{obj}{A seurat object or a count gene expression.}
@@ -12,12 +13,16 @@ check_seurat(obj, min.cells = 3, min.features = 200)
 \item{min.cells}{Include features detected in at least this many cells. Will subset the counts matrix as well. To reintroduce excluded features, create a new object with a lower cutoff.}
 
 \item{min.features}{Include cells where at least this many features are detected.}
+
+\item{percent.mt}{The highest percentage of reads that map to the mitochondrial genome.}
+
+\item{oversd}{Remove cells whose library size is greater than mean + oversd * sd. Default is null, which doesn't remove cells.}
 }
 \value{
-If the input is a seurat object, just return it. If not, it will assume it is a count gene expression matrix and transform it as a seurat object.
+If the input is not Seurat object, it will assume it is a count gene expression matrix and transform it as a seurat object. And then do quality control to select cells. Otherwise, it will do quality control directly.
 }
 \description{
-Check whether the input is a seurat object or not.
+Check whether the input is a seurat object or not and the do quality control.
 }
 \examples{
 pbmc_example <- check_seurat(pbmc_raw, min.cells = 1, min.features = 10)
