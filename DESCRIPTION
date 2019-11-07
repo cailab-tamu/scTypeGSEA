@@ -1,5 +1,5 @@
 Package: scTypeGSEA
-Title: What the Package Does (One Line, Title Case)
+Title: Single cell Type Gene set enrichment analysis
 Version: 0.0.0.9000
 Authors@R: 
     person(given = "Guanxun",
@@ -19,7 +19,9 @@ RoxygenNote: 6.1.1
 Depends:
     R (>= 2.10)
 Imports: Seurat,
-         fgsea
+         fgsea,
+         MAST,
+         tsne
 Suggests: 
     testthat (>= 2.1.0),
     knitr, 
