@@ -61,7 +61,7 @@ head(cluster_celltype)
 You can also use your own database. Here "otherdb" can be a path to the new data base that hope to be used, which is list of cell types with their marker genes. The file must be 'rds' format.
 ```{r, eval=FALSE}
 ## Don't run
-cluster_celltype <- GSEA_analysis(cluster_list = cluster_list, otherdb = "path/to/your/rdsfile")
+#cluster_celltype <- GSEA_analysis(cluster_list = cluster_list, otherdb = "path/to/your/rdsfile")
 ```
 
 ### Add label cell type
