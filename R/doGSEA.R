@@ -9,7 +9,7 @@
 #' @param minSize Minimal size of a gene set to test. All pathways below the threshold are excluded.
 #' @param maxSize Maximal size of a gene set to test. All pathways above the threshold are excluded.
 #'
-#' @return Cell type for each cluster.
+#' @return Cell type for each cluster, and its NSF and padj.
 #' @export
 #' @examples
 #' pbmc_example <- doClustering(pbmc_test, nfeatures = 100, npcs = 10,
@@ -20,8 +20,9 @@ doGSEA <- function(cluster_list, db = "PanglaoDB_list", otherdb = NULL, minSize 
 
   # number of cluster
   ncluster <- length(cluster_list)
-  cluster_celltype <- rep(NA, ncluster)
-  names(cluster_celltype) <- names(cluster_list)
+  cluster_celltype <- matrix(NA, nrow = ncluster, ncol = 3)
+  rownames(cluster_celltype) <- names(cluster_list)
+  colnames(cluster_celltype) <- c("cell type", "NES", "padj")
 
   # decide the database to use
   if (is.null(otherdb)) {
@@ -45,11 +46,11 @@ doGSEA <- function(cluster_list, db = "PanglaoDB_list", otherdb = NULL, minSize 
 
     ## decide the cell type
     if (nrow(a) == 0){
-      cluster_celltype[i] <- "unidentified"
+      cluster_celltype[i, 1] <- "unidentified"
     } else{
       index <- order( -fgseaRes[, "padj"], fgseaRes[, "NES"], decreasing = TRUE)
       fgseaRes <- fgseaRes[index, ]
-      cluster_celltype[i] <- fgseaRes[, "pathway"][1]
+      cluster_celltype[i, ] <- fgseaRes[1, c("pathway", "NES", "padj")]
     }
   }
   return(cluster_celltype)
