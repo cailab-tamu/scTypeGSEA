@@ -1,4 +1,4 @@
-#' Check Seurat.
+#' Single cell quality control.
 #'
 #' Check whether the input is a seurat object or not and the do quality control.
 #'
@@ -14,9 +14,9 @@
 #' @export
 #'
 #' @examples
-#' pbmc_example <- check_seurat(pbmc_raw, min.cells = 1, min.features = 10)
+#' pbmc_example <- scqc(pbmc_raw, min.cells = 1, min.features = 10)
 #' pbmc_example
-check_seurat <- function(obj, min.cells = 3, min.features = 200, percent.mt = 5, oversd = NULL) {
+scqc <- function(obj, min.cells = 3, min.features = 200, percent.mt = 5, oversd = NULL) {
   # check Seurat object
   info <- try(Seurat::Project(obj), silent = TRUE)
 
