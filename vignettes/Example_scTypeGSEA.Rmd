@@ -16,8 +16,8 @@ This package is used to label cell type for each cell in single-cell data. The f
 You can use following codes to install the package.
 
 ```{r, eval=FALSE}
-# library(devtools)
-# install_github("cailab-tamu/scTypeGSEA")
+library(devtools)
+install_github("cailab-tamu/scTypeGSEA")
 library(scTypeGSEA)
 ```
 
