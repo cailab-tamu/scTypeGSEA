@@ -18,14 +18,16 @@ You can use following codes to install the package.
 ```{r, eval=FALSE}
 library(devtools)
 install_github("cailab-tamu/scTypeGSEA")
-library(scTypeGSEA)
 ```
 
 ## Example
+```{r, warning=FALSE, message=FALSE}
+library(scTypeGSEA)
+```
 
 One can do quality control, data pre-process, cluster, get full changes, do GSEA and label the cell in one step. Following code is for toy data set "pbmc_small".
 ```{r, warning=FALSE}
-# pbmc_res <- assignCellType(obj = pbmc_small, min.cells = 1, min.features = 10, nfeatures = 100, npcs = 10, dims = 1:10, k.param = 5, resolution = 0.75, min.pct = 0.25, test.use = "MAST", minSize = 5)
+pbmc_res <- assignCellType(obj = pbmc_small, min.cells = 1, min.features = 10, nfeatures = 100, npcs = 10, dims = 1:10, k.param = 5, resolution = 0.75, min.pct = 0.25, test.use = "MAST", minSize = 5)
 ```
 
 It will return a list. The first entry is a Seurat object.
@@ -94,6 +96,7 @@ head(pbmc_res$cell_mat)
 ### Plot the data with cell type
 
 ```{r, warning=FALSE}
+library(Seurat)
 pbmc <- pbmc_res$obj
 pbmc <- Seurat::RunTSNE(pbmc, dims = 1:30)
 Seurat::DimPlot(pbmc, reduction = "tsne", label = TRUE, pt.size = 0.5) + NoLegend()
