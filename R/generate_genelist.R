@@ -38,3 +38,7 @@
 #
 # # saveRDS(GSEA_list, file = "inst/extdata/GSEA_list.rds")
 # use_data(GSEA_list)
+
+# pbmc <- Read10X(data.dir = "~/Documents/single cell/package example/R package/Seurat/cluster/data set")
+# use_data(pbmc)
+

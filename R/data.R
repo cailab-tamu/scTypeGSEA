@@ -30,6 +30,13 @@
 #' }
 "pbmc_test"
 
+#' PBMC raw data set.
+#'
+#' A version of 10X Genomics' 3k PBMC dataset
+#'
+#' @format A txt file with 32738 rows and 2700 columns
+"pbmc_raw"
+
 #' Cell type gene expression markers from GSEA data base
 #'
 #' A list contains cell types with their marker gene
