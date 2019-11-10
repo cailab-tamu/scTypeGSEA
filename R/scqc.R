@@ -4,6 +4,8 @@
 #'
 #' @importFrom Seurat CreateSeuratObject
 #' @importFrom Seurat PercentageFeatureSet
+#' @importFrom stats sd
+#'
 #' @param obj A seurat object or a count gene expression.
 #' @param percent.mt The highest percentage of reads that map to the mitochondrial genome.
 #' @param min.cells Include features detected in at least this many cells. Will subset the counts matrix as well. To reintroduce excluded features, create a new object with a lower cutoff.
@@ -14,7 +16,7 @@
 #' @export
 #'
 #' @examples
-#' pbmc_example <- scqc(pbmc_raw, min.cells = 1, min.features = 10)
+#' pbmc_example <- scqc(pbmc_small, min.cells = 1, min.features = 10)
 #' pbmc_example
 scqc <- function(obj, min.cells = 3, min.features = 200, percent.mt = 5, oversd = NULL) {
   # check Seurat object

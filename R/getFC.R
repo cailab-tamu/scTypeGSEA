@@ -12,7 +12,8 @@
 #' @return For each cluster, there will be a ranked gene list.
 #' @export
 #' @examples
-#' pbmc_example <- doClustering(pbmc_test, nfeatures = 100, npcs = 10,
+#' pbmc_example <- scqc(pbmc_small, min.cells = 1, min.features = 10)
+#' pbmc_example <- doClustering(pbmc_example, nfeatures = 100, npcs = 10,
 #'                               dims = 1:10, k.param = 5, resolution = 0.75)
 #' cluster_list <- getFC(pbmc_example, min.pct = 0.25, test.use = "MAST")
 #'

@@ -3,15 +3,12 @@
 \docType{data}
 \name{pbmc_raw}
 \alias{pbmc_raw}
-\title{A small example version of the PBMC dataset}
-\format{A txt file with 230 rows and 80 columns}
-\source{
-\url{https://github.com/satijalab/seurat/blob/master/inst/extdata/pbmc_raw.txt}
-}
+\title{PBMC raw data set.}
+\format{A txt file with 32738 rows and 2700 columns}
 \usage{
 pbmc_raw
 }
 \description{
-A subsetted version of 10X Genomics' 3k PBMC dataset
+A version of 10X Genomics' 3k PBMC dataset
 }
 \keyword{datasets}

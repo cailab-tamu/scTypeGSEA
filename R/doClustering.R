@@ -27,8 +27,9 @@
 #' @return If the input is already clustered, just return it. If not, the function do cluster and return obj with cluster.
 #' @export
 #' @examples
-#' is.null(pbmc_test@meta.data$seurat_clusters)
-#' pbmc_example <- doClustering(pbmc_test, nfeatures = 100, npcs = 10,
+#' pbmc_example <- scqc(pbmc_small, min.cells = 1, min.features = 10)
+#' is.null(pbmc_example@meta.data$seurat_clusters)
+#' pbmc_example <- doClustering(pbmc_example, nfeatures = 100, npcs = 10,
 #'                               dims = 1:10, k.param = 5, resolution = 0.5)
 #' head(pbmc_example@meta.data$seurat_clusters)
 #' pbmc_example <- doClustering(pbmc_example, nfeatures = 100, npcs = 10,
