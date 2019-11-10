@@ -41,16 +41,19 @@ doGSEA <- function(cluster_list, db = "PanglaoDB_list", otherdb = NULL, minSize 
 
     Ranks <- cluster_list[[i]]
     set.seed(1234)
+    options(warn=-1)
     fgseaRes <- fgsea::fgseaMultilevel(pathways = pathways, stats = Ranks, minSize = minSize, maxSize = maxSize)
     fgseaRes <- fgseaRes[fgseaRes$padj < 0.05 & fgseaRes$NES > 0,, drop=FALSE]
 
     ## decide the cell type
-    if (nrow(a) == 0){
+    if (nrow(fgseaRes) == 0){
       cluster_celltype[i, 1] <- "unidentified"
     } else{
       index <- order( -fgseaRes[, "padj"], fgseaRes[, "NES"], decreasing = TRUE)
       fgseaRes <- fgseaRes[index, ]
-      cluster_celltype[i, ] <- fgseaRes[1, c("pathway", "NES", "padj")]
+      cluster_celltype[i, 1] <- fgseaRes$pathway[1]
+      cluster_celltype[i, 2] <- fgseaRes$NES[1]
+      cluster_celltype[i, 3] <- fgseaRes$padj[1]
     }
   }
   return(cluster_celltype)

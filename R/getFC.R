@@ -31,6 +31,7 @@ getFC <- function(obj, min.pct = 0.1, test.use = "wilcox", logfc.threshold = 0.2
 
     # find marker gene
     cat(paste0("Find marker genes for cluster"), i - 1, "\n")
+    options(warn=-1)
     cluster.markers <- Seurat::FindMarkers(obj, ident.1 = (i - 1), min.pct = min.pct, logfc.threshold = logfc.threshold, test.use = test.use)
 
     # Order gene by 'avg_logFC'
