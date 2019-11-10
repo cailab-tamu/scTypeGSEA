@@ -1,4 +1,4 @@
-#' Gene rank of identity cluster
+#' Get full changes.
 #'
 #' This function is to do DE for each cluster regarding all other clusters.
 #' And then for each cluster, it will return a ranked gene list.
@@ -11,11 +11,11 @@
 #' @return For each cluster, there will be a ranked gene list.
 #' @export
 #' @examples
-#' pbmc_example <- check_cluster(pbmc_test, nfeatures = 100, npcs = 10,
+#' pbmc_example <- doClustering(pbmc_test, nfeatures = 100, npcs = 10,
 #'                               dims = 1:10, k.param = 5, resolution = 0.75)
-#' cluster_list <- Test_DE_cluster(pbmc_example, min.pct = 0.25, test.use = "MAST")
+#' cluster_list <- getFC(pbmc_example, min.pct = 0.25, test.use = "MAST")
 #'
-Test_DE_cluster <- function(obj, min.pct = 0.25, test.use = "wilcox") {
+getFC <- function(obj, min.pct = 0.25, test.use = "wilcox") {
 
   # number of cluster
   ncluster <- length(unique(obj@meta.data$seurat_clusters))
@@ -30,7 +30,7 @@ Test_DE_cluster <- function(obj, min.pct = 0.25, test.use = "wilcox") {
 
     # find marker gene
     cat(paste0("Find marker genes for cluster"), i - 1, "\n")
-    cluster.markers <- Seurat::FindMarkers(obj, ident.1 = (i - 1), min.pct = min.pct, test.use = test.use)
+    cluster.markers <- Seurat::FindMarkers(obj, ident.1 = (i - 1), min.pct = min.pct, logfc.threshold = 0, test.use = test.use)
 
     # Order gene by 'avg_logFC'
     cluster.markers <- cluster.markers[order(cluster.markers[, "avg_logFC"], -cluster.markers[, "p_val_adj"], decreasing = TRUE), ]
