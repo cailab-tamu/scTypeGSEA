@@ -15,7 +15,7 @@
 #' pbmc_example <- doClustering(pbmc_test, nfeatures = 100, npcs = 10,
 #'                               dims = 1:10, k.param = 5, resolution = 0.75)
 #' cluster_list <- getFC(pbmc_example, min.pct = 0.25, test.use = 'MAST')
-#' cluster_celltype <- doGSEA(cluster_list = cluster_list, minSize = 5, nperm = 1000)
+#' cluster_celltype <- doGSEA(cluster_list = cluster_list, minSize = 5)
 doGSEA <- function(cluster_list, db = "PanglaoDB_list", otherdb = NULL, minSize = 15, maxSize = 500) {
 
   # number of cluster
