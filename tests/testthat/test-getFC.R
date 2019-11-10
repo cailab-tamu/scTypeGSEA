@@ -1,5 +1,5 @@
-pbmc_example <- check_cluster(pbmc_test, nfeatures = 100, npcs = 10, dims = 1:10, k.param = 5, resolution = 0.75)
-cluster_list <- Test_DE_cluster(pbmc_example, min.pct = 0.25, test.use = "MAST")
+pbmc_example <- doClustering(pbmc_test, nfeatures = 100, npcs = 10, dims = 1:10, k.param = 5, resolution = 0.75)
+cluster_list <- getFC(pbmc_example, min.pct = 0.25, test.use = "MAST")
 
 test_that("Test_DE_cluster works", {
   # check every cluster has a list
