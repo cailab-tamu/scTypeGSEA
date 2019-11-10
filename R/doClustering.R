@@ -28,13 +28,13 @@
 #' @export
 #' @examples
 #' is.null(pbmc_test@meta.data$seurat_clusters)
-#' pbmc_example <- check_cluster(pbmc_test, nfeatures = 100, npcs = 10,
+#' pbmc_example <- doClustering(pbmc_test, nfeatures = 100, npcs = 10,
 #'                               dims = 1:10, k.param = 5, resolution = 0.5)
 #' head(pbmc_example@meta.data$seurat_clusters)
-#' pbmc_example <- check_cluster(pbmc_example, nfeatures = 100, npcs = 10,
+#' pbmc_example <- doClustering(pbmc_example, nfeatures = 100, npcs = 10,
 #'                               dims = 1:10, k.param = 5, resolution = 0.75, doit = TRUE)
 #' head(pbmc_example@meta.data$seurat_clusters)
-check_cluster <- function(obj, normalization.method = "LogNormalize", scale.factor = 10000, selection.method = "vst", nfeatures = 2000, npcs = 50, dims = 1:50, k.param = 20, resolution = 0.5, doit = "FALSE", doprocess = "FALSE") {
+doClustering <- function(obj, normalization.method = "LogNormalize", scale.factor = 10000, selection.method = "vst", nfeatures = 2000, npcs = 50, dims = 1:50, k.param = 20, resolution = 0.5, doit = "FALSE", doprocess = "FALSE") {
 
   # check cluster
   check_clu <- is.null(obj@meta.data$seurat_clusters)
