@@ -1,5 +1,5 @@
 Package: scTypeGSEA
-Title: Single cell Type Gene set enrichment analysis
+Title: Single Cell Type Gene Set Enrichment Analysis
 Version: 0.0.0.9000
 Authors@R: 
     person(given = "Guanxun",
@@ -8,10 +8,7 @@ Authors@R:
            email = "victorguanxun@gmail.com",
            comment = c(ORCID = "YOUR-ORCID-ID"))
 Maintainer: Guanxun Li <victorguanxun@gmail.com>
-Description: This package is used to label cell type for each cell in single-cell data. 
-             After doing data pre-process, cluster and find marker genes for each cluster, 
-            "scTypeGSEA" label cell type for each cluster by Gene set enrichment analysis (GSEA). 
-            See Aravind Subramanian et al (2005) <doi:10.1073􏰀pnas.0506580102> for more details.
+Description: A quick way to assign cell type for single cell data.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true

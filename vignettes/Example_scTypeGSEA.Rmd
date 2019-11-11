@@ -1,6 +1,7 @@
 ---
 title: "Example_scTypeGSEA"
-output: rmarkdown::html_vignette
+output: 
+  rmarkdown::pdf_document
 vignette: >
   %\VignetteIndexEntry{Example_scTypeGSEA}
   %\VignetteEngine{knitr::rmarkdown}
@@ -27,7 +28,9 @@ library(scTypeGSEA)
 
 One can do quality control, data pre-process, cluster, get full changes, do GSEA and label the cell in one step. Following code is for toy data set "pbmc_small".
 ```{r, warning=FALSE}
-pbmc_res <- assignCellType(obj = pbmc_small, min.cells = 1, min.features = 10, nfeatures = 100, npcs = 10, dims = 1:10, k.param = 5, resolution = 0.75, min.pct = 0.25, test.use = "MAST", minSize = 5)
+pbmc_res <- assignCellType(obj = pbmc_small, min.cells = 1, min.features = 10, nfeatures = 100, 
+                           npcs = 10, dims = 1:10, k.param = 5, resolution = 0.75, min.pct = 0.25, 
+                           test.use = "MAST", minSize = 5)
 ```
 
 It will return a list. The first entry is a Seurat object.
@@ -54,7 +57,9 @@ pbmc
 Next to do data pre-process and cluster. Here data pre-process includes normalization, feature selection and dimension reduction. Here we do “LogNormalize” nomalization, "vst" feature selections to select 2000 features and do PCA to get first 50 PCs. After data-process, we cluster the data.
 ```{r, warning=FALSE}
 set.seed(47)
-pbmc <- doClustering(pbmc, normalization.method = "LogNormalize", scale.factor = 10000, selection.method = "vst", nfeatures = 2000, npcs = 50, dims = 1:50, k.param = 20, resolution = 0.5)
+pbmc <- doClustering(pbmc, normalization.method = "LogNormalize", scale.factor = 10000, 
+                     selection.method = "vst", nfeatures = 2000, npcs = 50, dims = 1:50, 
+                     k.param = 20, resolution = 0.5)
 head(pbmc@meta.data$seurat_clusters)
 ```
 
