@@ -35,6 +35,8 @@ The second entry is a matrix contains cluster-ID, cell type and p-value for each
 head(pbmc_res$cell_mat)
 ```
 
+For more details about this pipeline, please read "vignettes".
+
 
 
 
