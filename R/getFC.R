@@ -1,7 +1,7 @@
-#' Get full changes.
+#' Get fold-changes.
 #'
-#' This function is to do DE for each cluster regarding all other clusters.
-#' And then for each cluster, it will return a ranked gene list.
+#' This function is to use differential gene expression analysis to compute the fold-change in gene expression
+#' by comparing the cluster profile against all the other identified clusters together.
 #'
 #' @importFrom Seurat FindMarkers
 #' @param obj A Seurat object with cluster.

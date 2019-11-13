@@ -1,13 +1,21 @@
 # scTypeGSEA
 
-This package is used to assign cell type for each cell in single-cell data. The first step is to use the “Seurat” package to do data pre-process and cell cluster. After clustering the cell, our purpose is to assign cell types for each cluster. The second step is to use differential gene expression analysis to find full changes for each cluster. Then, for each cluster, we get a list of full changes. The final step is to use the Gene set enrichment analysis (GSEA) method to decide the cell type for each cluster. GSEA will give us the normalized enrichment score (NES) and NES shows which cell type is significant. We set each cluster the cell type with the highest NES.
+This package is designed to assign cell type labels for each identified cluster in single-cell data. This package uses the “Seurat” R package to do data pre-processing and cell clustering. After clustering the cells, we use differential gene expression analysis to compute the fold-change in gene expression by comparing the cluster profile against all the other identified clusters together. Then we use the Gene Set Enrichment Analysis (GSEA) technique to compute the enrichment (NES and their associated P-value) of marker genes defined for a set of cell types. GSEA analysis provides us the most statistically relevant cell type for each cluster that is finally assigned to the group.
 
 ## Installation
 
+You can use following codes to install the package.
+
 ```{r}
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("fgsea")
+BiocManager::install("MAST")
+install.packages("Seurat")
+
 library(devtools)
 install_github("cailab-tamu/scTypeGSEA")
-library(scTypeGSEA)
 ```
 
 ## Quick example

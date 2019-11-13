@@ -8,13 +8,13 @@ Authors@R:
            email = "victorguanxun@gmail.com",
            comment = c(ORCID = "YOUR-ORCID-ID"))
 Maintainer: Guanxun Li <victorguanxun@gmail.com>
-Description: A quick way to assign cell type for single cell data.
+Description: A quick way to assign cell type for single cell data by GSES method.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.1
 Depends:
-    R (>= 2.10)
+    R (>= 3.6)
 Imports: Seurat,
          fgsea,
          MAST,
