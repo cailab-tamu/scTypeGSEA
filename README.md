@@ -4,7 +4,7 @@ This package is designed to assign cell type labels for each identified cluster 
 
 ## Installation
 
-You can use following codes to install the package.
+You can use following codes to install the package. To use some functions in "fgsea", your R version must be >= 3.6.0.
 
 ```{r}
 if (!requireNamespace("BiocManager", quietly = TRUE))
@@ -12,25 +12,25 @@ if (!requireNamespace("BiocManager", quietly = TRUE))
 
 BiocManager::install("fgsea")
 BiocManager::install("MAST")
-install.packages("Seurat")
 
 library(devtools)
 install_github("cailab-tamu/scTypeGSEA")
+library(scTypeGSEA)
 ```
 
 ## Quick example
 
-One can do quality control, data pre-process, cluster, get full changes, do GSEA and label the cell in one step.
+Here we use a small data set "pbmc_small" to show our main function "assignCellType". One can do quality control, data pre-process, cluster, get fold changes, do GSEA and label the cell in one step.
 ```{r}
 pbmc_res <- assignCellType(obj = pbmc_small, min.cells = 1, min.features = 10, nfeatures = 100, npcs = 10, dims = 1:10, k.param = 5, resolution = 0.75, min.pct = 0.25, test.use = "MAST", minSize = 5)
 ```
 
-It will return a list. The first entry is a Seurat object.
+It will return a list with 2 slots. The first slot is a Seurat object.
 ```{r}
 pbmc_res$obj
 ```
 
-The second entry is a matrix contains cluster-ID, cell type and p-value for each cell.
+The second slot is a matrix contains cluster-ID, cell type and p-value for each cell.
 ```{r}
 head(pbmc_res$cell_mat)
 ```

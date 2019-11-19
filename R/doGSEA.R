@@ -6,8 +6,8 @@
 #' @param cluster_list A ranked gene list for each cluster.
 #' @param db The cell type data base to use. It should be 'PanglaoDB_list' for 'PanglaoDB' data base and 'GSEA_list' for 'GSEA' data base.
 #' @param otherdb A path to the new data base that hope to be used, which is list of cell types with their marker genes. The file must be 'rds' format.
-#' @param minSize Minimal size of a gene set to test. All pathways below the threshold are excluded.
-#' @param maxSize Maximal size of a gene set to test. All pathways above the threshold are excluded.
+#' @param minSize An integer value. Minimal size of a gene set to test. All pathways below the threshold are excluded.
+#' @param maxSize An integer value. Maximal size of a gene set to test. All pathways above the threshold are excluded.
 #'
 #' @return Cell type for each cluster, and its NSF and padj.
 #' @export

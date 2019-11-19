@@ -16,13 +16,13 @@
 #' @param normalization.method Method for normalization. Include 'LogNormalize', 'CLR' and 'RC'.
 #' @param scale.factor Sets the scale factor for cell-level normalization.
 #' @param selection.method How to choose top variable features. Include 'vst', 'mean.var.plot' and 'dispersion'.
-#' @param nfeatures Number of features to select as top variable features.
-#' @param npcs Total Number of PCs to compute and store (50 by default).
-#' @param dims Dimensions of reduction to use as input. (For cluster.)
-#' @param k.param Defines k for the k-nearest neighbor algorithm. (For cluster.)
+#' @param nfeatures An integer value. Define the number of features to select as top variable features.
+#' @param npcs An integer value. Define total Number of PCs to compute and store (50 by default).
+#' @param dims An integer value. Define dimensions of reduction to use as input. (For cluster.)
+#' @param k.param An integer value. Defines k for the k-nearest neighbor algorithm. (For cluster.)
 #' @param resolution Value of the resolution parameter, use a value above (below) 1.0 if you want to obtain a larger (smaller) number of communities. (For cluster.)
-#' @param doit If the object contains the cluster, whether do the cluster with parameters. (Default is FALSE)
-#' @param doprocess Whether do data process (Normalization, Scale data, Find HVG and PCA) with new parameters.
+#' @param doit A boolean value (TRUE/FALSE). If true, the function will do the cluster with new parameters even the object contains original cluster. (Default is FALSE.)
+#' @param doprocess A boolean value (TRUE/FALSE). If true, the function will do data process with new parameters. (Default is FALSE.)
 #'
 #' @return If the input is already clustered, just return it. If not, the function do cluster and return obj with cluster.
 #' @export
@@ -35,7 +35,7 @@
 #' pbmc_example <- doClustering(pbmc_example, nfeatures = 100, npcs = 10,
 #'                               dims = 1:10, k.param = 5, resolution = 0.75, doit = TRUE)
 #' head(pbmc_example@meta.data$seurat_clusters)
-doClustering <- function(obj, normalization.method = "LogNormalize", scale.factor = 10000, selection.method = "vst", nfeatures = 2000, npcs = 50, dims = 1:50, k.param = 20, resolution = 0.5, doit = "FALSE", doprocess = "FALSE") {
+doClustering <- function(obj, normalization.method = "LogNormalize", scale.factor = 10000, selection.method = "vst", nfeatures = 2000, npcs = 50, dims = 1:50, k.param = 30, resolution = 0.5, doit = "FALSE", doprocess = "FALSE") {
 
   # check cluster
   check_clu <- is.null(obj@meta.data$seurat_clusters)

@@ -1,15 +1,15 @@
 #' Single cell quality control.
 #'
-#' Check whether the input is a seurat object or not and the do quality control.
+#' Check whether the input is a seurat object or not and then perform single-cell data quality control, including checking for minimum cell library size, mitochondrial ratio, outlier cells, and the fraction of cells where a gene is expressed.
 #'
 #' @importFrom Seurat CreateSeuratObject
 #' @importFrom Seurat PercentageFeatureSet
 #' @importFrom stats sd
 #'
-#' @param obj A seurat object or a count gene expression.
-#' @param percent.mt The highest percentage of reads that map to the mitochondrial genome.
-#' @param min.cells Include features detected in at least this many cells. Will subset the counts matrix as well. To reintroduce excluded features, create a new object with a lower cutoff.
-#' @param min.features Include cells where at least this many features are detected.
+#' @param obj A seurat object or a raw count gene expression.
+#' @param percent.mt A decimal value between 0 and 1. Define the highest percentage of reads that map to the mitochondrial genome.
+#' @param min.cells An integer value. Include features detected in at least this many cells.
+#' @param min.features An integer value. Include cells where at least this many features are detected.
 #' @param oversd Remove cells whose library size is greater than mean + oversd * sd. Default is null, which doesn't remove cells.
 #'
 #' @return If the input is not Seurat object, it will assume it is a count gene expression matrix and transform it as a seurat object. And then do quality control to select cells. Otherwise, it will do quality control directly.
@@ -18,7 +18,7 @@
 #' @examples
 #' pbmc_example <- scqc(pbmc_small, min.cells = 1, min.features = 10)
 #' pbmc_example
-scqc <- function(obj, min.cells = 3, min.features = 200, percent.mt = 5, oversd = NULL) {
+scqc <- function(obj, min.cells = 10, min.features = 1000, percent.mt = 5, oversd = NULL) {
   # check Seurat object
   info <- try(Seurat::Project(obj), silent = TRUE)
 

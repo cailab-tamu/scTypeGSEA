@@ -2,28 +2,28 @@
 #'
 #' This is the main function of scTypeGSEA, which can do quality control, data pre-process, cluster, get full changes, do GSEA and label the cell in one step.
 #'
-#' @param obj A seurat object or a count gene expression
-#' @param min.cells Include features detected in at least this many cells. Will subset the counts matrix as well. To reintroduce excluded features, create a new object with a lower cutoff.
-#' @param min.features Include cells where at least this many features are detected.
-#' @param percent.mt The highest percentage of reads that map to the mitochondrial genome.
+#' @param obj A seurat object or a raw count gene expression.
+#' @param percent.mt A decimal value between 0 and 1. Define the highest percentage of reads that map to the mitochondrial genome.
+#' @param min.cells An integer value. Include features detected in at least this many cells.
+#' @param min.features An integer value. Include cells where at least this many features are detected.
 #' @param oversd Remove cells whose library size is greater than mean + oversd * sd. Default is null, which doesn't remove cells.
 #' @param normalization.method Method for normalization. Include 'LogNormalize', 'CLR' and 'RC'.
 #' @param scale.factor Sets the scale factor for cell-level normalization.
 #' @param selection.method How to choose top variable features. Include 'vst', 'mean.var.plot' and 'dispersion'.
-#' @param nfeatures Number of features to select as top variable features.
-#' @param npcs Total Number of PCs to compute and store (50 by default).
-#' @param dims Dimensions of reduction to use as input. (For cluster.)
-#' @param k.param Defines k for the k-nearest neighbor algorithm. (For cluster.)
+#' @param nfeatures An integer value. Define the number of features to select as top variable features.
+#' @param npcs An integer value. Define total Number of PCs to compute and store (50 by default).
+#' @param dims An integer value. Define dimensions of reduction to use as input. (For cluster.)
+#' @param k.param An integer value. Defines k for the k-nearest neighbor algorithm. (For cluster.)
 #' @param resolution Value of the resolution parameter, use a value above (below) 1.0 if you want to obtain a larger (smaller) number of communities. (For cluster.)
-#' @param doit If the object contains the cluster, whether do the cluster with parameters. (Default is FALSE)
-#' @param doprocess Whether do data process (Normalization, Scale data, Find HVG and PCA) with new parameters.
-#' @param min.pct only test genes that are detected in a minimum fraction of min.pct cells in either of the two populations. Meant to speed up the function by not testing genes that are very infrequently expressed.
-#' @param logfc.threshold Limit testing to genes which show, on average, at least X-fold difference (log-scale) between the two groups of cells. Increasing logfc.threshold speeds up the function, but can miss weaker signals.
+#' @param doit A boolean value (TRUE/FALSE). If true, the function will do the cluster with new parameters even the object contains original cluster. (Default is FALSE.)
+#' @param doprocess A boolean value (TRUE/FALSE). If true, the function will do data process with new parameters. (Default is FALSE.)
+#' @param min.pct A decimal value between 0 and 1. Only test genes that are detected in a minimum fraction of min.pct cells in either of the two populations. Meant to speed up the function by not testing genes that are very infrequently expressed.
+#' @param logfc.threshold A decimal value between 0 and 1. Limit testing to genes which show, on average, at least X-fold difference (log-scale) between the two groups of cells. Increasing logfc.threshold speeds up the function, but can miss weaker signals.
 #' @param test.use Denotes which test to use. Available options are 'wilcox', 'bimod', 'roc', 'negbinom', 'poisson', 'LR', 'MAST' and 'DESeq2'.
 #' @param db The cell type data base to use. It should be 'PanglaoDB_list' for 'PanglaoDB' data base and 'GSEA_list' for 'GSEA' data base.
 #' @param otherdb A path to the new data base that hope to be used, which is list of cell types with their marker genes. The file must be 'rds' format.
-#' @param minSize Minimal size of a gene set to test. All pathways below the threshold are excluded.
-#' @param maxSize Maximal size of a gene set to test. All pathways above the threshold are excluded.
+#' @param minSize An integer value. Minimal size of a gene set to test. All pathways below the threshold are excluded.
+#' @param maxSize An integer value. Maximal size of a gene set to test. All pathways above the threshold are excluded.
 #'
 #' @return A list contains two entries. The first is a Seurat object with cell type for each cell and the second is a cell matrix.
 #' @export
