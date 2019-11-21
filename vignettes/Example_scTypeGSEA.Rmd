@@ -16,7 +16,7 @@ This package is designed to assign cell type labels for each identified cluster 
 
 You can use following codes to install the package. To use some functions in "fgsea", your R version must be >= 3.6.0.
 
-```{r, warning=FALSE, message=FALSE}
+```{r, warning=FALSE, message=FALSE, eval=FALSE}
 ## You may need following codes to install dependent packages.
 # if (!requireNamespace("BiocManager", quietly = TRUE))
 #     install.packages("BiocManager")
@@ -27,6 +27,10 @@ You can use following codes to install the package. To use some functions in "fg
 
 library(devtools)
 install_github("cailab-tamu/scTypeGSEA")
+```
+
+And then you can use following code to load the package.
+```{r}
 library(scTypeGSEA)
 ```
 
