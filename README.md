@@ -1,12 +1,16 @@
 # scTypeGSEA
+=============
 
 This package is designed to assign cell type labels for each identified cluster in single-cell data. This package uses the “Seurat” R package to do data pre-processing and cell clustering. After clustering the cells, we use differential gene expression analysis to compute the fold-change in gene expression by comparing the cluster profile against all the other identified clusters together. Then we use the Gene Set Enrichment Analysis (GSEA) technique to compute the enrichment (NES and their associated P-value) of marker genes defined for a set of cell types. GSEA analysis provides us the most statistically relevant cell type for each cluster that is finally assigned to the group.
 
 ## Installation
+--------------
 
 You can use following codes to install the package. To use some functions in "fgsea", your R version must be >= 3.6.0.
 
 ```{r}
+## You may need following codes to install dependent packages.
+
 if (!requireNamespace("BiocManager", quietly = TRUE))
     install.packages("BiocManager")
 
@@ -30,11 +34,27 @@ It will return a list with 2 slots. The first slot is a Seurat object.
 pbmc_res$obj
 ```
 
+```
+An object of class Seurat 
+230 features across 80 samples within 1 assay 
+Active assay: RNA (230 features)
+ 2 dimensional reductions calculated: pca, tsne
+```
+
 The second slot is a matrix contains cluster-ID, cell type and p-value for each cell.
 ```{r}
 head(pbmc_res$cell_mat)
 ```
 
+```
+               ClusterID Cell Type padj                 
+ATGCCAGAACGACT "1"       "T_cells" "1.5163313773336e-08"
+CATGGCCTGTGCAT "1"       "T_cells" "1.5163313773336e-08"
+GAACCTGATGAACC "1"       "T_cells" "1.5163313773336e-08"
+TGACTGGATTCTCA "1"       "T_cells" "1.5163313773336e-08"
+AGTCAGACTGCACA "1"       "T_cells" "1.5163313773336e-08"
+TCTGATACACGTGT "1"       "T_cells" "1.5163313773336e-08"
+```
 For more details about this pipeline, please read "vignettes".
 
 

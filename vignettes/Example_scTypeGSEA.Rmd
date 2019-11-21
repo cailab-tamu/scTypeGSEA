@@ -16,25 +16,24 @@ This package is designed to assign cell type labels for each identified cluster 
 
 You can use following codes to install the package. To use some functions in "fgsea", your R version must be >= 3.6.0.
 
-```{r, eval=FALSE}
-if (!requireNamespace("BiocManager", quietly = TRUE))
-    install.packages("BiocManager")
-
-BiocManager::install("fgsea")
-BiocManager::install("MAST")
-install.packages("Seurat")
+```{r, warning=FALSE, message=FALSE}
+## You may need following codes to install dependent packages.
+# if (!requireNamespace("BiocManager", quietly = TRUE))
+#     install.packages("BiocManager")
+# 
+# BiocManager::install("fgsea")
+# BiocManager::install("MAST")
+# install.packages("Seurat")
 
 library(devtools)
 install_github("cailab-tamu/scTypeGSEA")
-```
-
-## Example
-```{r, warning=FALSE, message=FALSE}
 library(scTypeGSEA)
 ```
 
-Here we use a small data set "pbmc_small" to show our main function "assignCellType". One can do quality control, data pre-process, cluster, get full changes, do GSEA and label the cell in one step. Following code is for toy data set "pbmc_small".
-```{r, warning=FALSE}
+## One Line example
+
+Here we use a toy data set "pbmc_small" to show our main function "assignCellType". One can do quality control, data pre-process, cluster, get full changes, do GSEA and label the cell in one step.
+```{r, warning=FALSE, tidy = T, tidy.opts=list(width.cutoff = 35)}
 pbmc_res <- assignCellType(obj = pbmc_small, min.cells = 1, min.features = 10, nfeatures = 100, 
                            npcs = 10, dims = 1:10, k.param = 5, resolution = 0.75, min.pct = 0.25, 
                            test.use = "MAST", minSize = 5)
@@ -50,10 +49,11 @@ The second slot is a matrix contains cluster-ID, cell type and p-value for each 
 head(pbmc_res$cell_mat)
 ```
 
+## Step by step example
 Next is to illustrate this pipeline step by step.
 
 ### Load data and quality control
-Here we will use data set "pbmc" go through this pipline. First is to load data set and do quality control. The input can be a Seurat object or count gene expression matrix.
+Here we will use the data set "pbmc" go through this pipeline. First is to load data set and do quality control. The input can be a Seurat object or count gene expression matrix.
 ```{r, warning=FALSE}
 library(scTypeGSEA)
 pbmc <- scqc(pbmc_raw, min.cells = 3, min.features = 200, percent.mt = 5)
@@ -61,8 +61,8 @@ pbmc
 ```
 
 ### Data pre-process and do cluster
-Next to do data pre-process and cluster. Here data pre-process includes normalization, feature selection and dimension reduction. Here we do “LogNormalize” nomalization, "vst" feature selections to select 2000 features and do PCA to get first 50 PCs. After data-process, we cluster the data.
-```{r, warning=FALSE}
+Next to do data pre-process and cluster. Here data pre-process includes normalization, feature selection and dimension reduction. Here we do “LogNormalize” normalization, "vst" feature selections to select 2000 features and do PCA to get the first 50 PCs. After data-process, we cluster the data.
+```{r, warning=FALSE, tidy = T, tidy.opts=list(width.cutoff = 35)}
 set.seed(47)
 pbmc <- doClustering(pbmc, normalization.method = "LogNormalize", scale.factor = 10000, 
                      selection.method = "vst", nfeatures = 2000, npcs = 50, dims = 1:50, 
@@ -73,7 +73,7 @@ head(pbmc@meta.data$seurat_clusters)
 If your data set have already been clustered, you can set "doit = TRUE" to do cluster using new parameters.
 ```{r, eval=FALSE}
 ## don't run
-pbmc <- check_cluster(pbmc, k.param = 30, resolution = 0.5, doit = TRUE)
+pbmc <- check_cluster(pbmc, k.param = 30, resolution = 0.75, doit = TRUE)
 ```
 
 ### Get full changes
@@ -101,13 +101,18 @@ cluster_celltype <- GSEA_analysis(cluster_list = cluster_list, otherdb = "path/t
 The last step is to add label cell type to our Seurat object.
 ```{r, warning=FALSE}
 pbmc_res <- labelSeurat(pbmc, cluster_celltype)
-pbmc_res$obj
+pbmc <- pbmc_res$obj
+head(pbmc@active.ident)
+```
+
+We can also check cell types for all cells.
+```{r, warning=FALSE}
 head(pbmc_res$cell_mat)
 ```
 
 ### Plot the data with cell type
 
-```{r, warning=FALSE}
+```{r, warning=FALSE, message=FALSE, fig.height=5}
 library(Seurat)
 pbmc <- pbmc_res$obj
 pbmc <- Seurat::RunTSNE(pbmc, dims = 1:30)
