@@ -64,7 +64,7 @@ TGACTGGATTCTCA "1"       "T_cells" "1.5163313773336e-08"
 AGTCAGACTGCACA "1"       "T_cells" "1.5163313773336e-08"
 TCTGATACACGTGT "1"       "T_cells" "1.5163313773336e-08"
 ```
-For more details about this pipeline, please read "vignettes".
+For more details about this pipeline, please read [vignettes](https://github.com/cailab-tamu/scTypeGSEA/blob/master/inst/doc/Example_scTypeGSEA.pdf).
 
 
 
