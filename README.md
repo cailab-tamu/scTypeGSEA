@@ -34,7 +34,7 @@ library(scTypeGSEA)
 ## Quick example:
 
 Here we use a toy data set "pbmc_small" to show our main function "assignCellType". One can do quality control, data pre-process, cluster, get fold changes, do GSEA and label the cell in one step.
-```{r}
+```{r, tidy = TRUE, tidy.opts=list(width.cutoff = 50)}
 pbmc_res <- assignCellType(obj = pbmc_small, min.cells = 1, min.features = 10, nfeatures = 100, npcs = 10, dims = 1:10, k.param = 5, resolution = 0.75, min.pct = 0.25, test.use = "MAST", minSize = 5)
 ```
 
