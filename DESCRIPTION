@@ -1,6 +1,6 @@
 Package: scTypeGSEA
 Title: Single Cell Type Gene Set Enrichment Analysis
-Version: 0.0.0.9000
+Version: 1.0.0
 Authors@R: 
     person(given = "Guanxun",
            family = "Li",
@@ -18,7 +18,7 @@ Depends:
 Imports: Seurat,
          fgsea,
          MAST,
-         tsne
+         Rtsne
 Suggests: 
     testthat (>= 2.1.0),
     knitr, 
