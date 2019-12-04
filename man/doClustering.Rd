@@ -4,10 +4,19 @@
 \alias{doClustering}
 \title{Cluster Determination}
 \usage{
-doClustering(obj, normalization.method = "LogNormalize",
-  scale.factor = 10000, selection.method = "vst", nfeatures = 2000,
-  npcs = 50, dims = 1:50, k.param = 20, resolution = 0.5,
-  doit = "FALSE", doprocess = "FALSE")
+doClustering(
+  obj,
+  normalization.method = "LogNormalize",
+  scale.factor = 10000,
+  selection.method = "vst",
+  nfeatures = 2000,
+  npcs = 50,
+  dims = 1:50,
+  k.param = 30,
+  resolution = 0.5,
+  doit = "FALSE",
+  doprocess = "FALSE"
+)
 }
 \arguments{
 \item{obj}{An Seurat object.}
@@ -18,19 +27,19 @@ doClustering(obj, normalization.method = "LogNormalize",
 
 \item{selection.method}{How to choose top variable features. Include 'vst', 'mean.var.plot' and 'dispersion'.}
 
-\item{nfeatures}{Number of features to select as top variable features.}
+\item{nfeatures}{An integer value. Define the number of features to select as top variable features.}
 
-\item{npcs}{Total Number of PCs to compute and store (50 by default).}
+\item{npcs}{An integer value. Define total Number of PCs to compute and store (50 by default).}
 
-\item{dims}{Dimensions of reduction to use as input. (For cluster.)}
+\item{dims}{An integer value. Define dimensions of reduction to use as input. (For cluster.)}
 
-\item{k.param}{Defines k for the k-nearest neighbor algorithm. (For cluster.)}
+\item{k.param}{An integer value. Defines k for the k-nearest neighbor algorithm. (For cluster.)}
 
 \item{resolution}{Value of the resolution parameter, use a value above (below) 1.0 if you want to obtain a larger (smaller) number of communities. (For cluster.)}
 
-\item{doit}{If the object contains the cluster, whether do the cluster with parameters. (Default is FALSE)}
+\item{doit}{A boolean value (TRUE/FALSE). If true, the function will do the cluster with new parameters even the object contains original cluster. (Default is FALSE.)}
 
-\item{doprocess}{Whether do data process (Normalization, Scale data, Find HVG and PCA) with new parameters.}
+\item{doprocess}{A boolean value (TRUE/FALSE). If true, the function will do data process with new parameters. (Default is FALSE.)}
 }
 \value{
 If the input is already clustered, just return it. If not, the function do cluster and return obj with cluster.

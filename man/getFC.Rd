@@ -2,26 +2,25 @@
 % Please edit documentation in R/getFC.R
 \name{getFC}
 \alias{getFC}
-\title{Get full changes.}
+\title{Get fold-changes.}
 \usage{
-getFC(obj, min.pct = 0.1, test.use = "wilcox",
-  logfc.threshold = 0.25)
+getFC(obj, min.pct = 0.25, test.use = "wilcox", logfc.threshold = 0.1)
 }
 \arguments{
 \item{obj}{A Seurat object with cluster.}
 
-\item{min.pct}{only test genes that are detected in a minimum fraction of min.pct cells in either of the two populations. Meant to speed up the function by not testing genes that are very infrequently expressed.}
+\item{min.pct}{A decimal value between 0 and 1. Only test genes that are detected in a minimum fraction of min.pct cells in either of the two populations. Meant to speed up the function by not testing genes that are very infrequently expressed.}
 
 \item{test.use}{Denotes which test to use. Available options are 'wilcox', 'bimod', 'roc', 'negbinom', 'poisson', 'LR', 'MAST' and 'DESeq2'.}
 
-\item{logfc.threshold}{Limit testing to genes which show, on average, at least X-fold difference (log-scale) between the two groups of cells. Increasing logfc.threshold speeds up the function, but can miss weaker signals.}
+\item{logfc.threshold}{A decimal value between 0 and 1. Limit testing to genes which show, on average, at least X-fold difference (log-scale) between the two groups of cells. Increasing logfc.threshold speeds up the function, but can miss weaker signals.}
 }
 \value{
 For each cluster, there will be a ranked gene list.
 }
 \description{
-This function is to do DE for each cluster regarding all other clusters.
-And then for each cluster, it will return a ranked gene list.
+This function is to use differential gene expression analysis to compute the fold-change in gene expression
+by comparing the cluster profile against all the other identified clusters together.
 }
 \examples{
 pbmc_example <- scqc(pbmc_small, min.cells = 1, min.features = 10)

@@ -4,23 +4,39 @@
 \alias{assignCellType}
 \title{Title Assign cell type for single cell data.}
 \usage{
-assignCellType(obj, min.cells = 3, min.features = 200,
-  percent.mt = 5, oversd = NULL,
-  normalization.method = "LogNormalize", scale.factor = 10000,
-  selection.method = "vst", nfeatures = 2000, npcs = 50,
-  dims = 1:50, k.param = 20, resolution = 0.5, doit = "FALSE",
-  doprocess = "FALSE", min.pct = 0.1, test.use = "wilcox",
-  logfc.threshold = 0.25, db = "PanglaoDB_list", otherdb = NULL,
-  minSize = 15, maxSize = 500)
+assignCellType(
+  obj,
+  min.cells = 3,
+  min.features = 200,
+  percent.mt = 5,
+  oversd = NULL,
+  normalization.method = "LogNormalize",
+  scale.factor = 10000,
+  selection.method = "vst",
+  nfeatures = 2000,
+  npcs = 50,
+  dims = 1:50,
+  k.param = 20,
+  resolution = 0.5,
+  doit = "FALSE",
+  doprocess = "FALSE",
+  min.pct = 0.1,
+  test.use = "wilcox",
+  logfc.threshold = 0.25,
+  db = "PanglaoDB_list",
+  otherdb = NULL,
+  minSize = 15,
+  maxSize = 500
+)
 }
 \arguments{
-\item{obj}{A seurat object or a count gene expression}
+\item{obj}{A seurat object or a raw count gene expression.}
 
-\item{min.cells}{Include features detected in at least this many cells. Will subset the counts matrix as well. To reintroduce excluded features, create a new object with a lower cutoff.}
+\item{min.cells}{An integer value. Include features detected in at least this many cells.}
 
-\item{min.features}{Include cells where at least this many features are detected.}
+\item{min.features}{An integer value. Include cells where at least this many features are detected.}
 
-\item{percent.mt}{The highest percentage of reads that map to the mitochondrial genome.}
+\item{percent.mt}{A decimal value between 0 and 1. Define the highest percentage of reads that map to the mitochondrial genome.}
 
 \item{oversd}{Remove cells whose library size is greater than mean + oversd * sd. Default is null, which doesn't remove cells.}
 
@@ -30,33 +46,33 @@ assignCellType(obj, min.cells = 3, min.features = 200,
 
 \item{selection.method}{How to choose top variable features. Include 'vst', 'mean.var.plot' and 'dispersion'.}
 
-\item{nfeatures}{Number of features to select as top variable features.}
+\item{nfeatures}{An integer value. Define the number of features to select as top variable features.}
 
-\item{npcs}{Total Number of PCs to compute and store (50 by default).}
+\item{npcs}{An integer value. Define total Number of PCs to compute and store (50 by default).}
 
-\item{dims}{Dimensions of reduction to use as input. (For cluster.)}
+\item{dims}{An integer value. Define dimensions of reduction to use as input. (For cluster.)}
 
-\item{k.param}{Defines k for the k-nearest neighbor algorithm. (For cluster.)}
+\item{k.param}{An integer value. Defines k for the k-nearest neighbor algorithm. (For cluster.)}
 
 \item{resolution}{Value of the resolution parameter, use a value above (below) 1.0 if you want to obtain a larger (smaller) number of communities. (For cluster.)}
 
-\item{doit}{If the object contains the cluster, whether do the cluster with parameters. (Default is FALSE)}
+\item{doit}{A boolean value (TRUE/FALSE). If true, the function will do the cluster with new parameters even the object contains original cluster. (Default is FALSE.)}
 
-\item{doprocess}{Whether do data process (Normalization, Scale data, Find HVG and PCA) with new parameters.}
+\item{doprocess}{A boolean value (TRUE/FALSE). If true, the function will do data process with new parameters. (Default is FALSE.)}
 
-\item{min.pct}{only test genes that are detected in a minimum fraction of min.pct cells in either of the two populations. Meant to speed up the function by not testing genes that are very infrequently expressed.}
+\item{min.pct}{A decimal value between 0 and 1. Only test genes that are detected in a minimum fraction of min.pct cells in either of the two populations. Meant to speed up the function by not testing genes that are very infrequently expressed.}
 
 \item{test.use}{Denotes which test to use. Available options are 'wilcox', 'bimod', 'roc', 'negbinom', 'poisson', 'LR', 'MAST' and 'DESeq2'.}
 
-\item{logfc.threshold}{Limit testing to genes which show, on average, at least X-fold difference (log-scale) between the two groups of cells. Increasing logfc.threshold speeds up the function, but can miss weaker signals.}
+\item{logfc.threshold}{A decimal value between 0 and 1. Limit testing to genes which show, on average, at least X-fold difference (log-scale) between the two groups of cells. Increasing logfc.threshold speeds up the function, but can miss weaker signals.}
 
 \item{db}{The cell type data base to use. It should be 'PanglaoDB_list' for 'PanglaoDB' data base and 'GSEA_list' for 'GSEA' data base.}
 
 \item{otherdb}{A path to the new data base that hope to be used, which is list of cell types with their marker genes. The file must be 'rds' format.}
 
-\item{minSize}{Minimal size of a gene set to test. All pathways below the threshold are excluded.}
+\item{minSize}{An integer value. Minimal size of a gene set to test. All pathways below the threshold are excluded.}
 
-\item{maxSize}{Maximal size of a gene set to test. All pathways above the threshold are excluded.}
+\item{maxSize}{An integer value. Maximal size of a gene set to test. All pathways above the threshold are excluded.}
 }
 \value{
 A list contains two entries. The first is a Seurat object with cell type for each cell and the second is a cell matrix.

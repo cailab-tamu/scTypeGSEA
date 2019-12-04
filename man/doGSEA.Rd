@@ -4,8 +4,13 @@
 \alias{doGSEA}
 \title{Runs preranked gene set enrichment analysis.}
 \usage{
-doGSEA(cluster_list, db = "PanglaoDB_list", otherdb = NULL,
-  minSize = 15, maxSize = 500)
+doGSEA(
+  cluster_list,
+  db = "PanglaoDB_list",
+  otherdb = NULL,
+  minSize = 15,
+  maxSize = 500
+)
 }
 \arguments{
 \item{cluster_list}{A ranked gene list for each cluster.}
@@ -14,9 +19,9 @@ doGSEA(cluster_list, db = "PanglaoDB_list", otherdb = NULL,
 
 \item{otherdb}{A path to the new data base that hope to be used, which is list of cell types with their marker genes. The file must be 'rds' format.}
 
-\item{minSize}{Minimal size of a gene set to test. All pathways below the threshold are excluded.}
+\item{minSize}{An integer value. Minimal size of a gene set to test. All pathways below the threshold are excluded.}
 
-\item{maxSize}{Maximal size of a gene set to test. All pathways above the threshold are excluded.}
+\item{maxSize}{An integer value. Maximal size of a gene set to test. All pathways above the threshold are excluded.}
 }
 \value{
 Cell type for each cluster, and its NSF and padj.
