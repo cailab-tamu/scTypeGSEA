@@ -47,7 +47,7 @@ pbmc_res$obj
 An object of class Seurat 
 230 features across 80 samples within 1 assay 
 Active assay: RNA (230 features)
- 2 dimensional reductions calculated: pca, tsne
+ 1 dimensional reduction calculated: pca
 ```
 
 The second slot is a matrix contains cluster-ID, cell type and p-value for each cell.
@@ -56,13 +56,13 @@ head(pbmc_res$cell_mat)
 ```
 
 ```
-               ClusterID Cell Type padj                 
-ATGCCAGAACGACT "1"       "T_cells" "1.5163313773336e-08"
-CATGGCCTGTGCAT "1"       "T_cells" "1.5163313773336e-08"
-GAACCTGATGAACC "1"       "T_cells" "1.5163313773336e-08"
-TGACTGGATTCTCA "1"       "T_cells" "1.5163313773336e-08"
-AGTCAGACTGCACA "1"       "T_cells" "1.5163313773336e-08"
-TCTGATACACGTGT "1"       "T_cells" "1.5163313773336e-08"
+               ClusterID Cell Type             padj                  
+ATGCCAGAACGACT "1"       "Gamma_delta_T_cells" "2.83772170020727e-10"
+CATGGCCTGTGCAT "1"       "Gamma_delta_T_cells" "2.83772170020727e-10"
+GAACCTGATGAACC "1"       "Gamma_delta_T_cells" "2.83772170020727e-10"
+TGACTGGATTCTCA "1"       "Gamma_delta_T_cells" "2.83772170020727e-10"
+AGTCAGACTGCACA "1"       "Gamma_delta_T_cells" "2.83772170020727e-10"
+TCTGATACACGTGT "1"       "Gamma_delta_T_cells" "2.83772170020727e-10"
 ```
 For more details about this pipeline, please read [vignettes](https://github.com/cailab-tamu/scTypeGSEA/blob/master/doc/Example_scTypeGSEA.pdf).
 
