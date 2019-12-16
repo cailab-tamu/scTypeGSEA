@@ -1,12 +1,10 @@
 Package: scTypeGSEA
 Title: Single Cell Type Gene Set Enrichment Analysis
 Version: 1.0.0
-Authors@R: 
-    person(given = "Guanxun",
-           family = "Li",
-           role = c("aut", "cre"),
-           email = "victorguanxun@gmail.com",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
+Authors@R: c(person(given = "Guanxun", family = "Li", role = c("aut","cre"), email = "victorguanxun@gmail.com"),
+             person(given = "Daniel", family = "Osorio", email = "dcosorioh@tamu.edu", role = c("aut","cre"), comment = c(ORCID = '0000-0003-4424-8422')),
+             person(given = "James", family = "Cai", role = c("aut", "ths"), comment = c(ORCID = '0000-0002-8081-6725'))
+             )
 Maintainer: Guanxun Li <victorguanxun@gmail.com>
 Description: A quick way to assign cell type for single cell data by GSES method.
 License: GPL-3
