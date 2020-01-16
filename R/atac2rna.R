@@ -34,9 +34,9 @@ atac2rna <- function(peaks, metadata = NULL, fragmentpath = NULL, annotation.fil
                      seq.levels = c(1:22, "X", "Y"), include.body = TRUE, upstream = 2000, downstream = 0,
                      EnsDbobj = EnsDb.Hsapiens.v75, chunk = 50, filter = ~ gene_biotype == "protein_coding"){
   ## do quality control
-  if (qualitycontrol = TRUE){
+  if (qualitycontrol == TRUE){
 
-    if (is.null(metadata) = TRUE){
+    if (is.null(metadata) == TRUE){
       stop(paste("We need metadata to do quality control!"))
     }
 
@@ -48,7 +48,7 @@ atac2rna <- function(peaks, metadata = NULL, fragmentpath = NULL, annotation.fil
       meta.data = metadata
     )
 
-    if (is.null(fragmentpath) = TRUE){
+    if (is.null(fragmentpath) == TRUE){
       stop(paste("We need fragments file to do quality control!"))
     }
 
@@ -86,7 +86,7 @@ atac2rna <- function(peaks, metadata = NULL, fragmentpath = NULL, annotation.fil
   } else {
     # Signac method, which needs fragments file.
 
-    if (is.null(fragmentpath) = TRUE){
+    if (is.null(fragmentpath) == TRUE){
       stop(paste("We need fragments file to use 'FeatureMatrix' function."))
     }
 
