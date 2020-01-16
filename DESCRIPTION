@@ -2,11 +2,12 @@ Package: scTypeGSEA
 Title: Single Cell Type Gene Set Enrichment Analysis
 Version: 1.0.0
 Authors@R: c(person(given = "Guanxun", family = "Li", role = c("aut","cre"), email = "victorguanxun@gmail.com"),
-             person(given = "Daniel", family = "Osorio", email = "dcosorioh@tamu.edu", role = c("aut","cre"), comment = c(ORCID = '0000-0003-4424-8422')),
+             person(given = "Daniel", family = "Osorio", role = c("aut", "ctb"), email = "dcosorioh@tamu.edu", comment = c(ORCID = '0000-0003-4424-8422')),
+             person(given = "Yan", family = "Zhong", role = c("aut","ctb")),
+             person(given = "Jianhua", family = "Huang", role = c("aut","ths")),
              person(given = "James", family = "Cai", role = c("aut", "ths"), comment = c(ORCID = '0000-0002-8081-6725'))
              )
-Maintainer: Guanxun Li <victorguanxun@gmail.com>
-Description: A quick way to assign cell type for single cell data by GSES method.
+Description: A quick way to assign cell type for single cell RNA sequence data and singlce cell ATAC data by GSES method.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
@@ -16,7 +17,10 @@ Depends:
 Imports: Seurat,
          fgsea,
          MAST,
-         Rtsne
+         Rtsne,
+         Signac,
+         ensembldb,
+         GenomeInfoDb
 Suggests: 
     testthat (>= 2.1.0),
     knitr, 
