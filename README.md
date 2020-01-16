@@ -64,7 +64,16 @@ TGACTGGATTCTCA "1"       "Gamma_delta_T_cells" "2.83772170020727e-10"
 AGTCAGACTGCACA "1"       "Gamma_delta_T_cells" "2.83772170020727e-10"
 TCTGATACACGTGT "1"       "Gamma_delta_T_cells" "2.83772170020727e-10"
 ```
-For more details about this pipeline, please read [vignettes](https://github.com/cailab-tamu/scTypeGSEA/blob/master/doc/Example_scTypeGSEA.pdf).
+
+To assign cell type for ATAC data, one can use following code to create gene acticity matrix and the go back to the above pipeline.
+
+```{r, eval = FALSE}
+## don't run
+dta_raw <- atac2rna(peaks = peaks, metadata = metadata, fragmentpath = fragment.path, 
+                    qualitycontrol = TRUE, annotation.file = annotation.file)
+```
+
+For more details about this pipeline, please read [vignettes](https://github.com/cailab-tamu/scTypeGSEA/blob/master/vignettes/Example_scTypeGSEA.pdf).
 
 
 
