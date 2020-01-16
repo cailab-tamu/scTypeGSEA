@@ -3,6 +3,16 @@
 #' This function provide two methods to create gene acticity matrix. One is to take in a peak matrix and an annotation file (gtf) and
 #' collapse the peak matrix to a gene activity matrix. And the other one is construct a feature x cell matrix from a genomic fragments file.
 #'
+#' @importFrom Seurat CreateSeuratObject
+#' @importFrom Seurat CreateGeneActivityMatrix
+#' @importFrom Signac NucleosomeSignal
+#' @importFrom Signac SetFragments
+#' @importFrom Signac Extend
+#' @importFrom Signac FeatureMatrix
+#' @importFrom Signac GRangesToString
+#' @importFrom ensembldb genes
+#' @importFrom GenomeInfoDb keepStandardChromosomes
+#'
 #' @param peaks Matrix of peak counts.
 #' @param metadata Additional cell-level metadata to add to the Seurat object. Should be a data frame where the rows are cell names and the columns are additional metadata fields.
 #' @param fragmentpath Path to tabix-indexed fragments file.
@@ -44,7 +54,7 @@ atac2rna <- function(peaks, metadata = NULL, fragmentpath = NULL, annotation.fil
 
     fragment.path <- fragmentpath
 
-    object <- SetFragments(
+    object <- Signac::SetFragments(
       object = object,
       file = fragment.path
     )
