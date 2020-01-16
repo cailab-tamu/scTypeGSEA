@@ -17,13 +17,13 @@ This package is designed to assign cell type labels for each identified cluster 
 You can use following codes to install the package. To use some functions in "fgsea", your R version must be >= 3.6.0.
 
 ```{r, warning=FALSE, message=FALSE, eval=FALSE}
-## You may need following codes to install dependent packages.
-# if (!requireNamespace("BiocManager", quietly = TRUE))
-#     install.packages("BiocManager")
-# 
-# BiocManager::install("fgsea")
-# BiocManager::install("MAST")
-# install.packages("Seurat")
+# You may need following codes to install dependent packages.
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("fgsea")
+BiocManager::install("MAST")
+install.packages("Seurat")
 
 library(devtools)
 install_github("cailab-tamu/scTypeGSEA")
@@ -80,7 +80,7 @@ If your data set have already been clustered, you can set "doit = TRUE" to do cl
 pbmc <- check_cluster(pbmc, k.param = 30, resolution = 0.75, doit = TRUE)
 ```
 
-### Get full changes
+### Get fold changes
 To get rank of gene list, we need to do gene differential expression analysis for each cluster with respect to all others. Here we use "wilcox" method.
 ```{r, warning=FALSE}
 cluster_list <- getFC(pbmc, min.pct = 0.25, test.use = "wilcox")
@@ -122,3 +122,30 @@ pbmc <- pbmc_res$obj
 pbmc <- Seurat::RunTSNE(pbmc, dims = 1:30)
 Seurat::DimPlot(pbmc, reduction = "tsne", label = TRUE, pt.size = 0.5) + NoLegend()
 ```
+
+## For ATAC sequence data
+
+To deal with single cell ATAC sequence data, you may need following codes to install extra dependent packages.
+
+```{r, warning=FALSE, message=FALSE, eval=FALSE}
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("GenomeInfoDb")
+BiocManager::install("ensembldb")
+BiocManager::install("EnsDb.Hsapiens.v75")
+BiocManager::install("GenomicRanges")
+
+library(devtools)
+install_github("timoast/signac")
+```
+
+To assign cell type for ATAC data, one can use following code to create gene acticity matrix and the go back to the above pipeline.
+
+```{r, eval = FALSE}
+## don't run
+dta_raw <- atac2rna(peaks = peaks, metadata = metadata, fragmentpath = fragment.path, qualitycontrol = TRUE, annotation.file = annotation.file)
+```
+
+Here "atac2rna" function is to create gene acticity matrix. This function provide two methods to acchieve this. The first one is based on "CreateGeneActivityMatrix" function in "Seurat" package, which is to take in a peak matrix and an annotation file (gtf), and collapse the peak matrix to a gene activity matrix. It makes the simplifying assumption that all counts in the gene body plus X kb up and or downstream should be attributed to that gene. This method is much faster than the second one. The second method is based on "FeatureMatrix" function in "Signac" package, which constructd a feature times cell matrix from a genomic fragments file. Using "?atac2rna" check details for parameters.
+
