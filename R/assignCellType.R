@@ -3,7 +3,19 @@
 #' This is the main function of scTypeGSEA, which can do quality control, data pre-process, cluster, get fold changes, do GSEA and label the cell in one step.
 #'
 #' @param obj A seurat object or or any matrix where each column is a cell.
-#' @param datatype Data type for your data, which can be "sc" for single cell data and "others" for all other data type.
+#' @param datatype Data type for your data, which can be "sc" for single cell data, "atac" for ATAC data and "others" for all other data type.
+#' @param metadata Additional cell-level metadata to add to the Seurat object. Should be a data frame where the rows are cell names and the columns are additional metadata fields. (For "ATAC" data)
+#' @param fragmentpath Path to tabix-indexed fragments file. (For "ATAC" data)
+#' @param annotation.file Path to GTF annotation file. (For "ATAC" data)
+#' @param qualitycontrol Whether to do quality control for peak matrix. If it is TRUE, it will compute QC Metrics and delete some cells. One needs both metadata data and fragments file to achieve quality control. (For "ATAC" data)
+#' @param alpha Integer value 0 or 1 to decide which method to use. alpha = 0 is to use annotation file, and alpha = 1 is to use genomic fragments file. (For "ATAC" data)
+#' @param seq.levels Which seqlevels to keep (corresponds to chromosomes usually). (For "ATAC" data)
+#' @param include.body Include the gene body? (For "ATAC" data)
+#' @param upstream Number of bases upstream to consider. (For "ATAC" data)
+#' @param downstream Number of bases downstream to consider. (For "ATAC" data)
+#' @param EnsDbobj For toSAF a GRangesList object. (For "ATAC" data)
+#' @param chunk Number of chunks to use when processing the fragments file. Fewer chunks may enable faster processing, but will use more memory. (For "ATAC" data)
+#' @param filter A filter describing which results to retrieve from the database. (For "ATAC" data)
 #' @param percent.mt A decimal value between 0 and 1. Define the highest percentage of reads that map to the mitochondrial genome.
 #' @param min.cells An integer value. Include features detected in at least this many cells.
 #' @param min.features An integer value. Include cells where at least this many features are detected.
@@ -34,11 +46,23 @@
 #' pbmc_res <- assignCellType(obj = pbmc_small, min.cells = 1, min.features = 10, nfeatures = 100,
 #'                            npcs = 10, dims = 1:10, k.param = 5, resolution = 0.75,
 #'                            min.pct = 0.25, test.use = "MAST", minSize = 5)
-assignCellType <- function(obj, datatype = "sc", min.cells = 3, min.features = 200, percent.mt = 5, oversd = NULL,
+assignCellType <- function(obj, datatype = "sc", metadata = NULL, fragmentpath = NULL, annotation.file = NULL, qualitycontrol = TRUE,
+                           alpha = 0, seq.levels = c(1:22, "X", "Y"), include.body = TRUE, upstream = 2000, downstream = 0,
+                           EnsDbobj = EnsDb.Hsapiens.v75, chunk = 50, filter = ~ gene_biotype == "protein_coding",
+                           min.cells = 3, min.features = 200, percent.mt = 5, oversd = NULL,
                            normalization.method = "LogNormalize", scale.factor = 10000, selection.method = "vst", nfeatures = 2000,
                            npcs = 50, cluster_cell = NULL, dims = 1:50, k.param = 20, resolution = 0.5, method = "complete",
                            min.pct = 0.1, test.use = "wilcox", ncluster = 3,
                            logfc.threshold = 0.25, db = "PanglaoDB_list",minSize = 15, maxSize = 500){
+  if (datatype = "atac"){
+    # transform atac to gene activity matrix
+    obj <- atac2rna(obj, metadata = metadata, fragmentpath = metadata, annotation.file = annotation.file, qualitycontrol = qualitycontrol, alpha = alpha,
+                                seq.levels = seq.levels, include.body = include.body, upstream = upstream, downstream = downstream,
+                                EnsDbobj = EnsDbobj, chunk = chunk, filter = filter)
+
+    datatype = "sc"
+  }
+
   if (datatype = "sc"){
     # quality control and data pre-process
     obj <- scqc(obj, min.cells = min.cells, min.features = min.features, percent.mt = percent.mt, oversd = oversd, normalization.method = normalization.method,
