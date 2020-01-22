@@ -11,6 +11,7 @@
 #'
 #' @param obj A Seurat object or any matrix where each column is a cell.
 #' @param datatype Data type to do cluster, which can be "sc" for single cell data and "others" for all other data type.
+#' @param cluster_cell The cluster result for cells if it is already known.
 #' @param dims An integer value. Define dimensions of reduction to use as input. (Do cluster for single cell data.)
 #' @param k.param An integer value. Defines k for the k-nearest neighbor algorithm. (Do cluster for single cell data.)
 #' @param resolution Value of the resolution parameter, use a value above (below) 1.0 if you want to obtain a larger (smaller) number of communities. (Do cluster for single cell data.)
@@ -25,7 +26,7 @@
 #' is.null(pbmc_example@meta.data$seurat_clusters)
 #' pbmc_example <- doClustering(pbmc_example, dims = 1:10, k.param = 5, resolution = 0.75)
 #' head(pbmc_example@meta.data$seurat_clusters)
-doClustering <- function(obj, datatype = "sc", cluster_list = NULL, dims = 1:50, k.param = 30, resolution = 0.5,
+doClustering <- function(obj, datatype = "sc", cluster_cell = NULL, dims = 1:50, k.param = 30, resolution = 0.5,
                          method = "complete") {
   if (datatype == "sc"){
 
@@ -41,11 +42,11 @@ doClustering <- function(obj, datatype = "sc", cluster_list = NULL, dims = 1:50,
     }
 
     # Add cluster if it has its own cluster
-    if (is.null(cluster_list) == FALSE){
-      if (length(cluster_list) != ncol(obj)){
-        stop(cat("The length of 'cluster_list' doesn't match the number of cells, please check it.\n"))
+    if (is.null(cluster_cell) == FALSE){
+      if (length(cluster_cell) != ncol(obj)){
+        stop(cat("The length of 'cluster_cell' doesn't match the number of cells, please check it.\n"))
       }
-      obj@meta.data$seurat_clusters <- cluster_list
+      obj@meta.data$seurat_clusters <- cluster_cell
       # return Seurat object
       return(obj)
     } else{
