@@ -1,72 +1,64 @@
 #' Cluster Determination
 #'
-#' If the input is already clustered, just return it.
-#' If not, the function will check whether the data has already been pre-processed, for example, PCA. If not, the function will do data pre-process first.
-#' After the basic data pre-process (Normalization, Scale data, Find HVG and PCA), the function will do cluster.
+#' It will do cluster for any type of data. If data type is single cell, the input must be Seurat object and it will use "Findcluster" function in Seurat pacakge.
+#' For any other data types, it will do hierarchical clustering.
 #'
-#' @importFrom Seurat NormalizeData
-#' @importFrom Seurat FindVariableFeatures
-#' @importFrom Seurat ScaleData
-#' @importFrom Seurat RunPCA
-#' @importFrom Seurat VariableFeatures
+#' @importFrom Seurat Project
 #' @importFrom Seurat FindNeighbors
 #' @importFrom Seurat FindClusters
+#' @importFrom stats dist
+#' @importFrom stats hclust
 #'
-#' @param obj An Seurat object.
-#' @param normalization.method Method for normalization. Include 'LogNormalize', 'CLR' and 'RC'.
-#' @param scale.factor Sets the scale factor for cell-level normalization.
-#' @param selection.method How to choose top variable features. Include 'vst', 'mean.var.plot' and 'dispersion'.
-#' @param nfeatures An integer value. Define the number of features to select as top variable features.
-#' @param npcs An integer value. Define total Number of PCs to compute and store (50 by default).
-#' @param dims An integer value. Define dimensions of reduction to use as input. (For cluster.)
-#' @param k.param An integer value. Defines k for the k-nearest neighbor algorithm. (For cluster.)
-#' @param resolution Value of the resolution parameter, use a value above (below) 1.0 if you want to obtain a larger (smaller) number of communities. (For cluster.)
-#' @param doit A boolean value (TRUE/FALSE). If true, the function will do the cluster with new parameters even the object contains original cluster. (Default is FALSE.)
-#' @param doprocess A boolean value (TRUE/FALSE). If true, the function will do data process with new parameters. (Default is FALSE.)
+#' @param obj A Seurat object or any matrix where each column is a cell.
+#' @param datatype Data type to do cluster, which can be "sc" for single cell data and "others" for all other data type.
+#' @param dims An integer value. Define dimensions of reduction to use as input. (Do cluster for single cell data.)
+#' @param k.param An integer value. Defines k for the k-nearest neighbor algorithm. (Do cluster for single cell data.)
+#' @param resolution Value of the resolution parameter, use a value above (below) 1.0 if you want to obtain a larger (smaller) number of communities. (Do cluster for single cell data.)
+#' @param method The agglomeration method to be used for hierarchical clustering, defalut is "complete".
 #'
-#' @return If the input is already clustered, just return it. If not, the function do cluster and return obj with cluster.
+#' @return For single cell type of data, it will return a Seurat object with cluster. For other type of data, it will return a list including data and result from hierarchical clustering.
+#'
 #' @export
+#'
 #' @examples
-#' pbmc_example <- scqc(pbmc_small, min.cells = 1, min.features = 10)
+#' pbmc_example <- scqc(pbmc_small, min.cells = 1, min.features = 10, nfeatures = 100, npcs = 10)
 #' is.null(pbmc_example@meta.data$seurat_clusters)
-#' pbmc_example <- doClustering(pbmc_example, nfeatures = 100, npcs = 10,
-#'                               dims = 1:10, k.param = 5, resolution = 0.5)
+#' pbmc_example <- doClustering(pbmc_example, dims = 1:10, k.param = 5, resolution = 0.75)
 #' head(pbmc_example@meta.data$seurat_clusters)
-#' pbmc_example <- doClustering(pbmc_example, nfeatures = 100, npcs = 10,
-#'                               dims = 1:10, k.param = 5, resolution = 0.75, doit = TRUE)
-#' head(pbmc_example@meta.data$seurat_clusters)
-doClustering <- function(obj, normalization.method = "LogNormalize", scale.factor = 10000, selection.method = "vst", nfeatures = 2000, npcs = 50, dims = 1:50, k.param = 30, resolution = 0.5, doit = "FALSE", doprocess = "FALSE") {
+doClustering <- function(obj, datatype = "sc", cluster_list = NULL, dims = 1:50, k.param = 30, resolution = 0.5,
+                         method = "complete") {
+  if (datatype == "sc"){
 
-  # check cluster
-  check_clu <- is.null(obj@meta.data$seurat_clusters)
-
-  if (check_clu == FALSE & doit == FALSE){
-    return(obj)
-  } else{
-    # check PCA dimension reduction
-    check_pca <- is.null(obj@reductions$pca)
-    if (check_pca == TRUE || doprocess == TRUE) {
-
-      if (check_pca == TRUE) cat("The data has not been pre-processed, let's do it!\n")
-
-      # Normalize object
-      obj <- Seurat::NormalizeData(obj, normalization.method = normalization.method, scale.factor = scale.factor)
-
-      # Identification of highly variable features (feature selection)
-      obj <- Seurat::FindVariableFeatures(obj, selection.method = selection.method, nfeatures = nfeatures)
-
-      # Scaling the data
-      all.genes <- rownames(obj)
-      obj <- Seurat::ScaleData(obj, features = all.genes)
-
-      # Perform linear dimensional reduction
-      obj <- Seurat::RunPCA(obj, features = Seurat::VariableFeatures(object = obj), verbose = FALSE, npcs = npcs)
+    # check Seurat object
+    info <- try(Seurat::Project(obj), silent = TRUE)
+    if (grepl("Error", info) == TRUE) {
+      stop(cat("The input should be Seurat Object for single cell data type.\n"))
     }
 
-    # Cluster the cells
-    obj <- Seurat::FindNeighbors(obj, dims = dims, k.param = 20)
-    obj <- Seurat::FindClusters(obj, resolution = resolution)
+    # check data process
+    if (is.null(obj@reductions$pca) == TRUE){
+      stop(cat("The Seurat object hasn't been processed, please use 'scqc' function first.\n"))
+    }
 
-    return(obj)
+    # Add cluster if it has its own cluster
+    if (is.null(cluster_list) == FALSE){
+      if (length(cluster_list) != ncol(obj)){
+        stop(cat("The length of 'cluster_list' doesn't match the number of cells, please check it.\n"))
+      }
+      obj@meta.data$seurat_clusters <- cluster_list
+      # return Seurat object
+      return(obj)
+    } else{
+      # Cluster the cells
+      obj <- Seurat::FindNeighbors(obj, dims = dims, k.param = 20)
+      obj <- Seurat::FindClusters(obj, resolution = resolution)
+      # return Seurat object
+      return(obj)
+    }
+  } else{
+    obj <- as.matrix(obj)
+    dd <- dist(t(obj))
+    cluster_cell <- hclust(dd, method = method)
+    return(list(data = obj, cluster_cell = cluster_cell))
   }
 }
