@@ -30,7 +30,7 @@
 #' @return A signcle cell RNA sequence matrix.
 #' @export
 #'
-atac2rna <- function(peaks, metadata = NULL, fragmentpath = NULL, annotation.file = NULL, qualitycontrol = FALSE, alpha = 0,
+atac2rna <- function(peaks, metadata = NULL, fragmentpath = NULL, annotation.file = NULL, qualitycontrol = TRUE, alpha = 0,
                      seq.levels = c(1:22, "X", "Y"), include.body = TRUE, upstream = 2000, downstream = 0,
                      EnsDbobj = EnsDb.Hsapiens.v75, chunk = 50, filter = ~ gene_biotype == "protein_coding"){
   ## do quality control
@@ -68,6 +68,9 @@ atac2rna <- function(peaks, metadata = NULL, fragmentpath = NULL, annotation.fil
 
     #filter out cells
     object <- subset(object, subset = peak_region_fragments > 1000 & peak_region_fragments < 20000 & pct_reads_in_peaks > 15 & blacklist_ratio < 0.05 & nucleosome_signal < 10)
+
+    #get peak matrix
+    peaks <- object@assays$peaks@counts
   }
 
   ## easy method
@@ -76,7 +79,7 @@ atac2rna <- function(peaks, metadata = NULL, fragmentpath = NULL, annotation.fil
       stop(paste("We need 'GTF' file for 'CreateGeneActivityMatrix' function!"))
     }
 
-    peaks <- object@assays$peaks@counts
+
     activity.matrix <- Seurat::CreateGeneActivityMatrix(peak.matrix = peaks, annotation.file = annotation.file,
                                                 seq.levels = seq.levels, upstream = upstream, downstream = downstream,
                                                 include.body = include.body, verbose = FALSE)
@@ -102,7 +105,7 @@ atac2rna <- function(peaks, metadata = NULL, fragmentpath = NULL, annotation.fil
     gene.activities <- Signac::FeatureMatrix(
       fragments = fragment.path,
       features = genebodyandpromoter.coords,
-      cells = colnames(object),
+      cells = colnames(peaks),
       chunk = chunk
     )
 
