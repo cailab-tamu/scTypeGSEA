@@ -28,6 +28,7 @@
 #' @param filter A filter describing which results to retrieve from the database.
 #'
 #' @return A signcle cell RNA sequence matrix.
+#'
 #' @export
 #'
 atac2rna <- function(peaks, metadata = NULL, fragmentpath = NULL, annotation.file = NULL, qualitycontrol = TRUE, alpha = 0,
