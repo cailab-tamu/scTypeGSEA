@@ -1,7 +1,8 @@
 #' Single cell quality control and basic data pre-process.
 #'
-#' Check whether the input is a seurat object or not and then perform single-cell data quality control, including checking for minimum cell library size, mitochondrial ratio, outlier cells, and the fraction of cells where a gene is expressed.
+#' For single cell type data, it will check whether the input is a seurat object or not and then perform single-cell data quality control, including checking for minimum cell library size, mitochondrial ratio, outlier cells, and the fraction of cells where a gene is expressed.
 #' Ane then  the function will do basic data pre-process, which including "Normalization", "Scale data", "Find HVG" and "PCA".
+#' For other type data, it will create seurat object to save the matrix.
 #'
 #' @importFrom Seurat CreateSeuratObject
 #' @importFrom Seurat PercentageFeatureSet
@@ -13,6 +14,7 @@
 #' @importFrom stats sd
 #'
 #' @param obj A seurat object or a raw count gene expression.
+#' @param datatype Data type for your data, default is 'datatype = "RNA"', which is used for scRNAseq data.
 #' @param percent.mt A decimal value between 0 and 1. Define the highest percentage of reads that map to the mitochondrial genome.
 #' @param min.cells An integer value. Include features detected in at least this many cells.
 #' @param min.features An integer value. Include cells where at least this many features are detected.
@@ -30,8 +32,10 @@
 #' @examples
 #' pbmc_example <- scqc(pbmc_small, min.cells = 1, min.features = 10, nfeatures = 100, npcs = 10)
 #' pbmc_example
-scqc <- function(obj, min.cells = 10, min.features = 1000, percent.mt = 5, oversd = NULL, normalization.method = "LogNormalize",
+scqc <- function(obj, datatype = "RNA", min.cells = 10, min.features = 1000, percent.mt = 5, oversd = NULL, normalization.method = "LogNormalize",
                  scale.factor = 10000, selection.method = "vst", nfeatures = 2000, npcs = 50) {
+
+  if (datatype == "RNA"){
   # check Seurat object
   info <- try(Seurat::Project(obj), silent = TRUE)
 
@@ -67,4 +71,9 @@ scqc <- function(obj, min.cells = 10, min.features = 1000, percent.mt = 5, overs
 
   # return Seurat object
   return(obj)
+  } else {
+    obj <- Seurat::CreateSeuratObject(counts = obj, min.cells = min.cells, min.features = min.features, assay = datatype)
+    # return Seurat object
+    return(obj)
+  }
 }
