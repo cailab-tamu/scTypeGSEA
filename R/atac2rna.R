@@ -31,9 +31,9 @@
 #'
 #' @export
 #'
-atac2rna <- function(peaks, metadata = NULL, fragmentpath = NULL, annotation.file = NULL, qualitycontrol = TRUE, alpha = 0,
+atac2rna <- function(peaks, metadata = NULL, fragmentpath = NULL, annotation.file = NULL, qualitycontrol = FALSE, alpha = 0,
                      seq.levels = c(1:22, "X", "Y"), include.body = TRUE, upstream = 2000, downstream = 0,
-                     EnsDbobj = EnsDb.Hsapiens.v75, chunk = 50, filter = ~ gene_biotype == "protein_coding"){
+                     EnsDbobj = NULL, chunk = NULL, filter = NULL){
   ## do quality control
   if (qualitycontrol == TRUE){
 
