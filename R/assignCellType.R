@@ -60,6 +60,7 @@ assignCellType <- function(obj, datatype = "RNA", min.cells = 3, min.features = 
     obj <- atac2rna(obj, metadata = metadata, fragmentpath = metadata, annotation.file = annotation.file, qualitycontrol = qualitycontrol, alpha = alpha,
                                 seq.levels = seq.levels, include.body = include.body, upstream = upstream, downstream = downstream,
                                 EnsDbobj = EnsDbobj, chunk = chunk, filter = filter)
+    datatype = "RNA"
   }
   # quality control and data pre-process
   obj <- scqc(obj, datatype = datatype, min.cells = min.cells, min.features = min.features, percent.mt = percent.mt, oversd = oversd, normalization.method = normalization.method,

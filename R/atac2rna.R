@@ -5,6 +5,7 @@
 #'
 #' @importFrom Seurat CreateSeuratObject
 #' @importFrom Seurat CreateGeneActivityMatrix
+#' @importFrom Seurat CreateAssayObject
 #' @importFrom Signac NucleosomeSignal
 #' @importFrom Signac SetFragments
 #' @importFrom Signac Extend
@@ -27,13 +28,21 @@
 #' @param chunk Number of chunks to use when processing the fragments file. Fewer chunks may enable faster processing, but will use more memory.
 #' @param filter A filter describing which results to retrieve from the database.
 #'
-#' @return A signcle cell RNA sequence matrix.
+#' @return A Seurat object with both ATAC data matrix and gene activity matrix.
 #'
 #' @export
 #'
 atac2rna <- function(peaks, metadata = NULL, fragmentpath = NULL, annotation.file = NULL, qualitycontrol = FALSE, alpha = 0,
                      seq.levels = c(1:22, "X", "Y"), include.body = TRUE, upstream = 2000, downstream = 0,
                      EnsDbobj = NULL, chunk = NULL, filter = NULL){
+  ## create Seurat Object
+  object <- Seurat::CreateSeuratObject(
+    counts = peaks,
+    assay = 'peaks',
+    project = 'ATAC',
+    min.cells = 1
+  )
+
   ## do quality control
   if (qualitycontrol == TRUE){
 
@@ -41,12 +50,9 @@ atac2rna <- function(peaks, metadata = NULL, fragmentpath = NULL, annotation.fil
       stop(paste("We need metadata to do quality control!"))
     }
 
-    object <- Seurat::CreateSeuratObject(
-      counts = peaks,
-      assay = 'peaks',
-      project = 'ATAC',
-      min.cells = 1,
-      meta.data = metadata
+    object <- Seurat::AddMetaData(
+      object = object,
+      metadata = metadata
     )
 
     if (is.null(fragmentpath) == TRUE){
@@ -59,6 +65,7 @@ atac2rna <- function(peaks, metadata = NULL, fragmentpath = NULL, annotation.fil
       object = object,
       file = fragment.path
     )
+
     # Computing QC Metrics
     object <- Signac::NucleosomeSignal(object = object)
 
@@ -80,13 +87,14 @@ atac2rna <- function(peaks, metadata = NULL, fragmentpath = NULL, annotation.fil
       stop(paste("We need 'GTF' file for 'CreateGeneActivityMatrix' function!"))
     }
 
-
     activity.matrix <- Seurat::CreateGeneActivityMatrix(peak.matrix = peaks, annotation.file = annotation.file,
                                                 seq.levels = seq.levels, upstream = upstream, downstream = downstream,
                                                 include.body = include.body, verbose = FALSE)
 
+    object[['RNA']] <- Seurat::CreateAssayObject(counts = activity.matrix)
+    Seurat::DefaultAssay(object) <- 'RNA'
     # return result
-    return(activity.matrix)
+    return(object)
   } else {
     # Signac method, which needs fragments file.
 
@@ -115,7 +123,10 @@ atac2rna <- function(peaks, metadata = NULL, fragmentpath = NULL, annotation.fil
     names(gene.key) <- Signac::GRangesToString(grange = genebodyandpromoter.coords)
     rownames(gene.activities) <- gene.key[rownames(gene.activities)]
 
+    object[['RNA']] <- Seurat::CreateAssayObject(counts = gene.activities)
+    Seurat::DefaultAssay(object) <- 'RNA'
+
     # return result
-    return(gene.activities)
+    return(object)
   }
 }
