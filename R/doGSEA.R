@@ -5,7 +5,7 @@
 #' @importFrom fgsea fgseaMultilevel
 #'
 #' @param cluster_list A ranked gene list for each cluster.
-#' @param db The cell type data base to use. For single cell data, we provide two data base, one is 'PanglaoDB' data base (db = 'PanglaoDB_list'), the other one is 'GSEA' data base (db = 'GSEA_list').It can also be a path to the new (referential) data base that hope to be used, the file must be 'rds' format.
+#' @param db The cell type data base to use. For single cell data, we provide two data base, one is 'PanglaoDB' data base (db = 'PanglaoDB_list'), the other one is 'GSEA' data base (db = 'GSEA_list'). It can also be a path to the new (referential) data base that hope to be used, the file must be 'rds' format.
 #' @param minSize An integer value. Minimal size of a gene set to test. All pathways below the threshold are excluded.
 #' @param maxSize An integer value. Maximal size of a gene set to test. All pathways above the threshold are excluded.
 #'
@@ -18,6 +18,7 @@
 #' pbmc_example <- doClustering(pbmc_example, dims = 1:10, k.param = 5, resolution = 0.75)
 #' cluster_list <- getFC(pbmc_example, min.pct = 0.25, test.use = "MAST")
 #' cluster_celltype <- doGSEA(cluster_list = cluster_list, minSize = 5)
+#'
 doGSEA <- function(cluster_list, db = "PanglaoDB_list", minSize = 15, maxSize = 500) {
 
   # number of cluster
