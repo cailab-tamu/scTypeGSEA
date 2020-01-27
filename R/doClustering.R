@@ -61,7 +61,8 @@ doClustering <- function(obj, datatype = "RNA", cluster_cell = NULL, dims = 1:50
         dd <- dist(t(dta))
         cluster_cell <- hclust(dd, method = hclustmethod)
         cluster_membership <- cutree(cluster_cell, k = ncluster)
-        Seurat::Idents(obj) <- cluster_membership
+        Seurat::Idents(obj) <- cluster_membership - 1
+        obj@meta.data$seurat_clusters <- cluster_membership - 1
         return(obj)
       }
     }
