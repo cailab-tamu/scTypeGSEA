@@ -2,16 +2,24 @@
 #'
 #' A version of 10X Genomics' 3k PBMC dataset
 #'
-#' @format A txt file with 32738 rows and 2700 columns
+#' @format A matrix with 32738 rows and 2700 columns
 "pbmc_raw"
 
 #' A small example version of the PBMC dataset
 #'
 #' A subsetted version of 10X Genomics' 3k PBMC dataset
 #'
-#' @format A txt file with 230 rows and 80 columns
+#' @format A matrix with 230 rows and 80 columns
 #' @source \url{https://github.com/satijalab/seurat/blob/master/inst/extdata/pbmc_raw.txt}
-"pbmc_small"
+"small_rna"
+
+#' A small example version of the PBMC ATAC dataset
+#'
+#' A subsetted version of 10X Genomics' 5k PBMC ATAC dataset
+#'
+#' @format A matrix with 650 rows and 80 columns
+#' @source \url{https://support.10xgenomics.com/single-cell-atac/datasets/1.2.0/atac_v1_pbmc_5k}
+"small_ATAC"
 
 #' Cell type gene expression markers from GSEA data base
 #'
