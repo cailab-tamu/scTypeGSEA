@@ -43,9 +43,9 @@
 #' @export
 #'
 #' @examples
-#' pbmc_example_res2 <- assignCellType(pbmc_small, min.cells = 1, min.features = 10, nfeatures = 100, npcs = 10,
-#'                                     dims = 1:10, k.param = 5, resolution = 0.75,
-#'                                     min.pct = 0.25, test.use = "MAST", minSize = 5)
+#' pbmc_example <- assignCellType(small_RNA, min.cells = 1, min.features = 10, nfeatures = 100, npcs = 10,
+#'                                dims = 1:10, k.param = 5, resolution = 0.75,
+#'                                min.pct = 0.25, test.use = "MAST", minSize = 5)
 #'
 assignCellType <- function(obj, datatype = "RNA", min.cells = 3, min.features = 200, percent.mt = 5, oversd = NULL, normalization.method = "LogNormalize",
                            scale.factor = 10000, selection.method = "vst", nfeatures = 2000, npcs = 50,
