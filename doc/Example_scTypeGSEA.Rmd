@@ -154,7 +154,7 @@ install_github("timoast/signac")
 
 One can also use our main function "assignCellType" to do analysis in one step. Here we use a toy data set "small_ATAC", which contains 685 peaks and 80 cells. Note that here we set datatype = "ATAC" and "annotation.file" is the path to GTF annotation file.
 
-```{r, message = FALSE, warning = FALSE, eval=FALSE}
+```{r, message = FALSE, warning = FALSE}
 annotation.file <- "~/Documents/Single cell/package example/R package/atac2rna/dataset/Homo_sapiens.GRCh37.82.gtf"
 ATAC_example_res <- assignCellType(small_ATAC, datatype = "ATAC", annotation.file = annotation.file,
                                     min.cells = 1, min.features = 10, nfeatures = 100, npcs = 10,
@@ -163,7 +163,7 @@ ATAC_example_res <- assignCellType(small_ATAC, datatype = "ATAC", annotation.fil
 ```
 
 Same as before, it will return a list with 4 slots. 
-```{r, eval=FALSE}
+```{r}
 ATAC_example_res$Seurat_obj
 head(ATAC_example_res$cell_mat)
 head(ATAC_example_res$cluster_celltype)
