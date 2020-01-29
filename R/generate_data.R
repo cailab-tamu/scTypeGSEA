@@ -120,11 +120,3 @@
 # small_ATAC <- small_ATAC[, sample(1:4654, 80)] # 685 x 80
 # small_ATAC <- small_ATAC[order(rownames(small_ATAC)), ]
 # use_data(small_ATAC)
-#
-# ##########################################
-# ######### Homo_sapiens_GRCh37_82_gtf #####
-# ##########################################
-#
-# rm(list = ls())
-# Homo_sapiens_GRCh37_82_gtf <- rtracklayer::import(con = "~/Documents/Single cell/package example/R package/atac2rna/dataset/Homo_sapiens.GRCh37.82.gtf")
-# use_data(Homo_sapiens_GRCh37_82_gtf)
