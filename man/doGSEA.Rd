@@ -19,7 +19,7 @@ doGSEA(cluster_list, db = "PanglaoDB_list", minSize = 15, maxSize = 500)
 Cell type for each cluster, and its NSF and padj.
 }
 \description{
-The function do gene set enrichment analysis(GSEA) for each cluster with its gene ranks. It will return cell type for each cluster.
+The function does gene set enrichment analysis(GSEA) for each cluster with its gene ranks. It will return cell type for each cluster.
 }
 \examples{
 pbmc_example <- scqc(small_RNA, min.cells = 1, min.features = 10, nfeatures = 100, npcs = 10)

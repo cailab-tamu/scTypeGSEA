@@ -2,7 +2,7 @@
 % Please edit documentation in R/atac2rna.R
 \name{atac2rna}
 \alias{atac2rna}
-\title{Title Convert a peak matrix to a gene activity matrix}
+\title{Convert a peak matrix to a gene activity matrix}
 \usage{
 atac2rna(
   peaks,
@@ -51,8 +51,8 @@ atac2rna(
 A Seurat object with both ATAC data matrix and gene activity matrix.
 }
 \description{
-This function provide two methods to create gene acticity matrix. One is to take in a peak matrix and an annotation file (gtf) and
-collapse the peak matrix to a gene activity matrix. And the other one is construct a feature x cell matrix from a genomic fragments file.
+This function provides two methods to create gene activity matrix. One is to take in a peak matrix and an annotation file (gtf)
+and collapse the peak matrix to a gene activity matrix. And the other one is construct a feature x cell matrix from a genomic fragments file.
 }
 \examples{
 # annotation.file <- "../data/Homo_sapiens.GRCh37.82.gtf"

@@ -114,7 +114,7 @@ assignCellType(
 \item{filter}{A filter describing which results to retrieve from the database. (Only for "ATAC" data)}
 }
 \value{
-It will return Seurat object with cell type, a cell type matrix and cluster list.
+It will return the Seurat object with cell type, a cell type matrix and a cluster list.
 }
 \description{
 This is the main function of scTypeGSEA, which can do quality control, data pre-process, cluster, get fold changes, do GSEA and label the cell in one step.

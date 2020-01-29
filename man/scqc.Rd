@@ -45,9 +45,10 @@ scqc(
 A Seurat Object with quality control and basic data pre-process.
 }
 \description{
-For single cell type data, it will check whether the input is a seurat object or not and then perform single-cell data quality control, including checking for minimum cell library size, mitochondrial ratio, outlier cells, and the fraction of cells where a gene is expressed.
-Ane then  the function will do basic data pre-process, which including "Normalization", "Scale data", "Find HVG" and "PCA".
-For other type data, it will create seurat object to save the matrix.
+For single cell type data, it will create a Seurat object and perform single-cell data quality control,
+including checking for minimum cell library size, mitochondrial ratio, outlier cells, and the fraction of cells where a gene is expressed.
+And then the function will do basic data pre-process, which includes “Normalization”, “Scale data”, “Find HVG” and “PCA”.
+For other type of data, it will create a Seurat object to save the matrix.
 }
 \examples{
 pbmc_example <- scqc(small_RNA, min.cells = 1, min.features = 10, nfeatures = 100, npcs = 10)
