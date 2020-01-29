@@ -24,7 +24,7 @@ library(scTypeGSEA)
 
 |Code| Function |
 |:-|:-|
-atac2rna|Convert a peak matrix to a gene activity matrix|
+|atac2rna|Convert a peak matrix to a gene activity matrix|
 |scqc|Performing single-cell data quality control|
 |doClustering|Performing data process and clustering|
 |getFC|Using differential gene expression analysis to compute the fold-change in gene expression|
@@ -32,18 +32,19 @@ atac2rna|Convert a peak matrix to a gene activity matrix|
 |labelSeurat|Adding cell type to Seurat object|
 |assignCellType|Doing quality control, data pre-process, cluster, get full changes and do GSEA to label the cell.|
 
-# Quick example:
+## Quick example:
 
-## For singlce cell RNA sequence data.
-
-Here we use a toy data set "small_RNA" to show our main function "assignCellType", which can do quality control, data pre-process, cluster, get fold changes, do GSEA and label the cell in one step.
+Here we use a toy data set "small_RNA" to show our main function "assignCellType" for single cell RNA sequence data. This function can achieve quality control, data pre-process, cluster, get fold changes, do GSEA and label the cell in one step.
 ```{r, tidy = TRUE, tidy.opts=list(width.cutoff = 50)}
-pbmc_res <- assignCellType(obj = small_RNA, min.cells = 1, min.features = 10, nfeatures = 100, npcs = 10, dims = 1:10, k.param = 5, resolution = 0.75, min.pct = 0.25, test.use = "MAST", minSize = 5)
+pbmc_example_res <- assignCellType(small_RNA, min.cells = 1, min.features = 10, 
+                                   nfeatures = 100, npcs = 10,
+                                   dims = 1:10, k.param = 5, resolution = 0.75,
+                                   min.pct = 0.25, test.use = "MAST", minSize = 5)
 ```
 
-It will return a list with 2 slots. The first slot is a Seurat object.
+It will return a list with 4 slots. The first slot is a Seurat object.
 ```{r}
-pbmc_res$obj
+pbmc_example_res$obj
 ```
 
 ```
@@ -53,31 +54,31 @@ Active assay: RNA (230 features)
  1 dimensional reduction calculated: pca
 ```
 
-The second slot is a matrix contains cluster-ID, cell type and p-value for each cell.
+The second slot is a dataframe including "cluster-ID", "cell type" and "p-value" for each cell.
 ```{r}
-head(pbmc_res$cell_mat)
+head(pbmc_example_res$cell_mat)
 ```
 
 ```
-               ClusterID Cell Type             padj                  
-ATGCCAGAACGACT "1"       "Gamma_delta_T_cells" "2.83772170020727e-10"
-CATGGCCTGTGCAT "1"       "Gamma_delta_T_cells" "2.83772170020727e-10"
-GAACCTGATGAACC "1"       "Gamma_delta_T_cells" "2.83772170020727e-10"
-TGACTGGATTCTCA "1"       "Gamma_delta_T_cells" "2.83772170020727e-10"
-AGTCAGACTGCACA "1"       "Gamma_delta_T_cells" "2.83772170020727e-10"
-TCTGATACACGTGT "1"       "Gamma_delta_T_cells" "2.83772170020727e-10"
+               ClusterID Cell Type  padj                  
+ATGCCAGAACGACT "1"       "NK_cells" "7.18829936801286e-10"
+CATGGCCTGTGCAT "1"       "NK_cells" "7.18829936801286e-10"
+GAACCTGATGAACC "1"       "NK_cells" "7.18829936801286e-10"
+TGACTGGATTCTCA "1"       "NK_cells" "7.18829936801286e-10"
+AGTCAGACTGCACA "1"       "NK_cells" "7.18829936801286e-10"
+TCTGATACACGTGT "1"       "NK_cells" "7.18829936801286e-10"
 ```
 
-To assign cell type for ATAC data, one can use following code to create gene acticity matrix and the go back to the above pipeline.
+The third slot is "cluster list". For each cluster, there will be a ranked gene/feature list, which is used to do DSEA. The forth slot is dataframe including "cell type", "NES" and "padj" for each cluster.
 
-```{r, eval = FALSE}
-## don't run
-dta_raw <- atac2rna(peaks = peaks, metadata = metadata, fragmentpath = fragment.path, 
-                    qualitycontrol = TRUE, annotation.file = annotation.file)
+```{r}
+head(pbmc_example_res$cluster_celltype)
 ```
 
-For more details about this pipeline, please read [vignettes](https://github.com/cailab-tamu/scTypeGSEA/blob/master/vignettes/Example_scTypeGSEA.pdf).
+```
+         cell type         NES                padj                  
+Cluster0 "NK_cells"        "2.86436828618051" "7.18829936801286e-10"
+Cluster1 "Dendritic_cells" "2.54600207137584" "6.306799398822e-06"  
+```
 
-
-
-
+Please read [vignettes](https://github.com/cailab-tamu/scTypeGSEA/blob/master/vignettes/Example_scTypeGSEA.pdf) for more details about how this function (pipeline) works and how to deal with other data type, for example, ATAC data. 
