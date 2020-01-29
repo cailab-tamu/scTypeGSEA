@@ -1,6 +1,6 @@
 # scTypeGSEA
 
-This package is designed to assign cell type labels for each identified cluster in single-cell data. This package uses the “Seurat” R package to do data pre-processing and cell clustering. After clustering the cells, we use differential gene expression analysis to compute the fold-change in gene expression by comparing the cluster profile against all the other identified clusters together. Then we use the Gene Set Enrichment Analysis (GSEA) technique to compute the enrichment (NES and their associated P-value) of marker genes defined for a set of cell types. GSEA analysis provides us the most statistically relevant cell type for each cluster that is finally assigned to the group.
+This package is designed to assign cell type labels for each identified cluster in single-cell data. This package uses the “Seurat” R package to do data pre-processing and cell clustering. After clustering the cells, we use differential gene expression analysis to compute the fold-change in gene expression by comparing the cluster profile against all the other identified clusters together. Then we use the Gene Set Enrichment Analysis (GSEA) technique to compute the enrichment (NES and their associated P-value) of marker genes defined for a set of cell types. GSEA analysis provides us with the most statistically relevant cell type for each cluster that is finally assigned to the group.
 
 ## Installation:
 
@@ -44,7 +44,7 @@ pbmc_example_res <- assignCellType(small_RNA, min.cells = 1, min.features = 10,
 
 It will return a list with 4 slots. The first slot is a Seurat object.
 ```{r}
-pbmc_example_res$obj
+pbmc_example_res$Seurat_obj
 ```
 
 ```
