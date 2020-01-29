@@ -38,7 +38,7 @@
 #' @param chunk Number of chunks to use when processing the fragments file. Fewer chunks may enable faster processing, but will use more memory. (Only for "ATAC" data)
 #' @param filter A filter describing which results to retrieve from the database. (Only for "ATAC" data)
 #'
-#' @return It will return Seurat object with cell type, a cell type matrix and cluster list.
+#' @return It will return the Seurat object with cell type, a cell type matrix and a cluster list.
 #'
 #' @export
 #'

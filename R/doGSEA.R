@@ -1,6 +1,6 @@
 #' Runs preranked gene set enrichment analysis.
 #'
-#' The function do gene set enrichment analysis(GSEA) for each cluster with its gene ranks. It will return cell type for each cluster.
+#' The function does gene set enrichment analysis(GSEA) for each cluster with its gene ranks. It will return cell type for each cluster.
 #'
 #' @importFrom fgsea fgseaMultilevel
 #'

@@ -1,8 +1,7 @@
-#' Title Convert a peak matrix to a gene activity matrix
+#' Convert a peak matrix to a gene activity matrix
 #'
-#' This function provide two methods to create gene acticity matrix. One is to take in a peak matrix and an annotation file (gtf) and
-#' collapse the peak matrix to a gene activity matrix. And the other one is construct a feature x cell matrix from a genomic fragments file.
-#'
+#' This function provides two methods to create gene activity matrix. One is to take in a peak matrix and an annotation file (gtf)
+#' and collapse the peak matrix to a gene activity matrix. And the other one is construct a feature x cell matrix from a genomic fragments file.
 #' @importFrom Seurat CreateSeuratObject
 #' @importFrom Seurat CreateGeneActivityMatrix
 #' @importFrom Seurat CreateAssayObject

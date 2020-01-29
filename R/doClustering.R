@@ -1,7 +1,7 @@
 #' Cluster Determination
 #'
-#' It will do cluster for any type of data. If data type is single cell, the input must be Seurat object and it will use "Findcluster" function in Seurat pacakge.
-#' For any other data types, it will do hierarchical clustering.
+#' It will do clustering. If the data type is single cell data, the input must be Seurat object and it will use the “Findcluster” function in the Seurat package
+#' For any other data type, it will do hierarchical clustering.
 #'
 #' @importFrom Seurat Project
 #' @importFrom Seurat FindNeighbors
