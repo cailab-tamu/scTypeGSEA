@@ -1,7 +1,3 @@
-set.seed(1234)
-load("data/small_ATAC.rda")
-load("data/PanglaoDB_list.rda")
-
 annotation.file <- "~/Documents/Single cell/package example/R package/atac2rna/dataset/Homo_sapiens.GRCh37.82.gtf"
 ATAC_example <- atac2rna(small_ATAC, annotation.file = annotation.file)
 test_that("scqc works", {

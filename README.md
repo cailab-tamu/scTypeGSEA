@@ -24,6 +24,7 @@ library(scTypeGSEA)
 
 |Code| Function |
 |:-|:-|
+atac2rna|Convert a peak matrix to a gene activity matrix|
 |scqc|Performing single-cell data quality control|
 |doClustering|Performing data process and clustering|
 |getFC|Using differential gene expression analysis to compute the fold-change in gene expression|
@@ -31,11 +32,13 @@ library(scTypeGSEA)
 |labelSeurat|Adding cell type to Seurat object|
 |assignCellType|Doing quality control, data pre-process, cluster, get full changes and do GSEA to label the cell.|
 
-## Quick example:
+# Quick example:
 
-Here we use a toy data set "pbmc_small" to show our main function "assignCellType". One can do quality control, data pre-process, cluster, get fold changes, do GSEA and label the cell in one step.
+## For singlce cell RNA sequence data.
+
+Here we use a toy data set "small_RNA" to show our main function "assignCellType", which can do quality control, data pre-process, cluster, get fold changes, do GSEA and label the cell in one step.
 ```{r, tidy = TRUE, tidy.opts=list(width.cutoff = 50)}
-pbmc_res <- assignCellType(obj = pbmc_small, min.cells = 1, min.features = 10, nfeatures = 100, npcs = 10, dims = 1:10, k.param = 5, resolution = 0.75, min.pct = 0.25, test.use = "MAST", minSize = 5)
+pbmc_res <- assignCellType(obj = small_RNA, min.cells = 1, min.features = 10, nfeatures = 100, npcs = 10, dims = 1:10, k.param = 5, resolution = 0.75, min.pct = 0.25, test.use = "MAST", minSize = 5)
 ```
 
 It will return a list with 2 slots. The first slot is a Seurat object.

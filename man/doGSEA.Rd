@@ -4,20 +4,12 @@
 \alias{doGSEA}
 \title{Runs preranked gene set enrichment analysis.}
 \usage{
-doGSEA(
-  cluster_list,
-  db = "PanglaoDB_list",
-  otherdb = NULL,
-  minSize = 15,
-  maxSize = 500
-)
+doGSEA(cluster_list, db = "PanglaoDB_list", minSize = 15, maxSize = 500)
 }
 \arguments{
 \item{cluster_list}{A ranked gene list for each cluster.}
 
-\item{db}{The cell type data base to use. It should be 'PanglaoDB_list' for 'PanglaoDB' data base and 'GSEA_list' for 'GSEA' data base.}
-
-\item{otherdb}{A path to the new data base that hope to be used, which is list of cell types with their marker genes. The file must be 'rds' format.}
+\item{db}{The cell type data base to use. For single cell data, we provide two data base, one is 'PanglaoDB' data base (db = 'PanglaoDB_list'), the other one is 'GSEA' data base (db = 'GSEA_list'). It can also be a path to the new (referential) data base that hope to be used, the file must be 'rds' format.}
 
 \item{minSize}{An integer value. Minimal size of a gene set to test. All pathways below the threshold are excluded.}
 
@@ -30,9 +22,9 @@ Cell type for each cluster, and its NSF and padj.
 The function do gene set enrichment analysis(GSEA) for each cluster with its gene ranks. It will return cell type for each cluster.
 }
 \examples{
-pbmc_example <- scqc(pbmc_small, min.cells = 1, min.features = 10)
-pbmc_example <- doClustering(pbmc_example, nfeatures = 100, npcs = 10,
-                              dims = 1:10, k.param = 5, resolution = 0.75)
-cluster_list <- getFC(pbmc_example, min.pct = 0.25, test.use = 'MAST')
+pbmc_example <- scqc(small_RNA, min.cells = 1, min.features = 10, nfeatures = 100, npcs = 10)
+pbmc_example <- doClustering(pbmc_example, dims = 1:10, k.param = 5, resolution = 0.75)
+cluster_list <- getFC(pbmc_example, min.pct = 0.25, test.use = "MAST")
 cluster_celltype <- doGSEA(cluster_list = cluster_list, minSize = 5)
+
 }

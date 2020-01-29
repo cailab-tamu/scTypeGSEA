@@ -6,6 +6,7 @@
 #' @importFrom Seurat CreateSeuratObject
 #' @importFrom Seurat CreateGeneActivityMatrix
 #' @importFrom Seurat CreateAssayObject
+#' @importFrom Seurat DefaultAssay
 #' @importFrom Signac NucleosomeSignal
 #' @importFrom Signac SetFragments
 #' @importFrom Signac Extend

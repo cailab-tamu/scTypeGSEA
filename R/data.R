@@ -11,7 +11,7 @@
 #'
 #' @format A matrix with 230 rows and 80 columns
 #' @source \url{https://github.com/satijalab/seurat/blob/master/inst/extdata/pbmc_raw.txt}
-"small_rna"
+"small_RNA"
 
 #' A small example version of the PBMC ATAC dataset
 #'

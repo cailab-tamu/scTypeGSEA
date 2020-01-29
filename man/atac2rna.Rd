@@ -15,9 +15,9 @@ atac2rna(
   include.body = TRUE,
   upstream = 2000,
   downstream = 0,
-  EnsDbobj = EnsDb.Hsapiens.v75,
-  chunk = 50,
-  filter = ~gene_biotype == "protein_coding"
+  EnsDbobj = NULL,
+  chunk = NULL,
+  filter = NULL
 )
 }
 \arguments{
@@ -48,9 +48,14 @@ atac2rna(
 \item{filter}{A filter describing which results to retrieve from the database.}
 }
 \value{
-A signcle cell RNA sequence matrix.
+A Seurat object with both ATAC data matrix and gene activity matrix.
 }
 \description{
 This function provide two methods to create gene acticity matrix. One is to take in a peak matrix and an annotation file (gtf) and
 collapse the peak matrix to a gene activity matrix. And the other one is construct a feature x cell matrix from a genomic fragments file.
+}
+\examples{
+# annotation.file <- "../data/Homo_sapiens.GRCh37.82.gtf"
+# ATAC_example <- atac2rna(small_ATAC, annotation.file = annotation.file)
+
 }

@@ -4,7 +4,7 @@
 \name{pbmc_raw}
 \alias{pbmc_raw}
 \title{PBMC raw data set.}
-\format{A txt file with 32738 rows and 2700 columns}
+\format{A matrix with 32738 rows and 2700 columns}
 \usage{
 pbmc_raw
 }

@@ -4,28 +4,27 @@
 \alias{getFC}
 \title{Get fold-changes.}
 \usage{
-getFC(obj, min.pct = 0.25, test.use = "wilcox", logfc.threshold = 0.1)
+getFC(obj, min.pct = 0.25, test.use = "MAST", logfc.threshold = 0.1)
 }
 \arguments{
 \item{obj}{A Seurat object with cluster.}
 
 \item{min.pct}{A decimal value between 0 and 1. Only test genes that are detected in a minimum fraction of min.pct cells in either of the two populations. Meant to speed up the function by not testing genes that are very infrequently expressed.}
 
-\item{test.use}{Denotes which test to use. Available options are 'wilcox', 'bimod', 'roc', 'negbinom', 'poisson', 'LR', 'MAST' and 'DESeq2'.}
+\item{test.use}{Denotes which test to use. Available options are 'wilcox', 'bimod', 'roc', 'negbinom', 'poisson', 'LR', 'MAST' and 'DESeq2'. The defalut is "MAST" for scRNAseq data, we suggest to use 'wilcox' for other data type.}
 
 \item{logfc.threshold}{A decimal value between 0 and 1. Limit testing to genes which show, on average, at least X-fold difference (log-scale) between the two groups of cells. Increasing logfc.threshold speeds up the function, but can miss weaker signals.}
 }
 \value{
-For each cluster, there will be a ranked gene list.
+For each cluster, there will be a ranked gene/feature list.
 }
 \description{
-This function is to use differential gene expression analysis to compute the fold-change in gene expression
+This function is to use differential gene expression analysis to compute the fold-change in gene/feature expression
 by comparing the cluster profile against all the other identified clusters together.
 }
 \examples{
-pbmc_example <- scqc(pbmc_small, min.cells = 1, min.features = 10)
-pbmc_example <- doClustering(pbmc_example, nfeatures = 100, npcs = 10,
-                              dims = 1:10, k.param = 5, resolution = 0.75)
+pbmc_example <- scqc(small_RNA, min.cells = 1, min.features = 10, nfeatures = 100, npcs = 10)
+pbmc_example <- doClustering(pbmc_example, dims = 1:10, k.param = 5, resolution = 0.75)
 cluster_list <- getFC(pbmc_example, min.pct = 0.25, test.use = "MAST")
 
 }

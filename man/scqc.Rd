@@ -2,12 +2,26 @@
 % Please edit documentation in R/scqc.R
 \name{scqc}
 \alias{scqc}
-\title{Single cell quality control.}
+\title{Single cell quality control and basic data pre-process.}
 \usage{
-scqc(obj, min.cells = 10, min.features = 1000, percent.mt = 5, oversd = NULL)
+scqc(
+  obj,
+  datatype = "RNA",
+  min.cells = 10,
+  min.features = 1000,
+  percent.mt = 5,
+  oversd = NULL,
+  normalization.method = "LogNormalize",
+  scale.factor = 10000,
+  selection.method = "vst",
+  nfeatures = 2000,
+  npcs = 50
+)
 }
 \arguments{
 \item{obj}{A seurat object or a raw count gene expression.}
+
+\item{datatype}{Data type for your data, default is 'datatype = "RNA"', which is used for scRNAseq data.}
 
 \item{min.cells}{An integer value. Include features detected in at least this many cells.}
 
@@ -16,14 +30,26 @@ scqc(obj, min.cells = 10, min.features = 1000, percent.mt = 5, oversd = NULL)
 \item{percent.mt}{A decimal value between 0 and 1. Define the highest percentage of reads that map to the mitochondrial genome.}
 
 \item{oversd}{Remove cells whose library size is greater than mean + oversd * sd. Default is null, which doesn't remove cells.}
+
+\item{normalization.method}{Method for normalization. Include 'LogNormalize', 'CLR' and 'RC'.}
+
+\item{scale.factor}{Sets the scale factor for cell-level normalization.}
+
+\item{selection.method}{How to choose top variable features. Include 'vst', 'mean.var.plot' and 'dispersion'.}
+
+\item{nfeatures}{An integer value. Define the number of features to select as top variable features.}
+
+\item{npcs}{An integer value. Define total Number of PCs to compute and store (50 by default).}
 }
 \value{
-If the input is not Seurat object, it will assume it is a count gene expression matrix and transform it as a seurat object. And then do quality control to select cells. Otherwise, it will do quality control directly.
+A Seurat Object with quality control and basic data pre-process.
 }
 \description{
-Check whether the input is a seurat object or not and then perform single-cell data quality control, including checking for minimum cell library size, mitochondrial ratio, outlier cells, and the fraction of cells where a gene is expressed.
+For single cell type data, it will check whether the input is a seurat object or not and then perform single-cell data quality control, including checking for minimum cell library size, mitochondrial ratio, outlier cells, and the fraction of cells where a gene is expressed.
+Ane then  the function will do basic data pre-process, which including "Normalization", "Scale data", "Find HVG" and "PCA".
+For other type data, it will create seurat object to save the matrix.
 }
 \examples{
-pbmc_example <- scqc(pbmc_small, min.cells = 1, min.features = 10)
+pbmc_example <- scqc(small_RNA, min.cells = 1, min.features = 10, nfeatures = 100, npcs = 10)
 pbmc_example
 }

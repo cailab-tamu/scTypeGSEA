@@ -1,7 +1,3 @@
-set.seed(1234)
-load("data/small_RNA.rda")
-load("data/PanglaoDB_list.rda")
-
 pbmc_example <- scqc(small_RNA, min.cells = 1, min.features = 10, nfeatures = 100, npcs = 10)
 test_that("scqc works", {
   # check it becomes a Seurat object

@@ -2,10 +2,11 @@
 % Please edit documentation in R/assignCellType.R
 \name{assignCellType}
 \alias{assignCellType}
-\title{Title Assign cell type for single cell data.}
+\title{Assign cell type.}
 \usage{
 assignCellType(
   obj,
+  datatype = "RNA",
   min.cells = 3,
   min.features = 200,
   percent.mt = 5,
@@ -15,22 +16,36 @@ assignCellType(
   selection.method = "vst",
   nfeatures = 2000,
   npcs = 50,
+  cluster_cell = NULL,
   dims = 1:50,
   k.param = 20,
   resolution = 0.5,
-  doit = "FALSE",
-  doprocess = "FALSE",
+  hclustmethod = "complete",
+  ncluster = 3,
   min.pct = 0.1,
   test.use = "wilcox",
-  logfc.threshold = 0.25,
+  logfc.threshold = 0.1,
   db = "PanglaoDB_list",
-  otherdb = NULL,
   minSize = 15,
-  maxSize = 500
+  maxSize = 500,
+  metadata = NULL,
+  fragmentpath = NULL,
+  annotation.file = NULL,
+  qualitycontrol = FALSE,
+  alpha = 0,
+  seq.levels = c(1:22, "X", "Y"),
+  include.body = TRUE,
+  upstream = 2000,
+  downstream = 0,
+  EnsDbobj = EnsDb.Hsapiens.v75,
+  chunk = 50,
+  filter = ~gene_biotype == "protein_coding"
 )
 }
 \arguments{
-\item{obj}{A seurat object or a raw count gene expression.}
+\item{obj}{A seurat object or or any matrix where each column is a cell.}
+
+\item{datatype}{Data type for your data, which can be "RNA" for scRNAseq data, "ATAC" for scATACseq data or any other data type.}
 
 \item{min.cells}{An integer value. Include features detected in at least this many cells.}
 
@@ -50,38 +65,64 @@ assignCellType(
 
 \item{npcs}{An integer value. Define total Number of PCs to compute and store (50 by default).}
 
-\item{dims}{An integer value. Define dimensions of reduction to use as input. (For cluster.)}
+\item{cluster_cell}{The cluster result for cells if it is already known.}
 
-\item{k.param}{An integer value. Defines k for the k-nearest neighbor algorithm. (For cluster.)}
+\item{dims}{An integer value. Define dimensions of reduction to use as input. (Do cluster for single cell data..)}
 
-\item{resolution}{Value of the resolution parameter, use a value above (below) 1.0 if you want to obtain a larger (smaller) number of communities. (For cluster.)}
+\item{k.param}{An integer value. Defines k for the k-nearest neighbor algorithm. (Do cluster for single cell data..)}
 
-\item{doit}{A boolean value (TRUE/FALSE). If true, the function will do the cluster with new parameters even the object contains original cluster. (Default is FALSE.)}
+\item{resolution}{Value of the resolution parameter, use a value above (below) 1.0 if you want to obtain a larger (smaller) number of communities. (Do cluster for single cell data..)}
 
-\item{doprocess}{A boolean value (TRUE/FALSE). If true, the function will do data process with new parameters. (Default is FALSE.)}
+\item{hclustmethod}{The agglomeration method to be used for hierarchical clustering, defalut is "complete". (Do cluster for other data type.)}
+
+\item{ncluster}{An integer, which is the number of cluster when your input including results from hierarchical clustering.}
 
 \item{min.pct}{A decimal value between 0 and 1. Only test genes that are detected in a minimum fraction of min.pct cells in either of the two populations. Meant to speed up the function by not testing genes that are very infrequently expressed.}
 
-\item{test.use}{Denotes which test to use. Available options are 'wilcox', 'bimod', 'roc', 'negbinom', 'poisson', 'LR', 'MAST' and 'DESeq2'.}
+\item{test.use}{Denotes which test to use. Available options are 'wilcox', 'bimod', 'roc', 'negbinom', 'poisson', 'LR', 'MAST' and 'DESeq2'. The defalut is "MAST" for scRNAseq data, we suggest to use 'wilcox' for other data type.}
 
 \item{logfc.threshold}{A decimal value between 0 and 1. Limit testing to genes which show, on average, at least X-fold difference (log-scale) between the two groups of cells. Increasing logfc.threshold speeds up the function, but can miss weaker signals.}
 
-\item{db}{The cell type data base to use. It should be 'PanglaoDB_list' for 'PanglaoDB' data base and 'GSEA_list' for 'GSEA' data base.}
-
-\item{otherdb}{A path to the new data base that hope to be used, which is list of cell types with their marker genes. The file must be 'rds' format.}
+\item{db}{The cell type data base to use. For single cell data, we provide two data base, one is 'PanglaoDB' data base (db = 'PanglaoDB_list'), the other one is 'GSEA' data base (db = 'GSEA_list'). It can also be a path to the new (referential) data base that hope to be used, the file must be 'rds' format.}
 
 \item{minSize}{An integer value. Minimal size of a gene set to test. All pathways below the threshold are excluded.}
 
 \item{maxSize}{An integer value. Maximal size of a gene set to test. All pathways above the threshold are excluded.}
+
+\item{metadata}{Additional cell-level metadata to add to the Seurat object. Should be a data frame where the rows are cell names and the columns are additional metadata fields. (Only for "ATAC" data)}
+
+\item{fragmentpath}{Path to tabix-indexed fragments file. (Only for "ATAC" data)}
+
+\item{annotation.file}{Path to GTF annotation file. (Only for "ATAC" data)}
+
+\item{qualitycontrol}{Whether to do quality control for peak matrix. If it is TRUE, it will compute QC Metrics and delete some cells. One needs both metadata data and fragments file to achieve quality control. (For "ATAC" data)}
+
+\item{alpha}{Integer value 0 or 1 to decide which method to use. alpha = 0 is to use annotation file, and alpha = 1 is to use genomic fragments file. (Only for "ATAC" data)}
+
+\item{seq.levels}{Which seqlevels to keep (corresponds to chromosomes usually). (Only for "ATAC" data)}
+
+\item{include.body}{Include the gene body? (Only for "ATAC" data)}
+
+\item{upstream}{Number of bases upstream to consider. (Only for "ATAC" data)}
+
+\item{downstream}{Number of bases downstream to consider. (Only for "ATAC" data)}
+
+\item{EnsDbobj}{For toSAF a GRangesList object. (Only for "ATAC" data)}
+
+\item{chunk}{Number of chunks to use when processing the fragments file. Fewer chunks may enable faster processing, but will use more memory. (Only for "ATAC" data)}
+
+\item{filter}{A filter describing which results to retrieve from the database. (Only for "ATAC" data)}
 }
 \value{
-A list contains two entries. The first is a Seurat object with cell type for each cell and the second is a cell matrix.
+It will return Seurat object with cell type, a cell type matrix and cluster list.
 }
 \description{
-This is the main function of scTypeGSEA, which can do quality control, data pre-process, cluster, get full changes, do GSEA and label the cell in one step.
+This is the main function of scTypeGSEA, which can do quality control, data pre-process, cluster, get fold changes, do GSEA and label the cell in one step.
 }
 \examples{
-pbmc_res <- assignCellType(obj = pbmc_small, min.cells = 1, min.features = 10, nfeatures = 100,
-                           npcs = 10, dims = 1:10, k.param = 5, resolution = 0.75,
-                           min.pct = 0.25, test.use = "MAST", minSize = 5)
+pbmc_example <- assignCellType(small_RNA, min.cells = 1, min.features = 10,
+                               nfeatures = 100, npcs = 10,
+                               dims = 1:10, k.param = 5, resolution = 0.75,
+                               min.pct = 0.25, test.use = "MAST", minSize = 5)
+
 }

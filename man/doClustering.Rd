@@ -6,56 +6,41 @@
 \usage{
 doClustering(
   obj,
-  normalization.method = "LogNormalize",
-  scale.factor = 10000,
-  selection.method = "vst",
-  nfeatures = 2000,
-  npcs = 50,
+  datatype = "RNA",
+  cluster_cell = NULL,
   dims = 1:50,
   k.param = 30,
   resolution = 0.5,
-  doit = "FALSE",
-  doprocess = "FALSE"
+  hclustmethod = "complete",
+  ncluster = 3
 )
 }
 \arguments{
-\item{obj}{An Seurat object.}
+\item{obj}{A Seurat object.}
 
-\item{normalization.method}{Method for normalization. Include 'LogNormalize', 'CLR' and 'RC'.}
+\item{datatype}{Data type for your data, default is 'datatype = "RNA"', which is used for scRNAseq data.}
 
-\item{scale.factor}{Sets the scale factor for cell-level normalization.}
+\item{cluster_cell}{The cluster result for cells if it is already known.}
 
-\item{selection.method}{How to choose top variable features. Include 'vst', 'mean.var.plot' and 'dispersion'.}
+\item{dims}{An integer value. Define dimensions of reduction to use as input. (Do cluster for single cell data.)}
 
-\item{nfeatures}{An integer value. Define the number of features to select as top variable features.}
+\item{k.param}{An integer value. Defines k for the k-nearest neighbor algorithm. (Do cluster for single cell data.)}
 
-\item{npcs}{An integer value. Define total Number of PCs to compute and store (50 by default).}
+\item{resolution}{Value of the resolution parameter, use a value above (below) 1.0 if you want to obtain a larger (smaller) number of communities. (Do cluster for single cell data.)}
 
-\item{dims}{An integer value. Define dimensions of reduction to use as input. (For cluster.)}
+\item{hclustmethod}{The agglomeration method to be used for hierarchical clustering, defalut is "complete".}
 
-\item{k.param}{An integer value. Defines k for the k-nearest neighbor algorithm. (For cluster.)}
-
-\item{resolution}{Value of the resolution parameter, use a value above (below) 1.0 if you want to obtain a larger (smaller) number of communities. (For cluster.)}
-
-\item{doit}{A boolean value (TRUE/FALSE). If true, the function will do the cluster with new parameters even the object contains original cluster. (Default is FALSE.)}
-
-\item{doprocess}{A boolean value (TRUE/FALSE). If true, the function will do data process with new parameters. (Default is FALSE.)}
+\item{ncluster}{An integer, which is the number of cluster when your input including results from hierarchical clustering.}
 }
 \value{
-If the input is already clustered, just return it. If not, the function do cluster and return obj with cluster.
+It will return a Seurat object with cluster.
 }
 \description{
-If the input is already clustered, just return it.
-If not, the function will check whether the data has already been pre-processed, for example, PCA. If not, the function will do data pre-process first.
-After the basic data pre-process (Normalization, Scale data, Find HVG and PCA), the function will do cluster.
+It will do cluster for any type of data. If data type is single cell, the input must be Seurat object and it will use "Findcluster" function in Seurat pacakge.
+For any other data types, it will do hierarchical clustering.
 }
 \examples{
-pbmc_example <- scqc(pbmc_small, min.cells = 1, min.features = 10)
-is.null(pbmc_example@meta.data$seurat_clusters)
-pbmc_example <- doClustering(pbmc_example, nfeatures = 100, npcs = 10,
-                              dims = 1:10, k.param = 5, resolution = 0.5)
-head(pbmc_example@meta.data$seurat_clusters)
-pbmc_example <- doClustering(pbmc_example, nfeatures = 100, npcs = 10,
-                              dims = 1:10, k.param = 5, resolution = 0.75, doit = TRUE)
+pbmc_example <- scqc(small_RNA, min.cells = 1, min.features = 10, nfeatures = 100, npcs = 10)
+pbmc_example <- doClustering(pbmc_example, dims = 1:10, k.param = 5, resolution = 0.75)
 head(pbmc_example@meta.data$seurat_clusters)
 }
