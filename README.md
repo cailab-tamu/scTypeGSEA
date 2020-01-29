@@ -81,4 +81,4 @@ Cluster0 "NK_cells"        "2.86436828618051" "7.18829936801286e-10"
 Cluster1 "Dendritic_cells" "2.54600207137584" "6.306799398822e-06"  
 ```
 
-Please read [vignettes](https://github.com/cailab-tamu/scTypeGSEA/blob/master/vignettes/Example_scTypeGSEA.pdf) for more details about how this function (pipeline) works and how to deal with other data type, for example, ATAC data. 
+Please read [vignettes](https://github.com/cailab-tamu/scTypeGSEA/blob/master/doc/Example_scTypeGSEA.pdf) for more details about how this function (pipeline) works and how to deal with other data type, for example, ATAC data. 

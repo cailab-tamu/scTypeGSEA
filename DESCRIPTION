@@ -1,6 +1,6 @@
 Package: scTypeGSEA
 Title: Single Cell Type Gene Set Enrichment Analysis
-Version: 1.0.0
+Version: 1.0.1
 Authors@R: c(person(given = "Guanxun", family = "Li", role = c("aut","cre"), email = "victorguanxun@gmail.com"),
              person(given = "Daniel", family = "Osorio", role = c("aut", "ctb"), email = "dcosorioh@tamu.edu", comment = c(ORCID = '0000-0003-4424-8422')),
              person(given = "Yan", family = "Zhong", role = c("aut","ctb")),
