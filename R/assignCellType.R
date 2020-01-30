@@ -25,18 +25,11 @@
 #' @param db The cell type data base to use. For single cell data, we provide two data base, one is 'PanglaoDB' data base (db = 'PanglaoDB_list'), the other one is 'GSEA' data base (db = 'GSEA_list'). It can also be a path to the new (referential) data base that hope to be used, the file must be 'rds' format.
 #' @param minSize An integer value. Minimal size of a gene set to test. All pathways below the threshold are excluded.
 #' @param maxSize An integer value. Maximal size of a gene set to test. All pathways above the threshold are excluded.
-#' @param metadata Additional cell-level metadata to add to the Seurat object. Should be a data frame where the rows are cell names and the columns are additional metadata fields. (Only for "ATAC" data)
-#' @param fragmentpath Path to tabix-indexed fragments file. (Only for "ATAC" data)
 #' @param annotation.file Path to GTF annotation file. (Only for "ATAC" data)
-#' @param qualitycontrol Whether to do quality control for peak matrix. If it is TRUE, it will compute QC Metrics and delete some cells. One needs both metadata data and fragments file to achieve quality control. (For "ATAC" data)
-#' @param alpha Integer value 0 or 1 to decide which method to use. alpha = 0 is to use annotation file, and alpha = 1 is to use genomic fragments file. (Only for "ATAC" data)
-#' @param seq.levels Which seqlevels to keep (corresponds to chromosomes usually). (Only for "ATAC" data)
+#' @param seq.levels Which seqlevels to keep (corresponds to chromosomes usually).
 #' @param include.body Include the gene body? (Only for "ATAC" data)
 #' @param upstream Number of bases upstream to consider. (Only for "ATAC" data)
 #' @param downstream Number of bases downstream to consider. (Only for "ATAC" data)
-#' @param EnsDbobj For toSAF a GRangesList object. (Only for "ATAC" data)
-#' @param chunk Number of chunks to use when processing the fragments file. Fewer chunks may enable faster processing, but will use more memory. (Only for "ATAC" data)
-#' @param filter A filter describing which results to retrieve from the database. (Only for "ATAC" data)
 #'
 #' @return It will return the Seurat object with cell type, a cell type matrix and a cluster list.
 #'
@@ -53,14 +46,12 @@ assignCellType <- function(obj, datatype = "RNA", min.cells = 3, min.features = 
                            cluster_cell = NULL, dims = 1:50, k.param = 20, resolution = 0.5, hclustmethod = "complete", ncluster = 3,
                            min.pct = 0.1, test.use = "wilcox", logfc.threshold = 0.1,
                            db = "PanglaoDB_list",minSize = 15, maxSize = 500,
-                           metadata = NULL, fragmentpath = NULL, annotation.file = NULL, qualitycontrol = FALSE,
-                           alpha = 0, seq.levels = c(1:22, "X", "Y"), include.body = TRUE, upstream = 2000, downstream = 0,
-                           EnsDbobj = EnsDb.Hsapiens.v75, chunk = 50, filter = ~ gene_biotype == "protein_coding"){
+                           annotation.file = NULL, seq.levels = c(1:22, "X", "Y"), include.body = TRUE,
+                           upstream = 2000, downstream = 0){
   if (datatype == "ATAC"){
     # transform atac to gene activity matrix
-    obj <- atac2rna(obj, metadata = metadata, fragmentpath = metadata, annotation.file = annotation.file, qualitycontrol = qualitycontrol, alpha = alpha,
-                                seq.levels = seq.levels, include.body = include.body, upstream = upstream, downstream = downstream,
-                                EnsDbobj = EnsDbobj, chunk = chunk, filter = filter)
+    obj <- atac2rna(obj, annotation.file = annotation.file, seq.levels = seq.levels,
+                    include.body = include.body, upstream = upstream, downstream = downstream)
     datatype = "RNA"
   }
   # quality control and data pre-process

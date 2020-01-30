@@ -154,7 +154,7 @@ install_github("timoast/signac")
 
 One can also use our main function "assignCellType" to do analysis in one step. Here we use a toy data set "small_ATAC", which contains 685 peaks and 80 cells. Note that here we set datatype = "ATAC" and "annotation.file" is the path to GTF annotation file.
 
-```{r, message = FALSE, warning = FALSE, eval=FALSE}
+```{r, message = FALSE, warning = FALSE, eval = FALSE}
 annotation.file <- "~/Documents/Single cell/package example/R package/atac2rna/dataset/Homo_sapiens.GRCh37.82.gtf"
 ATAC_example_res <- assignCellType(small_ATAC, datatype = "ATAC", annotation.file = annotation.file,
                                     min.cells = 1, min.features = 10, nfeatures = 100, npcs = 10,
@@ -163,7 +163,7 @@ ATAC_example_res <- assignCellType(small_ATAC, datatype = "ATAC", annotation.fil
 ```
 
 Same as before, it will return a list with 4 slots. 
-```{r, eval=FALSE}
+```{r, eval = FALSE}
 ATAC_example_res$Seurat_obj
 head(ATAC_example_res$cell_mat)
 head(ATAC_example_res$cluster_celltype)
@@ -181,7 +181,7 @@ cluster_celltype <- doGSEA(cluster_list = cluster_list, minSize = 5)
 ATAC_example_res <- labelCelltype(ATAC_example, cluster_celltype)
 ```
 
-"atac2rne" function provides two methods to create gene activity matrix. The first one is based on "CreateGeneActivityMatrix" function in "Seurat" package, which is to take in a peak matrix and an annotation file (gtf), and collapse the peak matrix to a gene activity matrix. It makes the simplifying assumption that all counts in the gene body plus X kb up and or downstream should be attributed to that gene. This method is much faster than the second one. The second method is based on "FeatureMatrix" function in "Signac" package, which constructd a feature times cell matrix from a genomic fragments file. "atac2rna" function also provides quality control for peaks data, but the "default" is "FALSE" and we suggest users do quality control before using this function. Please try "?atac2rna" to check details for parameters.
+"atac2rne" function creates gene activity matrix bases on "CreateGeneActivityMatrix" function in "Seurat" package, which is to take in a peak matrix and an annotation file (gtf), and collapse the peak matrix to a gene activity matrix. It makes the simplifying assumption that all counts in the gene body plus X kb up and or downstream should be attributed to that gene. Please try "?atac2rna" to check details for parameters.
 
 ## For other data type.
 One can also go through the pipeline for other data types, for example, "Cell surface proteins". Here we will only focus on the difference.
