@@ -28,18 +28,11 @@ assignCellType(
   db = "PanglaoDB_list",
   minSize = 15,
   maxSize = 500,
-  metadata = NULL,
-  fragmentpath = NULL,
   annotation.file = NULL,
-  qualitycontrol = FALSE,
-  alpha = 0,
   seq.levels = c(1:22, "X", "Y"),
   include.body = TRUE,
   upstream = 2000,
-  downstream = 0,
-  EnsDbobj = EnsDb.Hsapiens.v75,
-  chunk = 50,
-  filter = ~gene_biotype == "protein_coding"
+  downstream = 0
 )
 }
 \arguments{
@@ -89,29 +82,15 @@ assignCellType(
 
 \item{maxSize}{An integer value. Maximal size of a gene set to test. All pathways above the threshold are excluded.}
 
-\item{metadata}{Additional cell-level metadata to add to the Seurat object. Should be a data frame where the rows are cell names and the columns are additional metadata fields. (Only for "ATAC" data)}
-
-\item{fragmentpath}{Path to tabix-indexed fragments file. (Only for "ATAC" data)}
-
 \item{annotation.file}{Path to GTF annotation file. (Only for "ATAC" data)}
 
-\item{qualitycontrol}{Whether to do quality control for peak matrix. If it is TRUE, it will compute QC Metrics and delete some cells. One needs both metadata data and fragments file to achieve quality control. (For "ATAC" data)}
-
-\item{alpha}{Integer value 0 or 1 to decide which method to use. alpha = 0 is to use annotation file, and alpha = 1 is to use genomic fragments file. (Only for "ATAC" data)}
-
-\item{seq.levels}{Which seqlevels to keep (corresponds to chromosomes usually). (Only for "ATAC" data)}
+\item{seq.levels}{Which seqlevels to keep (corresponds to chromosomes usually).}
 
 \item{include.body}{Include the gene body? (Only for "ATAC" data)}
 
 \item{upstream}{Number of bases upstream to consider. (Only for "ATAC" data)}
 
 \item{downstream}{Number of bases downstream to consider. (Only for "ATAC" data)}
-
-\item{EnsDbobj}{For toSAF a GRangesList object. (Only for "ATAC" data)}
-
-\item{chunk}{Number of chunks to use when processing the fragments file. Fewer chunks may enable faster processing, but will use more memory. (Only for "ATAC" data)}
-
-\item{filter}{A filter describing which results to retrieve from the database. (Only for "ATAC" data)}
 }
 \value{
 It will return the Seurat object with cell type, a cell type matrix and a cluster list.

@@ -6,32 +6,17 @@
 \usage{
 atac2rna(
   peaks,
-  metadata = NULL,
-  fragmentpath = NULL,
   annotation.file = NULL,
-  qualitycontrol = FALSE,
-  alpha = 0,
   seq.levels = c(1:22, "X", "Y"),
   include.body = TRUE,
   upstream = 2000,
-  downstream = 0,
-  EnsDbobj = NULL,
-  chunk = NULL,
-  filter = NULL
+  downstream = 0
 )
 }
 \arguments{
 \item{peaks}{Matrix of peak counts.}
 
-\item{metadata}{Additional cell-level metadata to add to the Seurat object. Should be a data frame where the rows are cell names and the columns are additional metadata fields.}
-
-\item{fragmentpath}{Path to tabix-indexed fragments file.}
-
 \item{annotation.file}{Path to GTF annotation file.}
-
-\item{qualitycontrol}{Whether to do quality control for peak matrix. If it is TRUE, it will compute QC Metrics and delete some cells. One needs both metadata data and fragments file to achieve quality control.}
-
-\item{alpha}{Integer value 0 or 1 to decide which method to use. alpha = 0 is to use annotation file, and alpha = 1 is to use genomic fragments file.}
 
 \item{seq.levels}{Which seqlevels to keep (corresponds to chromosomes usually).}
 
@@ -40,19 +25,12 @@ atac2rna(
 \item{upstream}{Number of bases upstream to consider.}
 
 \item{downstream}{Number of bases downstream to consider.}
-
-\item{EnsDbobj}{For toSAF a GRangesList object. .}
-
-\item{chunk}{Number of chunks to use when processing the fragments file. Fewer chunks may enable faster processing, but will use more memory.}
-
-\item{filter}{A filter describing which results to retrieve from the database.}
 }
 \value{
 A Seurat object with both ATAC data matrix and gene activity matrix.
 }
 \description{
-This function provides two methods to create gene activity matrix. One is to take in a peak matrix and an annotation file (gtf)
-and collapse the peak matrix to a gene activity matrix. And the other one is construct a feature x cell matrix from a genomic fragments file.
+This function takes in a peak matrix and an annotation file (gtf)and collapse the peak matrix to a gene activity matrix.
 }
 \examples{
 # annotation.file <- "../data/Homo_sapiens.GRCh37.82.gtf"
