@@ -7,6 +7,7 @@ Authors@R: c(person(given = "Guanxun", family = "Li", role = c("aut","cre"), ema
              person(given = "Jianhua", family = "Huang", role = c("aut","ths")),
              person(given = "James", family = "Cai", role = c("aut", "ths"), comment = c(ORCID = '0000-0002-8081-6725'))
              )
+Maintainer: Guanxun Li <victorguanxun@gmail.com> 
 Description: A quick way to assign cell type for single cell RNA sequence data and single cell ATAC data by GSEA method.
 License: GPL-3
 Encoding: UTF-8
