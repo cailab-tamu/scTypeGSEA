@@ -4,7 +4,7 @@
 #'
 #' @param obj A seurat object or or any matrix where each column is a cell.
 #' @param datatype Data type for your data, which can be "RNA" for scRNAseq data, "ATAC" for scATACseq data or any other data type.
-#' @param percent.mt A decimal value between 0 and 1. Define the highest percentage of reads that map to the mitochondrial genome.
+#' @param percent.mt Define the highest percentage of reads that map to the mitochondrial genome.
 #' @param min.cells An integer value. Include features detected in at least this many cells.
 #' @param min.features An integer value. Include cells where at least this many features are detected.
 #' @param oversd Remove cells whose library size is greater than mean + oversd * sd. Default is null, which doesn't remove cells.
@@ -41,7 +41,7 @@
 #'                                dims = 1:10, k.param = 5, resolution = 0.75,
 #'                                min.pct = 0.25, test.use = "MAST", minSize = 5)
 #'
-assignCellType <- function(obj, datatype = "RNA", min.cells = 3, min.features = 200, percent.mt = 5, oversd = NULL, normalization.method = "LogNormalize",
+assignCellType <- function(obj, datatype = "RNA", min.cells = 3, min.features = 200, percent.mt = 10, oversd = NULL, normalization.method = "LogNormalize",
                            scale.factor = 10000, selection.method = "vst", nfeatures = 2000, npcs = 50,
                            cluster_cell = NULL, dims = 1:50, k.param = 20, resolution = 0.5, hclustmethod = "complete", ncluster = 3,
                            min.pct = 0.1, test.use = "wilcox", logfc.threshold = 0.1,
