@@ -105,7 +105,7 @@ head(cluster_celltype)
 You can also use your own cell type markers database. Setting “db” to be a path to the new database that to be used, which is a list of cell types with their marker genes. The file must be in ‘rds’ format.
 ```{r, eval=FALSE}
 ## Don't run
-cluster_celltype <- GSEA_analysis(cluster_list = cluster_list, db = "path/to/your/rdsfile")
+cluster_celltype <- doGSEA(cluster_list = cluster_list, db = "path/to/your/rdsfile")
 ```
 
 ### Label the cell type
@@ -207,7 +207,7 @@ cluster_list <- getFC(obj, min.pct = 0.25, test.use = "wilcox")
 Doing GSEA, one needs to provide a cell type markers database. Setting “db” to be a path to the new database that to be used, the file must be in ‘rds’ format.
 
 ```{r, eval = FALSE}
-cluster_celltype <- GSEA_analysis(cluster_list = cluster_list, db = "path/to/your/rdsfile")
+cluster_celltype <- doGSEA(cluster_list = cluster_list, db = "path/to/your/rdsfile")
 ```
 
 The last step, label the cell type, is the same as before.

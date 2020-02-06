@@ -55,7 +55,7 @@ head(cluster_celltype)
 
 ## ---- eval=FALSE--------------------------------------------------------------
 #  ## Don't run
-#  cluster_celltype <- GSEA_analysis(cluster_list = cluster_list, db = "path/to/your/rdsfile")
+#  cluster_celltype <- doGSEA(cluster_list = cluster_list, db = "path/to/your/rdsfile")
 
 ## ---- warning=FALSE-----------------------------------------------------------
 pbmc_res <- labelCelltype(pbmc, cluster_celltype)
@@ -115,7 +115,7 @@ head(ATAC_example_res$cluster_celltype)
 #  cluster_list <- getFC(obj, min.pct = 0.25, test.use = "wilcox")
 
 ## ---- eval = FALSE------------------------------------------------------------
-#  cluster_celltype <- GSEA_analysis(cluster_list = cluster_list, db = "path/to/your/rdsfile")
+#  cluster_celltype <- doGSEA(cluster_list = cluster_list, db = "path/to/your/rdsfile")
 
 ## ---- eval = FALSE------------------------------------------------------------
 #  obj_res <- labelCelltype(obj, cluster_celltype)
