@@ -3,6 +3,7 @@
 # library(Seurat)
 # library(GenomeInfoDb)
 # library(GenomicRanges)
+# library(readxl)
 #
 # #################################
 # ######## PanglaoDB_list #########
@@ -25,6 +26,33 @@
 #
 # # saveRDS(PanglaoDB_list, file = "inst/extdata/PanglaoDB_list.rds")
 # use_data(PanglaoDB_list)
+#
+# ##########################
+# ### generate TAIR_list ###
+# ##########################
+# rm(list = ls())
+#
+# TAIR_dta <- read_xlsx("~/Downloads/3463_marker_genes.xlsx")
+# TAIR_dta <- TAIR_dta[, -6]
+# TAIR_dta <- as.data.frame(TAIR_dta)
+#
+# celltype <- colnames(TAIR_dta)
+# celltype <- unique(celltype)
+#
+# TAIR_list <- vector("list", length(celltype))
+# names(TAIR_list) <- celltype
+# TAIR_dta <- rbind(TAIR_dta, NA)
+#
+# for (i in 1:length(celltype)) {
+#   tmp <- TAIR_dta[, i]
+#   index <- which(is.na(tmp) == TRUE)
+#   TAIR_list[[i]] <- as.vector(TAIR_dta[1:(index[1] - 1), i])
+# }
+#
+# # saveRDS(TAIR_list, file = "TAIR_list.rds")
+# use_data(TAIR_list)
+#
+#
 #
 # ###########################
 # #### GSEA_list ############

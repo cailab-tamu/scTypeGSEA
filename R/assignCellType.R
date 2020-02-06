@@ -22,7 +22,7 @@
 #' @param min.pct A decimal value between 0 and 1. Only test genes that are detected in a minimum fraction of min.pct cells in either of the two populations. Meant to speed up the function by not testing genes that are very infrequently expressed.
 #' @param logfc.threshold A decimal value between 0 and 1. Limit testing to genes which show, on average, at least X-fold difference (log-scale) between the two groups of cells. Increasing logfc.threshold speeds up the function, but can miss weaker signals.
 #' @param test.use Denotes which test to use. Available options are 'wilcox', 'bimod', 'roc', 'negbinom', 'poisson', 'LR', 'MAST' and 'DESeq2'. The defalut is "MAST" for scRNAseq data, we suggest to use 'wilcox' for other data type.
-#' @param db The cell type data base to use. For single cell data, we provide two data base, one is 'PanglaoDB' data base (db = 'PanglaoDB_list'), the other one is 'GSEA' data base (db = 'GSEA_list'). It can also be a path to the new (referential) data base that hope to be used, the file must be 'rds' format.
+#' @param db The cell type data base to use. For single cell data, we provide three data base, the first one is 'PanglaoDB' data base (db = 'PanglaoDB_list'), the second one is 'GSEA' data base (db = 'GSEA_list') and the third one is the reference genome for Arabidopsis (db = 'TAIR_list'). It can also be a path to the new (referential) data base that hope to be used, the file must be 'rds' format.
 #' @param minSize An integer value. Minimal size of a gene set to test. All pathways below the threshold are excluded.
 #' @param maxSize An integer value. Maximal size of a gene set to test. All pathways above the threshold are excluded.
 #' @param annotation.file Path to GTF annotation file. (Only for "ATAC" data)

@@ -36,3 +36,10 @@
 #' @format A list with 178 cell types
 #' @source \url{https://panglaodb.se/markers.html}
 "PanglaoDB_list"
+
+#' The reference genome for Arabidopsis.
+#'
+#' A list contains cell types with their marker gene
+#'
+#' @format A list with 16 cell types
+"TAIR_list"
