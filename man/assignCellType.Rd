@@ -9,7 +9,7 @@ assignCellType(
   datatype = "RNA",
   min.cells = 3,
   min.features = 200,
-  percent.mt = 5,
+  percent.mt = 10,
   oversd = NULL,
   normalization.method = "LogNormalize",
   scale.factor = 10000,
@@ -44,7 +44,7 @@ assignCellType(
 
 \item{min.features}{An integer value. Include cells where at least this many features are detected.}
 
-\item{percent.mt}{A decimal value between 0 and 1. Define the highest percentage of reads that map to the mitochondrial genome.}
+\item{percent.mt}{Define the highest percentage of reads that map to the mitochondrial genome.}
 
 \item{oversd}{Remove cells whose library size is greater than mean + oversd * sd. Default is null, which doesn't remove cells.}
 
@@ -76,7 +76,7 @@ assignCellType(
 
 \item{logfc.threshold}{A decimal value between 0 and 1. Limit testing to genes which show, on average, at least X-fold difference (log-scale) between the two groups of cells. Increasing logfc.threshold speeds up the function, but can miss weaker signals.}
 
-\item{db}{The cell type data base to use. For single cell data, we provide two data base, one is 'PanglaoDB' data base (db = 'PanglaoDB_list'), the other one is 'GSEA' data base (db = 'GSEA_list'). It can also be a path to the new (referential) data base that hope to be used, the file must be 'rds' format.}
+\item{db}{The cell type data base to use. For single cell data, we provide three data base, the first one is 'PanglaoDB' data base (db = 'PanglaoDB_list'), the second one is 'GSEA' data base (db = 'GSEA_list') and the third one is the reference genome for Arabidopsis (db = 'TAIR_list'). It can also be a path to the new (referential) data base that hope to be used, the file must be 'rds' format.}
 
 \item{minSize}{An integer value. Minimal size of a gene set to test. All pathways below the threshold are excluded.}
 

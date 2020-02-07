@@ -9,7 +9,7 @@ doGSEA(cluster_list, db = "PanglaoDB_list", minSize = 15, maxSize = 500)
 \arguments{
 \item{cluster_list}{A ranked gene list for each cluster.}
 
-\item{db}{The cell type data base to use. For single cell data, we provide two data base, one is 'PanglaoDB' data base (db = 'PanglaoDB_list'), the other one is 'GSEA' data base (db = 'GSEA_list'). It can also be a path to the new (referential) data base that hope to be used, the file must be 'rds' format.}
+\item{db}{The cell type data base to use. For single cell data, we provide three data base, the first one is 'PanglaoDB' data base (db = 'PanglaoDB_list'), the second one is 'GSEA' data base (db = 'GSEA_list') and the third one is the reference genome for Arabidopsis (db = 'TAIR_list'). It can also be a path to the new (referential) data base that hope to be used, the file must be 'rds' format.}
 
 \item{minSize}{An integer value. Minimal size of a gene set to test. All pathways below the threshold are excluded.}
 

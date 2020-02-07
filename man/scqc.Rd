@@ -9,7 +9,7 @@ scqc(
   datatype = "RNA",
   min.cells = 10,
   min.features = 1000,
-  percent.mt = 5,
+  percent.mt = 10,
   oversd = NULL,
   normalization.method = "LogNormalize",
   scale.factor = 10000,
@@ -27,7 +27,7 @@ scqc(
 
 \item{min.features}{An integer value. Include cells where at least this many features are detected.}
 
-\item{percent.mt}{A decimal value between 0 and 1. Define the highest percentage of reads that map to the mitochondrial genome.}
+\item{percent.mt}{Define the highest percentage of reads that map to the mitochondrial genome.}
 
 \item{oversd}{Remove cells whose library size is greater than mean + oversd * sd. Default is null, which doesn't remove cells.}
 
