@@ -1,10 +1,3 @@
-#' PBMC raw data set.
-#'
-#' A version of 10X Genomics' 3k PBMC dataset
-#'
-#' @format A matrix with 32738 rows and 2700 columns
-"pbmc_raw"
-
 #' A small example version of the PBMC dataset
 #'
 #' A subsetted version of 10X Genomics' 3k PBMC dataset

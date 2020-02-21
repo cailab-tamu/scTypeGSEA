@@ -29,19 +29,17 @@ doGSEA <- function(cluster_list, db = "PanglaoDB_list", minSize = 15, maxSize = 
 
   # decide the database to use
   if (db == "PanglaoDB_list"){
-    load("data/PanglaoDB_list.rda")
     pathways <- PanglaoDB_list
   } else if(db == "GSEA_list"){
-    load("data/GSEA_list.rda")
     pathways <- GSEA_list
   } else if(db == "TAIR_list") {
-    load("data/TAIR_list.rda")
     pathways <- TAIR_list
   } else {
     pathways <- readRDS(db)
   }
 
   # Do fgsea to each cluster
+
   for (i in 1:ncluster) {
     cat(paste0("Do GSEA for cluster"), i - 1, "\n")
 

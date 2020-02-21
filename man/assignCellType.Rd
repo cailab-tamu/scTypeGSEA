@@ -103,4 +103,5 @@ This is the main function of scTypeGSEA, which can do quality control, data pre-
 #                               nfeatures = 100, npcs = 10,
 #                               dims = 1:10, k.param = 5, resolution = 0.75,
 #                               min.pct = 0.25, test.use = "MAST", minSize = 5)
+
 }

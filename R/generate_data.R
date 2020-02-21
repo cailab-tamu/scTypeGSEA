@@ -25,7 +25,8 @@
 # }
 #
 # # saveRDS(PanglaoDB_list, file = "inst/extdata/PanglaoDB_list.rds")
-# use_data(PanglaoDB_list)
+# load("~/Documents/PanglaoDB_list.rda")
+# use_data(PanglaoDB_list, internal = TRUE)
 #
 # ##########################
 # ### generate TAIR_list ###
@@ -50,7 +51,8 @@
 # }
 #
 # # saveRDS(TAIR_list, file = "TAIR_list.rds")
-# use_data(TAIR_list)
+# load("~/Documents//TAIR_list.rda")
+# use_data(TAIR_list, internal = TRUE)
 #
 #
 #
@@ -73,7 +75,11 @@
 # }
 #
 # # saveRDS(GSEA_list, file = "inst/extdata/GSEA_list.rds")
-# use_data(GSEA_list)
+# load("~/Documents//GSEA_list.rda")
+# use_data(GSEA_list, internal = TRUE)
+#
+#
+# use_data(PanglaoDB_list, GSEA_list, TAIR_list, internal = TRUE)
 #
 # ##########################
 # ####### pbmc_raw #########
