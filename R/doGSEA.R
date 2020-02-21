@@ -14,10 +14,10 @@
 #' @export
 #'
 #' @examples
-#' pbmc_example <- scqc(small_RNA, min.cells = 1, min.features = 10, nfeatures = 100, npcs = 10)
-#' pbmc_example <- doClustering(pbmc_example, dims = 1:10, k.param = 5, resolution = 0.75)
-#' cluster_list <- getFC(pbmc_example, min.pct = 0.25, test.use = "MAST")
-#' cluster_celltype <- doGSEA(cluster_list = cluster_list, minSize = 5)
+#' # pbmc_example <- scqc(small_RNA, min.cells = 1, min.features = 10, nfeatures = 100, npcs = 10)
+#' # pbmc_example <- doClustering(pbmc_example, dims = 1:10, k.param = 5, resolution = 0.75)
+#' # cluster_list <- getFC(pbmc_example, min.pct = 0.25, test.use = "MAST")
+#' # cluster_celltype <- doGSEA(cluster_list = cluster_list, minSize = 5)
 #'
 doGSEA <- function(cluster_list, db = "PanglaoDB_list", minSize = 15, maxSize = 500) {
 
@@ -29,10 +29,13 @@ doGSEA <- function(cluster_list, db = "PanglaoDB_list", minSize = 15, maxSize = 
 
   # decide the database to use
   if (db == "PanglaoDB_list"){
+    load("data/PanglaoDB_list.rda")
     pathways <- PanglaoDB_list
   } else if(db == "GSEA_list"){
+    load("data/GSEA_list.rda")
     pathways <- GSEA_list
   } else if(db == "TAIR_list") {
+    load("data/TAIR_list.rda")
     pathways <- TAIR_list
   } else {
     pathways <- readRDS(db)

@@ -8,7 +8,7 @@ Authors@R: c(person(given = "Guanxun", family = "Li", role = c("aut","cre"), ema
              person(given = "Jianhua", family = "Huang", role = c("aut","ths")),
              person(given = "James", family = "Cai", role = c("aut", "ths"), comment = c(ORCID = '0000-0002-8081-6725'))
              )
-Description: A quick way to assign cell type for single cell RNA sequence data and single cell ATAC data by GSEA method.
+Description: A quick way to assign cell type for single cell RNA sequence data and single cell ATAC data by GSEA method (See Aravind Subramanian, et al (2005) <doi:10.1073/pnas.0506580102>).
 License: GPL-3
 Encoding: UTF-8
 LazyData: true

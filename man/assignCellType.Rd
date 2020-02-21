@@ -99,9 +99,8 @@ It will return the Seurat object with cell type, a cell type matrix and a cluste
 This is the main function of scTypeGSEA, which can do quality control, data pre-process, cluster, get fold changes, do GSEA and label the cell in one step.
 }
 \examples{
-pbmc_example <- assignCellType(small_RNA, min.cells = 1, min.features = 10,
-                               nfeatures = 100, npcs = 10,
-                               dims = 1:10, k.param = 5, resolution = 0.75,
-                               min.pct = 0.25, test.use = "MAST", minSize = 5)
-
+# pbmc_example <- assignCellType(small_RNA, min.cells = 1, min.features = 10,
+#                               nfeatures = 100, npcs = 10,
+#                               dims = 1:10, k.param = 5, resolution = 0.75,
+#                               min.pct = 0.25, test.use = "MAST", minSize = 5)
 }
