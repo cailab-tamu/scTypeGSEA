@@ -36,6 +36,7 @@
 #' @export
 #'
 #' @examples
+#' # It may take several seconds to run the example.
 #' # pbmc_example <- assignCellType(small_RNA, min.cells = 1, min.features = 10,
 #' #                               nfeatures = 100, npcs = 10,
 #' #                               dims = 1:10, k.param = 5, resolution = 0.75,

@@ -31,6 +31,7 @@
 #' @export
 #'
 #' @examples
+#' # It may take several seconds to run the example.
 #' pbmc_example <- scqc(small_RNA, min.cells = 1, min.features = 10, nfeatures = 100, npcs = 10)
 #' pbmc_example
 scqc <- function(obj, datatype = "RNA", min.cells = 10, min.features = 1000, percent.mt = 10, oversd = NULL, normalization.method = "LogNormalize",

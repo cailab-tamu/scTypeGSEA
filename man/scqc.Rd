@@ -51,6 +51,7 @@ And then the function will do basic data pre-process, which includes “Normaliz
 For other type of data, it will create a Seurat object to save the matrix.
 }
 \examples{
+# It may take several seconds to run the example.
 pbmc_example <- scqc(small_RNA, min.cells = 1, min.features = 10, nfeatures = 100, npcs = 10)
 pbmc_example
 }

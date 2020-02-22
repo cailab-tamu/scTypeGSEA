@@ -33,6 +33,7 @@ A Seurat object with both ATAC data matrix and gene activity matrix.
 This function takes in a peak matrix and an annotation file (gtf)and collapse the peak matrix to a gene activity matrix.
 }
 \examples{
+# Don't run.
 # annotation.file <- "../data/Homo_sapiens.GRCh37.82.gtf"
 # ATAC_example <- atac2rna(small_ATAC, annotation.file = annotation.file)
 

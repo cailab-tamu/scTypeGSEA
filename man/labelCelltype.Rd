@@ -18,6 +18,7 @@ It will return a list including a Seurat object with cell type for each cell and
 Add cell type to Seurat object.
 }
 \examples{
+# It may take several seconds to run the example.
 # pbmc_example <- scqc(small_RNA, min.cells = 1, min.features = 10, nfeatures = 100, npcs = 10)
 # pbmc_example <- doClustering(pbmc_example, dims = 1:10, k.param = 5, resolution = 0.75)
 # cluster_list <- getFC(pbmc_example, min.pct = 0.25, test.use = "MAST")
