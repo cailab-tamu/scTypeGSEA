@@ -90,12 +90,12 @@
 # use_data(pbmc_raw)
 #
 # #########################
-# ###### small_RNA ########
+# ###### small_pbmc #######
 # #########################
 #
 # rm(list = ls())
-# small_RNA <- pbmc_small@assays$RNA@counts
-# use_data(small_RNA)
+# small_pbmc_rna <- pbmc_small@assays$RNA@counts
+# use_data(small_pbmc_rna)
 #
 # ########################
 # ##### small_ATAC #######

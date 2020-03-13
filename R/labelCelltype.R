@@ -11,24 +11,23 @@
 #' @export
 #'
 #' @examples
-#' # It may take several seconds to run the example.
-#' # pbmc_example <- scqc(small_RNA, min.cells = 1, min.features = 10, nfeatures = 100, npcs = 10)
-#' # pbmc_example <- doClustering(pbmc_example, dims = 1:10, k.param = 5, resolution = 0.75)
-#' # cluster_list <- getFC(pbmc_example, min.pct = 0.25, test.use = "MAST")
-#' # cluster_celltype <- doGSEA(cluster_list = cluster_list, minSize = 5)
-#' # celltype <- labelCelltype(pbmc_example, cluster_celltype)
+#' \donttest{pbmc_example <- scqc(small_pbmc_rna, min.cells = 1, min.features = 10, nfeatures = 100, npcs = 10)
+#'           pbmc_example <- doClustering(pbmc_example, dims = 1:10, k.param = 5, resolution = 0.75)
+#'           cluster_list <- getFC(pbmc_example, min.pct = 0.25, test.use = "MAST")
+#'           cluster_celltype <- doGSEA(cluster_list = cluster_list, minSize = 5)
+#'           celltype <- labelCelltype(pbmc_example, cluster_celltype)}
 #'
 labelCelltype <- function(obj, cluster_celltype){
 
     # check Seurat object
     info <- try(Seurat::Project(obj), silent = TRUE)
     if (grepl("Error", info) == TRUE) {
-      stop(cat("The input should be Seurat Object for single cell data type.\n"))
+      stop(message("The input should be Seurat Object for single cell data type.\n"))
     }
 
     # check number of cluster
     if (nrow(cluster_celltype) != length(unique(obj@meta.data$seurat_clusters))){
-      stop(cat("The number of cluster between 'cluster_celltype' and Seurat object is not consistent."))
+      stop(message("The number of cluster between 'cluster_celltype' and Seurat object is not consistent."))
     }
 
     # Add cell type for Seurat object

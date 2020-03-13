@@ -14,11 +14,10 @@
 #' @export
 #'
 #' @examples
-#' # It may take several seconds to run the example.
-#' # pbmc_example <- scqc(small_RNA, min.cells = 1, min.features = 10, nfeatures = 100, npcs = 10)
-#' # pbmc_example <- doClustering(pbmc_example, dims = 1:10, k.param = 5, resolution = 0.75)
-#' # cluster_list <- getFC(pbmc_example, min.pct = 0.25, test.use = "MAST")
-#' # cluster_celltype <- doGSEA(cluster_list = cluster_list, minSize = 5)
+#' \donttest{pbmc_example <- scqc(small_pbmc_rna, min.cells = 1, min.features = 10, nfeatures = 100, npcs = 10)
+#'           pbmc_example <- doClustering(pbmc_example, dims = 1:10, k.param = 5, resolution = 0.75)
+#'           cluster_list <- getFC(pbmc_example, min.pct = 0.25, test.use = "MAST")
+#'           cluster_celltype <- doGSEA(cluster_list = cluster_list, minSize = 5)}
 #'
 doGSEA <- function(cluster_list, db = "PanglaoDB_list", minSize = 15, maxSize = 500) {
 
@@ -42,11 +41,10 @@ doGSEA <- function(cluster_list, db = "PanglaoDB_list", minSize = 15, maxSize = 
   # Do fgsea to each cluster
 
   for (i in 1:ncluster) {
-    cat(paste0("Do GSEA for cluster"), i - 1, "\n")
+    message(paste0("Do GSEA for cluster"), i - 1, "\n")
 
     Ranks <- cluster_list[[i]]
     set.seed(1234)
-    options(warn=-1)
     fgseaRes <- fgsea::fgseaMultilevel(pathways = pathways, stats = Ranks, minSize = minSize, maxSize = maxSize)
     fgseaRes <- fgseaRes[fgseaRes$padj < 0.05 & fgseaRes$NES > 0,, drop=FALSE]
 

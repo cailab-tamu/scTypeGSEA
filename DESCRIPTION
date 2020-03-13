@@ -1,6 +1,6 @@
 Package: scTypeGSEA
 Title: Single Cell Type Gene Set Enrichment Analysis
-Version: 1.0.2
+Version: 1.0.3
 Authors@R: c(person(given = "Guanxun", family = "Li", role = c("aut","cre"), email = "victorguanxun@gmail.com"),
              person(given = "Daniel", family = "Osorio", role = c("aut", "ctb"), email = "dcosorioh@tamu.edu", comment = c(ORCID = '0000-0003-4424-8422')),
              person(given = "Yan", family = "Zhong", role = c("aut","ctb")),
@@ -8,7 +8,7 @@ Authors@R: c(person(given = "Guanxun", family = "Li", role = c("aut","cre"), ema
              person(given = "Jianhua", family = "Huang", role = c("aut","ths")),
              person(given = "James", family = "Cai", role = c("aut", "ths"), comment = c(ORCID = '0000-0002-8081-6725'))
              )
-Description: A quick way to assign cell type for single cell RNA sequence data and single cell ATAC data by GSEA method (See Aravind Subramanian, et al (2005) <doi:10.1073/pnas.0506580102>).
+Description: A quick way to assign cell type for single cell RNA sequence data and single cell ATAC (Assay for Transposase Accessible Chromatin) data by GSEA (Gene set enrichment analysis) method (See Aravind Subramanian, et al (2005) <doi:10.1073/pnas.0506580102>).
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
@@ -25,4 +25,3 @@ Suggests:
     testthat (>= 2.1.0),
     knitr, 
     rmarkdown
-VignetteBuilder: knitr

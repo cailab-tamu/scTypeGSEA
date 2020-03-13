@@ -24,8 +24,7 @@
 #' @export
 #'
 #' @examples
-#' # It may take several seconds to run the example.
-#' pbmc_example <- scqc(small_RNA, min.cells = 1, min.features = 10, nfeatures = 100, npcs = 10)
+#' pbmc_example <- scqc(small_pbmc_rna, min.cells = 1, min.features = 10, nfeatures = 100, npcs = 10)
 #' pbmc_example <- doClustering(pbmc_example, dims = 1:10, k.param = 5, resolution = 0.75)
 #' head(pbmc_example@meta.data$seurat_clusters)
 doClustering <- function(obj, datatype = "RNA", cluster_cell = NULL, dims = 1:50, k.param = 30, resolution = 0.5,
@@ -33,13 +32,13 @@ doClustering <- function(obj, datatype = "RNA", cluster_cell = NULL, dims = 1:50
     # check Seurat object
     info <- try(Seurat::Project(obj), silent = TRUE)
     if (grepl("Error", info) == TRUE) {
-      stop(cat("The input should be Seurat Object.\n"))
+      stop(message("The input should be Seurat Object.\n"))
     }
 
     # Add cluster if it has its own cluster
     if (is.null(cluster_cell) == FALSE){
       if (length(cluster_cell) != ncol(obj)){
-        stop(cat("The length of 'cluster_cell' doesn't match the number of cells, please check it.\n"))
+        stop(message("The length of 'cluster_cell' doesn't match the number of cells, please check it.\n"))
       }
       obj@meta.data$seurat_clusters <- cluster_cell
       # return Seurat object
@@ -49,7 +48,7 @@ doClustering <- function(obj, datatype = "RNA", cluster_cell = NULL, dims = 1:50
       if (datatype == "RNA"){
         # check data process
         if (is.null(obj@reductions$pca) == TRUE){
-          stop(cat("The Seurat object hasn't been processed, please use 'scqc' function first.\n"))
+          stop(message("The Seurat object hasn't been processed, please use 'scqc' function first.\n"))
         }
         # Cluster the cells
         obj <- Seurat::FindNeighbors(obj, dims = dims, k.param = 20)

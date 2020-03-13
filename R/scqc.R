@@ -31,8 +31,7 @@
 #' @export
 #'
 #' @examples
-#' # It may take several seconds to run the example.
-#' pbmc_example <- scqc(small_RNA, min.cells = 1, min.features = 10, nfeatures = 100, npcs = 10)
+#' pbmc_example <- scqc(small_pbmc_rna, min.cells = 1, min.features = 10, nfeatures = 100, npcs = 10)
 #' pbmc_example
 scqc <- function(obj, datatype = "RNA", min.cells = 10, min.features = 1000, percent.mt = 10, oversd = NULL, normalization.method = "LogNormalize",
                  scale.factor = 10000, selection.method = "vst", nfeatures = 2000, npcs = 50) {
@@ -42,7 +41,7 @@ scqc <- function(obj, datatype = "RNA", min.cells = 10, min.features = 1000, per
   info <- try(Seurat::Project(obj), silent = TRUE)
 
   if (grepl("Error", info) == TRUE) {
-    cat("The input is not a Seurat object, next to transform gene express count matrix to Seurat object.\n")
+    message("The input is not a Seurat object, next to transform gene express count matrix to Seurat object.\n")
     obj <- Seurat::CreateSeuratObject(counts = obj, min.cells = min.cells, min.features = min.features)
   }
 

@@ -15,12 +15,11 @@
 #'
 #' @return A Seurat object with both ATAC data matrix and gene activity matrix.
 #'
-#' @examples
-#' # Don't run.
-#' # annotation.file <- "../data/Homo_sapiens.GRCh37.82.gtf"
-#' # ATAC_example <- atac2rna(small_ATAC, annotation.file = annotation.file)
-#'
 #' @export
+#'
+#' @examples
+#' \dontrun{annotation.file <- "../data/Homo_sapiens.GRCh37.82.gtf"
+#'          ATAC_example <- atac2rna(pbmc_small_atac, annotation.file = annotation.file)}
 #'
 atac2rna <- function(peaks, annotation.file = NULL, seq.levels = c(1:22, "X", "Y"),
                      include.body = TRUE, upstream = 2000, downstream = 0){

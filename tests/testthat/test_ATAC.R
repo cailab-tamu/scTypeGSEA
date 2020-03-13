@@ -1,5 +1,5 @@
 # annotation.file <- "~/Documents/Single cell/package example/R package/atac2rna/dataset/Homo_sapiens.GRCh37.82.gtf"
-# ATAC_example <- atac2rna(small_ATAC, annotation.file = annotation.file)
+# ATAC_example <- atac2rna(small_pbmc_rna, annotation.file = annotation.file)
 # test_that("scqc works", {
 #   # check RNA matrix
 #   expect_equal(is.null(ATAC_example@assays$RNA), FALSE)
@@ -37,7 +37,7 @@
 #
 # ATAC_example_res1 <- labelCelltype(ATAC_example, cluster_celltype)
 # set.seed(1234)
-# ATAC_example_res2 <- assignCellType(small_ATAC, datatype = "ATAC", annotation.file = annotation.file,
+# ATAC_example_res2 <- assignCellType(pbmc_small_atac, datatype = "ATAC", annotation.file = annotation.file,
 #                                     min.cells = 1, min.features = 10, nfeatures = 100, npcs = 10,
 #                                     dims = 1:10, k.param = 5, resolution = 0.75,
 #                                     min.pct = 0.25, test.use = "MAST", minSize = 5)

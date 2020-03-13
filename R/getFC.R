@@ -16,15 +16,14 @@
 #' @export
 #'
 #' @examples
-#' # It may take several seconds to run the example.
-#' # pbmc_example <- scqc(small_RNA, min.cells = 1, min.features = 10, nfeatures = 100, npcs = 10)
-#' # pbmc_example <- doClustering(pbmc_example, dims = 1:10, k.param = 5, resolution = 0.75)
-#' # cluster_list <- getFC(pbmc_example, min.pct = 0.25, test.use = "MAST")
+#' \donttest{pbmc_example <- scqc(small_pbmc_rna, min.cells = 1, min.features = 10, nfeatures = 100, npcs = 10)
+#'           pbmc_example <- doClustering(pbmc_example, dims = 1:10, k.param = 5, resolution = 0.75)
+#'           cluster_list <- getFC(pbmc_example, min.pct = 0.25, test.use = "MAST")}
 #'
 getFC <- function(obj, min.pct = 0.25, test.use = "MAST", logfc.threshold = 0.1) {
   # check cluster
   if (is.null(obj@meta.data$seurat_clusters) == TRUE){
-    stop(cat("Please go through 'check_cluster' fucntion to do cluster first.\n"))
+    stop(message("Please go through 'check_cluster' fucntion to do cluster first.\n"))
   }
 
   # number of cluster
@@ -38,7 +37,7 @@ getFC <- function(obj, min.pct = 0.25, test.use = "MAST", logfc.threshold = 0.1)
   for (i in 1:ncluster) {
 
     # find marker gene
-    cat(paste0("Find marker genes for cluster"), i - 1, "\n")
+    message(paste0("Find marker genes for cluster"), i - 1, "\n")
     options(warn=-1)
     cluster.markers <- Seurat::FindMarkers(obj, ident.1 = (i - 1), min.pct = min.pct, logfc.threshold = logfc.threshold, test.use = test.use, min.cells.group = 1)
 

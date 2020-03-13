@@ -4,7 +4,7 @@
 #'
 #' @format A matrix with 230 rows and 80 columns
 #' @source \url{https://github.com/satijalab/seurat/blob/master/inst/extdata/pbmc_raw.txt}
-"small_RNA"
+"small_pbmc_rna"
 
 #' A small example version of the PBMC ATAC dataset
 #'
@@ -12,7 +12,7 @@
 #'
 #' @format A matrix with 650 rows and 80 columns
 #' @source \url{https://support.10xgenomics.com/single-cell-atac/datasets/1.2.0/atac_v1_pbmc_5k}
-"small_ATAC"
+"pbmc_small_atac"
 
 #' Cell type gene expression markers from GSEA data base
 #'
