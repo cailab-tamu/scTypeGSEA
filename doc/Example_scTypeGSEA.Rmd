@@ -31,14 +31,15 @@ install_github("cailab-tamu/scTypeGSEA")
 
 And then you can use following code to load the package.
 ```{r}
+library(Seurat)
 library(scTypeGSEA)
 ```
 
 ## Quick example
 
-Here we use a toy data set "small_RNA" to show our main function "assignCellType" for single cell RNA sequence data. This function can achieve quality control, data pre-process, cluster, get fold changes, do GSEA and label the cell in one step.
+Here we use a toy data set "small_pbmc_rna" to show our main function "assignCellType" for single cell RNA sequence data. This function can achieve quality control, data pre-process, cluster, get fold changes, do GSEA and label the cell in one step.
 ```{r, warning=FALSE}
-pbmc_example_res <- assignCellType(small_RNA, min.cells = 1, min.features = 10, 
+pbmc_example_res <- assignCellType(small_pbmc_rna, min.cells = 1, min.features = 10, 
                                    nfeatures = 100, npcs = 10,
                                    dims = 1:10, k.param = 5, resolution = 0.75,
                                    min.pct = 0.25, test.use = "MAST", minSize = 5)
@@ -63,10 +64,11 @@ head(pbmc_example_res$cluster_celltype)
 Next is to illustrate this pipeline step by step.
 
 ### Load data and quality control
-Here we will use the data set “pbmc_raw”, which has 32738 genes and 2700 cells, to go through this pipeline. The first step is to create Seurat Object, do quality control and then do basic data pre-process, which includes “Normalization”, “Scale data”, “Find HVG” and “PCA”. Here we do “LogNormalize” normalization, “vst” feature selections to select 2000 features and do PCA to get the first 50 PCs. The input can be a Seurat object or a count gene expression matrix.
+Here we will use the data set “pbmc_raw” (https://s3-us-west-2.amazonaws.com/10x.files/samples/cell/pbmc3k/pbmc3k_filtered_gene_bc_matrices.tar.gz), which has 32738 genes and 2700 cells, to go through this pipeline. The first step is to create Seurat Object, do quality control and then do basic data pre-process, which includes “Normalization”, “Scale data”, “Find HVG” and “PCA”. Here we do “LogNormalize” normalization, “vst” feature selections to select 2000 features and do PCA to get the first 50 PCs. The input can be a Seurat object or a count gene expression matrix.
 
 ```{r, warning=FALSE}
 library(scTypeGSEA)
+pbmc_raw <- Read10X("~/Documents/Single cell/package example/R package/Seurat/cluster/data set/")
 pbmc <- scqc(pbmc_raw, min.cells = 3, min.features = 200, percent.mt = 5, 
              normalization.method = "LogNormalize", scale.factor = 10000, 
             selection.method = "vst", nfeatures = 2000, npcs = 50)
@@ -155,8 +157,8 @@ install_github("timoast/signac")
 One can also use our main function "assignCellType" to do analysis in one step. Here we use a toy data set "small_ATAC", which contains 685 peaks and 80 cells. Note that here we set datatype = "ATAC" and "annotation.file" is the path to GTF annotation file.
 
 ```{r, message = FALSE, warning = FALSE}
-annotation.file <- "~/Documents/Single cell/package example/R package/atac2rna/dataset/Homo_sapiens.GRCh37.82.gtf"
-ATAC_example_res <- assignCellType(small_ATAC, datatype = "ATAC", annotation.file = annotation.file,
+annotation.file <- "~/Documents/Single cell/data set/gtf_file/Homo_sapiens.GRCh37.82.gtf"
+ATAC_example_res <- assignCellType(pbmc_small_atac, datatype = "ATAC", annotation.file = annotation.file,
                                     min.cells = 1, min.features = 10, nfeatures = 100, npcs = 10,
                                     dims = 1:10, k.param = 5, resolution = 0.75,
                                     min.pct = 0.25, test.use = "MAST", minSize = 5)

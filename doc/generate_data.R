@@ -112,7 +112,7 @@
 # peaks.gr <- GenomicRanges::makeGRangesFromDataFrame(df = peak.df)
 # BiocGenerics::start(peaks.gr[BiocGenerics::start(peaks.gr) == 0, ]) <- 1
 # # get annotation file, select genes
-# gtf <- rtracklayer::import(con = "~/Documents/Single cell/package example/R package/atac2rna/dataset/Homo_sapiens.GRCh37.82.gtf")
+# gtf <- rtracklayer::import(con = "~/Documents/Single cell/data set/gtf_file/Homo_sapiens.GRCh37.82.gtf")
 # gtf <- GenomeInfoDb::keepSeqlevels(x = gtf, value = c(1:22, "X", "Y"), pruning.mode = 'coarse')
 # # change seqlevelsStyle if not the same
 # if (!any(GenomeInfoDb::seqlevelsStyle(x = gtf) == GenomeInfoDb::seqlevelsStyle(x = peaks.gr))) {
@@ -149,8 +149,8 @@
 # index_row <- na.omit(index_row)
 #
 # # generate small peak matrix
-# small_ATAC <- peaks[index_row, ] # 685 x 4654
+# pbmc_small_atac <- peaks[index_row, ] # 685 x 4654
 # set.seed(1234)
-# small_ATAC <- small_ATAC[, sample(1:4654, 80)] # 685 x 80
-# small_ATAC <- small_ATAC[order(rownames(small_ATAC)), ]
-# use_data(small_ATAC)
+# pbmc_small_atac <- pbmc_small_atac[, sample(1:4654, 80)] # 685 x 80
+# pbmc_small_atac <- pbmc_small_atac[order(rownames(pbmc_small_atac)), ]
+# use_data(pbmc_small_atac)

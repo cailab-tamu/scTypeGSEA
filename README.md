@@ -34,9 +34,9 @@ library(scTypeGSEA)
 
 ## Quick example:
 
-Here we use a toy data set "small_RNA" to show our main function "assignCellType" for single cell RNA sequence data. This function can achieve quality control, data pre-process, cluster, get fold changes, do GSEA and label the cell in one step.
+Here we use a toy data set "small_pbmc_rna" to show our main function "assignCellType" for single cell RNA sequence data. This function can achieve quality control, data pre-process, cluster, get fold changes, do GSEA and label the cell in one step.
 ```{r, tidy = TRUE, tidy.opts=list(width.cutoff = 50)}
-pbmc_example_res <- assignCellType(small_RNA, min.cells = 1, min.features = 10, 
+pbmc_example_res <- assignCellType(small_pbmc_rna, min.cells = 1, min.features = 10, 
                                    nfeatures = 100, npcs = 10,
                                    dims = 1:10, k.param = 5, resolution = 0.75,
                                    min.pct = 0.25, test.use = "MAST", minSize = 5)
