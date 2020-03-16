@@ -4,7 +4,9 @@
 \name{GSEA_list}
 \alias{GSEA_list}
 \title{Cell type gene expression markers from GSEA data base}
-\format{A list with 257 cell types}
+\format{
+A list with 257 cell types
+}
 \source{
 \url{http://software.broadinstitute.org/gsea/msigdb/supplementary_genesets.jsp#SCSig}
 }

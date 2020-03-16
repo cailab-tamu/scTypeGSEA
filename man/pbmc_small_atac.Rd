@@ -4,7 +4,9 @@
 \name{pbmc_small_atac}
 \alias{pbmc_small_atac}
 \title{A small example version of the PBMC ATAC dataset}
-\format{A matrix with 650 rows and 80 columns}
+\format{
+A matrix with 650 rows and 80 columns
+}
 \source{
 \url{https://support.10xgenomics.com/single-cell-atac/datasets/1.2.0/atac_v1_pbmc_5k}
 }

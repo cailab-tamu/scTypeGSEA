@@ -4,7 +4,9 @@
 \name{TAIR_list}
 \alias{TAIR_list}
 \title{The reference genome for Arabidopsis.}
-\format{A list with 16 cell types}
+\format{
+A list with 16 cell types
+}
 \usage{
 TAIR_list
 }

@@ -4,7 +4,9 @@
 \name{PanglaoDB_list}
 \alias{PanglaoDB_list}
 \title{Cell type gene expression markers from GSEA data base}
-\format{A list with 178 cell types}
+\format{
+A list with 178 cell types
+}
 \source{
 \url{https://panglaodb.se/markers.html}
 }

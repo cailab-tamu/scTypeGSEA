@@ -58,8 +58,8 @@ doClustering <- function(obj, datatype = "RNA", cluster_cell = NULL, dims = 1:50
       } else{
         # do Hierarchical Clustering
         dta <- as.matrix(obj@assays[[1]]@counts)
-        dd <- dist(t(dta))
-        cluster_cell <- hclust(dd, method = hclustmethod)
+        dd <- stats::dist(t(dta))
+        cluster_cell <- stats::hclust(dd, method = hclustmethod)
         cluster_membership <- cutree(cluster_cell, k = ncluster)
         Seurat::Idents(obj) <- cluster_membership - 1
         obj@meta.data$seurat_clusters <- cluster_membership - 1

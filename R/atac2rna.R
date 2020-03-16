@@ -1,6 +1,7 @@
 #' Convert a peak matrix to a gene activity matrix
 #'
 #' This function takes in a peak matrix and an annotation file (gtf)and collapse the peak matrix to a gene activity matrix.
+#'
 #' @importFrom Seurat CreateSeuratObject
 #' @importFrom Seurat CreateGeneActivityMatrix
 #' @importFrom Seurat CreateAssayObject

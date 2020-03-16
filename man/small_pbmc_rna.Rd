@@ -4,7 +4,9 @@
 \name{small_pbmc_rna}
 \alias{small_pbmc_rna}
 \title{A small example version of the PBMC dataset}
-\format{A matrix with 230 rows and 80 columns}
+\format{
+A matrix with 230 rows and 80 columns
+}
 \source{
 \url{https://github.com/satijalab/seurat/blob/master/inst/extdata/pbmc_raw.txt}
 }
