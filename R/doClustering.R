@@ -41,6 +41,8 @@ doClustering <- function(obj, datatype = "RNA", cluster_cell = NULL, dims = 1:50
         stop(message("The length of 'cluster_cell' doesn't match the number of cells, please check it.\n"))
       }
       obj@meta.data$seurat_clusters <- cluster_cell
+      names(cluster_cell) <- names(obj@active.ident)
+      obj@active.ident <- as.factor(cluster_cell)
       # return Seurat object
       return(obj)
     } else{
