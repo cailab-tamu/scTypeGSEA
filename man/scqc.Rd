@@ -7,6 +7,7 @@
 scqc(
   obj,
   datatype = "RNA",
+  metadata = NULL,
   min.cells = 10,
   min.features = 1000,
   percent.mt = 10,
@@ -22,6 +23,8 @@ scqc(
 \item{obj}{A seurat object or a raw count gene expression.}
 
 \item{datatype}{Data type for your data, default is 'datatype = "RNA"', which is used for scRNAseq data.}
+
+\item{metadata}{Add metadata when creating Seurat object.}
 
 \item{min.cells}{An integer value. Include features detected in at least this many cells.}
 

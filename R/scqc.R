@@ -17,6 +17,7 @@
 #' @param obj A seurat object or a raw count gene expression.
 #' @param datatype Data type for your data, default is 'datatype = "RNA"', which is used for scRNAseq data.
 #' @param percent.mt Define the highest percentage of reads that map to the mitochondrial genome.
+#' @param metadata Add metadata when creating Seurat object.
 #' @param min.cells An integer value. Include features detected in at least this many cells.
 #' @param min.features An integer value. Include cells where at least this many features are detected.
 #' @param oversd Remove cells whose library size is greater than mean + oversd * sd. Default is null, which doesn't remove cells.
@@ -33,7 +34,8 @@
 #' @examples
 #' pbmc_example <- scqc(small_pbmc_rna, min.cells = 1, min.features = 10, nfeatures = 100, npcs = 10)
 #' pbmc_example
-scqc <- function(obj, datatype = "RNA", min.cells = 10, min.features = 1000, percent.mt = 10, oversd = NULL, normalization.method = "LogNormalize",
+scqc <- function(obj, datatype = "RNA", metadata = NULL,
+                 min.cells = 10, min.features = 1000, percent.mt = 10, oversd = NULL, normalization.method = "LogNormalize",
                  scale.factor = 10000, selection.method = "vst", nfeatures = 2000, npcs = 50) {
 
   if (datatype == "RNA"){
@@ -42,7 +44,7 @@ scqc <- function(obj, datatype = "RNA", min.cells = 10, min.features = 1000, per
 
   if (grepl("Error", info) == TRUE) {
     message("The input is not a Seurat object, next to transform gene express count matrix to Seurat object.\n")
-    obj <- Seurat::CreateSeuratObject(counts = obj, min.cells = min.cells, min.features = min.features)
+    obj <- Seurat::CreateSeuratObject(counts = obj, min.cells = min.cells, min.features = min.features, meta.data = metadata)
   }
 
   # Do quality control

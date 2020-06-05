@@ -7,6 +7,7 @@
 assignCellType(
   obj,
   datatype = "RNA",
+  metadata = NULL,
   min.cells = 3,
   min.features = 200,
   percent.mt = 10,
@@ -39,6 +40,8 @@ assignCellType(
 \item{obj}{A seurat object or or any matrix where each column is a cell.}
 
 \item{datatype}{Data type for your data, which can be "RNA" for scRNAseq data, "ATAC" for scATACseq data or any other data type.}
+
+\item{metadata}{Add metadata when creating Seurat object.}
 
 \item{min.cells}{An integer value. Include features detected in at least this many cells.}
 
