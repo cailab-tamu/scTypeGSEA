@@ -70,6 +70,6 @@ assignCellType <- function(obj, datatype = "RNA", metadata = NULL, min.cells = 3
   cluster_celltype <- doGSEA(cluster_list = cluster_list, db = db, minSize = minSize, maxSize = maxSize)
 
   # label the seurat object
-  obj <- labelCelltype(obj, cluster_celltype)
+  obj <- labelCelltype(obj, cluster_celltype[[2]])
   return(list(Seurat_obj = obj$obj, cell_mat = obj$cell_mat, cluster_list = cluster_list, cluster_celltype = cluster_celltype))
 }

@@ -26,6 +26,7 @@ doGSEA <- function(cluster_list, db = "PanglaoDB_list", minSize = 15, maxSize = 
   cluster_celltype <- matrix(NA, nrow = ncluster, ncol = 3)
   rownames(cluster_celltype) <- names(cluster_list)
   colnames(cluster_celltype) <- c("cell type", "NES", "padj")
+  cluster_celltype_list <- list()
 
   # decide the database to use
   if (db == "PanglaoDB_list"){
@@ -51,13 +52,15 @@ doGSEA <- function(cluster_list, db = "PanglaoDB_list", minSize = 15, maxSize = 
     ## decide the cell type
     if (nrow(fgseaRes) == 0){
       cluster_celltype[i, 1] <- "unidentified"
+      cluster_celltype_list[[i]] <- "unidentified"
     } else{
       index <- order( -fgseaRes[, "padj"], fgseaRes[, "NES"], decreasing = TRUE)
       fgseaRes <- fgseaRes[index, ]
+      cluster_celltype_list[[i]] <- fgseaRes
       cluster_celltype[i, 1] <- fgseaRes$pathway[1]
       cluster_celltype[i, 2] <- fgseaRes$NES[1]
       cluster_celltype[i, 3] <- fgseaRes$padj[1]
     }
   }
-  return(cluster_celltype)
+  return(list(cluster_celltype_list, cluster_celltype))
 }
