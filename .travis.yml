@@ -14,7 +14,7 @@ r_github_packages:
   - cran/testthat
   - cran/knitr
   - cran/Rtsne
-  - Bioconductor/MAST
+  - RGLab/MAST
   - Bioconductor/ensembldb
   - Bioconductor/GenomeInfoDb
 
