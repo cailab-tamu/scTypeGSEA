@@ -1,0 +1,25 @@
+os: 
+- linux
+
+language: r
+r:
+  - oldrel
+  - release
+  - devel
+  
+r_github_packages:
+  - jimhester/covr
+  - cran/seurat
+  - ctlab/fgsea
+  - cran/testthat
+  - cran/knitr
+  - cran/Rtsne
+  - Bioconductor/MAST
+  - Bioconductor/ensembldb
+  - Bioconductor/GenomeInfoDb
+
+after_success:
+  - Rscript -e 'covr::codecov()'
+  
+cache: packages
+sudo: false
